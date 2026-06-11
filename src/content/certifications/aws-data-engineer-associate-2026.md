@@ -11,4 +11,4 @@ featured: true
 order: 1
 ---
 
-AWS Certified Data Engineer – Associate (DEA-C01). Validates the ability to design and build data pipelines on AWS: ingestion and transformation with Glue, EMR and Lambda; storage and modelling across S3, Redshift, DynamoDB and Lake Formation; orchestration with Step Functions and MWAA; plus security, monitoring and cost optimisation across the data stack.
+AWS Certified Data Engineer - Associate (DEA-C01). Validates the ability to design and build data pipelines on AWS: ingestion and transformation with Glue, EMR and Lambda; storage and modelling across S3, Redshift, DynamoDB and Lake Formation; orchestration with Step Functions and MWAA; plus security, monitoring and cost optimisation across the data stack.

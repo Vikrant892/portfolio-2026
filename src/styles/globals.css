@@ -3,16 +3,16 @@
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
 
-/* ──────────────────────────────────────────────────────────────────────────
-   "MADISON × DECODED" — design tokens
+/*
+   "MADISON × DECODED" - design tokens
    Editorial typography on a warm cream surface with sunset-amber accents
    and a restrained electric-cyan as the cyber/tech nod.
    - Heavy serif italics for "Hey, there"-style displays.
    - Heavy sans for the "I AM VIKRANT" mark.
-   ────────────────────────────────────────────────────────────────────────── */
+    */
 
 @theme {
-  /* Surfaces — warm cream, not pure white */
+  /* Surfaces - warm cream, not pure white */
   --color-bg: #f5f1e8;
   --color-bg-elevated: #fbf7ee;
   --color-bg-subtle: #ede7d7;
@@ -22,7 +22,7 @@
   --color-bg-dark: #0a0a0a;
   --color-bg-dark-elevated: #131313;
 
-  /* Ink — deep black on cream, off-white on dark */
+  /* Ink - deep black on cream, off-white on dark */
   --color-ink: #0a0a0a;
   --color-ink-muted: #4a4a48;
   --color-ink-dim: #807d76;
@@ -30,12 +30,12 @@
   --color-ink-on-dark: #f5f1e8;
   --color-ink-on-dark-muted: #b8b3a8;
 
-  /* Warm accent — sunset amber, the dominant accent */
+  /* Warm accent - sunset amber, the dominant accent */
   --color-amber: #e8a05a;
   --color-amber-soft: #f4c89a;
   --color-amber-glow: #e8a05a26;
 
-  /* Cool accent — electric cyan, used sparingly (cyber/tech nod) */
+  /* Cool accent - electric cyan, used sparingly (cyber/tech nod) */
   --color-cyan: #00b8b8;
   --color-cyan-soft: #00b8b833;
 
@@ -60,7 +60,7 @@
   --shadow-card: 0 1px 0 0 var(--color-border-subtle), 0 24px 48px -24px rgba(10, 10, 10, 0.18);
   --shadow-pill: 0 1px 0 0 rgba(255, 255, 255, 0.6) inset, 0 4px 12px -4px rgba(10, 10, 10, 0.12);
 
-  /* Easings — slow-in, sharp-out for cinema feel */
+  /* Easings - slow-in, sharp-out for cinema feel */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -124,7 +124,7 @@
 }
 
 @layer components {
-  /* Display — heavy sans, the "I AM VIKRANT" mark */
+  /* Display - heavy sans, the "I AM VIKRANT" mark */
   .display-mark {
     font-family: var(--font-sans);
     font-weight: 900;
@@ -133,7 +133,7 @@
     text-transform: uppercase;
   }
 
-  /* Display — Fraunces italic, the "Hey, there" header */
+  /* Display - Fraunces italic, the "Hey, there" header */
   .display-script {
     font-family: var(--font-display);
     font-style: italic;

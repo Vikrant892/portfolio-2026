@@ -22,7 +22,7 @@ try {
         return m
           ? m[1]
               .replace(/<!\[CDATA\[|\]\]>/g, '')
-              .replace(/\s*[—–]\s*/g, ', ')
+              .replace(/\s*[--]\s*/g, ', ')
               .trim()
           : '';
       };

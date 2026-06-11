@@ -14,7 +14,7 @@
   function init() {
     if (reduced) return;
 
-    /* ── Hero: large display text fades + slides up on load ───────── */
+    /*  Hero: large display text fades + slides up on load  */
     const heroDisplays = document.querySelectorAll<HTMLElement>(
       '[aria-labelledby="hero-heading"] .display-script, [aria-labelledby="hero-heading"] .display-mark, [aria-labelledby="hero-heading"] .ds-pill'
     );
@@ -29,7 +29,7 @@
       });
     }
 
-    /* ── Every section heading: character cipher reveal on enter ─────
+    /*  Every section heading: character cipher reveal on enter
        Splits the heading into spans, scrambles characters into the
        cyber alphabet, then resolves to original chars as you scroll. */
     const cipherChars = '01⌬◇◆⌁⊹∴∵≡≣⏣▣▢█▒░';
@@ -91,7 +91,7 @@
       });
     });
 
-    /* ── Cards & list items: stagger fade-up on scroll ────────────── */
+    /*  Cards & list items: stagger fade-up on scroll  */
     const fadeGroups = [
       '#services article',
       '#stats dl > div',
@@ -118,9 +118,9 @@
       });
     });
 
-    /* ── Contact: amber CTA gentle float on hover (handled by CSS) ── */
+    /*  Contact: amber CTA gentle float on hover (handled by CSS)  */
 
-    /* ── Refresh once, then on resize ─────────────────────────────── */
+    /*  Refresh once, then on resize  */
     ScrollTrigger.refresh();
   }
 

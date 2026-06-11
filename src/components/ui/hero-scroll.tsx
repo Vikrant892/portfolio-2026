@@ -16,10 +16,7 @@ export function HeroScroll() {
     <ContainerScroll
       titleComponent={
         <>
-          <motion.div
-            {...fadeUp(0)}
-            className="flex flex-col items-center gap-4"
-          >
+          <motion.div {...fadeUp(0)} className="flex justify-center">
             <img
               src={portraitImg.src}
               alt="Vikrant Sharma"
@@ -29,11 +26,13 @@ export function HeroScroll() {
               loading="eager"
               draggable={false}
             />
-            <p className="t-eyebrow">Vikrant Sharma · Adelaide, Australia</p>
           </motion.div>
 
-          <motion.h1 {...fadeUp(0.08)} className="mt-6">
-            <span className="t-display block text-3xl text-[var(--color-ink)] sm:text-5xl">
+          <motion.h1 {...fadeUp(0.08)} className="mt-5">
+            <span className="t-eyebrow block">
+              Vikrant Sharma · Adelaide, Australia
+            </span>
+            <span className="t-display mt-6 block text-3xl text-[var(--color-ink)] sm:text-5xl">
               Machine learning,
             </span>
             <span className="t-display t-gradient mt-2 block text-[clamp(2.75rem,9vw,6.5rem)] leading-none">

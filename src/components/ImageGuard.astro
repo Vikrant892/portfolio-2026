@@ -1,0 +1,40 @@
+---
+// Image download friction, scoped strictly to images. Right-click,
+// drag-to-save and the iOS long-press save sheet are blocked on <img>
+// elements only. The rest of the page behaves normally: text selection,
+// printing, view-source and DevTools all work, because blocking those
+// reads as amateur to technical reviewers. This is friction, not
+// security; a determined visitor can still screenshot.
+---
+
+<script is:inline>
+  (() => {
+    document.addEventListener(
+      'contextmenu',
+      (event) => {
+        if (event.target instanceof HTMLImageElement) event.preventDefault();
+      },
+      true,
+    );
+
+    document.addEventListener(
+      'dragstart',
+      (event) => {
+        if (event.target instanceof HTMLImageElement) event.preventDefault();
+      },
+      true,
+    );
+  })();
+</script>
+
+<style is:global>
+  img,
+  picture,
+  video,
+  source {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+</style>

@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import '../styles/globals.css';
 import Header from '../components/Header.astro';
 import Motion from '../components/Motion.astro';
+import ImageGuard from '../components/ImageGuard.astro';
 import portrait from '../assets/portrait.jpg';
 
 interface Props {
@@ -29,10 +30,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = await getImage({ src: portrait, width: 1200, format: 'jpeg' });
 const ogImageURL = new URL(ogImage.src, Astro.site).toString();
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Vikrant Sharma',
+  alternateName: ['Vikrant Sharma Portfolio', 'vikrant69g'],
+  url: 'https://vikrant69g.com',
+};
+
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Vikrant Sharma',
+  givenName: 'Vikrant',
+  familyName: 'Sharma',
   url: 'https://vikrant69g.com',
   email: 'mailto:vikrantsharma892@gmail.com',
   jobTitle: 'Machine Learning Engineer (Cybersecurity)',
@@ -81,6 +92,7 @@ const personSchema = {
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vikrant Sharma" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
@@ -96,6 +108,7 @@ const personSchema = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
     {/* Gate for reveal styles: must run before first paint so content
         never flashes hidden for no-JS visitors. */}
@@ -110,5 +123,6 @@ const personSchema = {
       <slot />
     </main>
     <Motion />
+    <ImageGuard />
   </body>
 </html>

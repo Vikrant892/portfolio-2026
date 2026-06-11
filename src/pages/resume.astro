@@ -209,13 +209,32 @@ const certs = [
     document.getElementById('print-btn')?.addEventListener('click', () => window.print());
   </script>
 
-  <style>
+  <style is:global>
+    /* The resume reads and prints as a light document regardless of the
+       site theme. Token override is page-scoped: each Astro page is its
+       own HTML document. */
+    html {
+      color-scheme: light;
+      --color-bg: #ffffff;
+      --color-bg-elevated: #fafafa;
+      --color-bg-subtle: #f4f4f5;
+      --color-ink: #18181b;
+      --color-ink-muted: #3f3f46;
+      --color-ink-dim: #65656e;
+      --color-border: #e4e4e7;
+      --color-border-subtle: #ededf0;
+      --color-border-strong: #c9c9d1;
+      --color-accent: #0e7490;
+      --color-amber: #0e7490;
+      background: #ffffff;
+    }
+
     @media print {
-      :global(html) {
-        background: #fff;
-      }
-      :global(body) {
+      body {
         font-size: 12px;
+      }
+      .btn {
+        display: none;
       }
     }
   </style>

@@ -1,50 +1,55 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   "LEDGER" — design tokens
-   Editorial paper surface, ink typography, one burnt-amber accent.
-   Fraunces roman for display, Inter for body, JetBrains Mono for meta.
-   Every colour pair below passes WCAG AA at its intended size.
+   "OBSIDIAN" — design tokens
+   Deep-space dark surface, electric cyan signal accent, violet undertone.
+   Space Grotesk display, Inter body, JetBrains Mono meta.
+   Token NAMES are stable across redesigns; only values change here.
+   Every colour pair passes WCAG AA at its intended size.
    ────────────────────────────────────────────────────────────────────────── */
 
 @theme {
   /* Surfaces */
-  --color-bg: #faf7f0;
-  --color-bg-elevated: #fffdf8;
-  --color-bg-subtle: #f2ede1;
-  --color-bg-inset: #e9e2d0;
+  --color-bg: #060609;
+  --color-bg-elevated: #0d0d15;
+  --color-bg-subtle: #10101a;
+  --color-bg-inset: #161622;
 
-  /* Dark band surfaces */
-  --color-bg-dark: #121110;
-  --color-bg-dark-elevated: #1b1916;
+  /* Feature band surfaces (slightly lifted from page bg) */
+  --color-bg-dark: #0b0b13;
+  --color-bg-dark-elevated: #14141f;
 
   /* Ink */
-  --color-ink: #161512;
-  --color-ink-muted: #4f4d47;
-  --color-ink-dim: #6b6860;
-  --color-ink-faint: #9b968a; /* decorative only, never body text */
-  --color-ink-on-dark: #f5f1e8;
-  --color-ink-on-dark-muted: #bab4a7;
+  --color-ink: #f2f2f5;
+  --color-ink-muted: #a7a7b4;
+  --color-ink-dim: #7e7e8e;
+  --color-ink-faint: #4b4b5a; /* decorative only, never body text */
+  --color-ink-on-dark: #f2f2f5;
+  --color-ink-on-dark-muted: #a7a7b4;
 
-  /* Accent — burnt amber. Text-safe on paper (5.2:1). */
-  --color-accent: #a8501a;
-  /* Accent on dark surfaces (8.1:1 on --color-bg-dark) */
-  --color-accent-on-dark: #e8a05a;
-  /* Decorative amber — fills, rules, dots. Never text. */
-  --color-amber: #e8a05a;
-  --color-amber-soft: #f4c89a;
-  --color-amber-glow: #e8a05a26;
+  /* Accent — electric cyan. 10.9:1 on --color-bg. */
+  --color-accent: #22d3ee;
+  --color-accent-on-dark: #22d3ee;
+  /* Secondary accent for gradients */
+  --color-violet: #8b5cf6;
+
+  /* Decorative signal tones (dots, rules, glows). Legacy names kept so
+     section components stay palette-agnostic. */
+  --color-amber: #22d3ee;
+  --color-amber-soft: #67e8f9;
+  --color-amber-glow: rgba(34, 211, 238, 0.16);
 
   /* Borders */
-  --color-border: #dbd3bf;
-  --color-border-subtle: #e7e0cd;
-  --color-border-strong: #b3ab94;
+  --color-border: #1f1f2e;
+  --color-border-subtle: #16161f;
+  --color-border-strong: #34344a;
 
   /* Type ramp */
-  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-display:
+    "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
@@ -56,13 +61,13 @@
   --radius-xl: 1.25rem;
   --radius-pill: 999px;
 
-  /* Shadows */
+  /* Shadows — on dark, depth reads as glow plus border light */
   --shadow-card:
-    0 1px 0 0 var(--color-border-subtle),
-    0 20px 40px -24px rgba(18, 17, 16, 0.16);
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 64px -28px rgba(34, 211, 238, 0.14);
   --shadow-lift:
-    0 2px 6px -2px rgba(18, 17, 16, 0.08),
-    0 28px 56px -28px rgba(18, 17, 16, 0.22);
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 28px 72px -28px rgba(34, 211, 238, 0.22);
 
   /* Motion tokens — one rhythm for the whole site */
   --dur-fast: 180ms;
@@ -74,7 +79,7 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
   }
 
   html {
@@ -96,8 +101,8 @@
   }
 
   ::selection {
-    background: var(--color-amber);
-    color: var(--color-ink);
+    background: var(--color-accent);
+    color: var(--color-bg);
   }
 
   *:focus-visible {
@@ -138,30 +143,38 @@
 @layer components {
   /* ── Type system ──────────────────────────────────────────────────── */
 
-  /* Display — Fraunces roman, confident not decorative */
   .t-display {
     font-family: var(--font-display);
-    font-weight: 590;
-    font-variation-settings: "opsz" 72;
-    letter-spacing: -0.022em;
+    font-weight: 640;
+    letter-spacing: -0.03em;
     line-height: 1.02;
   }
 
-  /* Section heading */
   .t-heading {
     font-family: var(--font-display);
-    font-weight: 560;
-    font-variation-settings: "opsz" 40;
-    letter-spacing: -0.018em;
+    font-weight: 600;
+    letter-spacing: -0.025em;
     line-height: 1.08;
   }
 
-  /* Card / item title */
   .t-title {
     font-family: var(--font-display);
-    font-weight: 540;
-    letter-spacing: -0.012em;
+    font-weight: 560;
+    letter-spacing: -0.015em;
     line-height: 1.18;
+  }
+
+  /* Gradient display text — the signature move, hero and headings only */
+  .t-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-amber-soft) 0%,
+      var(--color-accent) 38%,
+      var(--color-violet) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .mono {
@@ -169,7 +182,6 @@
     font-feature-settings: "liga" off;
   }
 
-  /* Eyebrow label */
   .t-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
@@ -190,6 +202,27 @@
     .container-site {
       padding-inline: 2.5rem;
     }
+  }
+
+  /* Faint blueprint grid for feature surfaces */
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      );
+    background-size: 56px 56px;
+    mask-image: radial-gradient(
+      ellipse 90% 70% at 50% 0%,
+      black 35%,
+      transparent 100%
+    );
   }
 
   /* ── Buttons ─────────────────────────────────────────────────────── */
@@ -216,41 +249,43 @@
     transform: scale(0.97);
   }
 
+  /* Primary — solid light button, Linear style */
   .btn-primary {
     background: var(--color-ink);
-    color: var(--color-ink-on-dark);
+    color: var(--color-bg);
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
+    box-shadow: 0 12px 40px -12px rgba(242, 242, 245, 0.35);
   }
   .btn-primary:active {
     transform: scale(0.97);
   }
 
   .btn-secondary {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.02);
     color: var(--color-ink);
     border: 1px solid var(--color-border-strong);
   }
   .btn-secondary:hover {
-    border-color: var(--color-ink);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 24px -8px var(--color-amber-glow);
     transform: translateY(-2px);
   }
 
-  /* On-dark variants */
+  /* Band variants (used inside feature bands; same surface family) */
   .btn-on-dark-primary {
-    background: var(--color-amber);
-    color: var(--color-ink);
+    background: var(--color-accent);
+    color: var(--color-bg);
   }
   .btn-on-dark-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 32px -16px rgba(232, 160, 90, 0.5);
+    box-shadow: 0 16px 48px -16px rgba(34, 211, 238, 0.5);
   }
   .btn-on-dark-secondary {
     background: transparent;
     color: var(--color-ink-on-dark);
-    border: 1px solid rgba(245, 241, 232, 0.3);
+    border: 1px solid rgba(242, 242, 245, 0.25);
   }
   .btn-on-dark-secondary:hover {
     border-color: var(--color-ink-on-dark);

@@ -11,9 +11,15 @@ const summary = [
 
 <section
   id="resume"
-  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-dark)] py-20 text-[var(--color-ink-on-dark)] sm:py-24"
+  class="relative isolate overflow-hidden border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-dark)] py-20 text-[var(--color-ink-on-dark)] sm:py-24"
   aria-labelledby="resume-heading"
 >
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute right-[-15%] top-[-40%] -z-10 h-[30rem] w-[40rem] rounded-full opacity-50 blur-3xl"
+    style="background: radial-gradient(ellipse at center, rgba(34,211,238,0.12) 0%, rgba(139,92,246,0.07) 50%, transparent 75%);"
+  >
+  </div>
   <div class="container-site grid grid-cols-1 gap-10 lg:grid-cols-12">
     <div class="lg:col-span-5" data-reveal>
       <p class="t-eyebrow" style="color: var(--color-accent-on-dark)">Resume</p>

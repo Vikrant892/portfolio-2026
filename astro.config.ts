@@ -24,7 +24,7 @@ export default defineConfig({
     ssr: {
       noExternal: [
         "@fontsource-variable/inter",
-        "@fontsource-variable/fraunces",
+        "@fontsource-variable/space-grotesk",
         "@fontsource-variable/jetbrains-mono",
       ],
     },

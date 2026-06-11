@@ -40,21 +40,6 @@ const featured: CaseStudy[] = [
   },
   {
     n: '02',
-    title: 'ThreatLens',
-    category: 'Threat Intelligence',
-    img: threatLensImg,
-    challenge:
-      'Thousands of CVEs are published every month. Teams without a triage system patch alphabetically, or not at all.',
-    built:
-      'A FastAPI service that correlates NVD CVE data with exploit availability, asset exposure and MITRE ATT&CK techniques, producing one composite risk score per vulnerability.',
-    outcome:
-      'A pre-ranked patch queue. The vulnerabilities that are actually exploitable against assets you actually run rise to the top.',
-    stack: ['FastAPI', 'NVD API', 'MITRE ATT&CK', 'Pydantic'],
-    live: 'https://huggingface.co/spaces/vikrant892/threat-lens',
-    github: 'https://github.com/Vikrant892/threat-lens',
-  },
-  {
-    n: '03',
     title: 'Credit Card Fraud Detection',
     category: 'ML · Imbalanced Classification',
     img: fraudImg,
@@ -69,7 +54,7 @@ const featured: CaseStudy[] = [
     github: 'https://github.com/Vikrant892/credit-card-fraud-detection',
   },
   {
-    n: '04',
+    n: '03',
     title: 'Cosmic Keys',
     category: 'NASA Space Apps 2023 · Global Finalist',
     img: nasaImg,
@@ -86,6 +71,14 @@ const featured: CaseStudy[] = [
 ];
 
 const more = [
+  {
+    title: 'ThreatLens',
+    desc: 'CVE triage service correlating NVD data with exploit availability and ATT&CK techniques into one composite risk score.',
+    img: threatLensImg,
+    stack: ['FastAPI', 'NVD API', 'Pydantic'],
+    live: 'https://huggingface.co/spaces/vikrant892/threat-lens',
+    github: 'https://github.com/Vikrant892/threat-lens',
+  },
   {
     title: 'Phishing Detection Platform',
     desc: 'Email analyser that flags header anomalies, hidden payloads and spoofed senders that gateways miss.',
@@ -122,7 +115,7 @@ const more = [
     <div class="mb-14 max-w-2xl" data-reveal>
       <p class="t-eyebrow mb-4">Selected work</p>
       <h2 id="work-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
-        Four systems, end to end<span class="text-[var(--color-accent)]">.</span>
+        Three systems, end to end<span class="text-[var(--color-accent)]">.</span>
       </h2>
       <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
         Each one is deployed and public. The live links open real running
@@ -212,7 +205,7 @@ const more = [
     {/* Compact tier */}
     <div class="mt-16" data-reveal-group>
       <p class="t-eyebrow mb-6" data-reveal-child>Also shipped</p>
-      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           more.map((p) => (
             <li data-reveal-child>
@@ -222,7 +215,7 @@ const more = [
                     src={p.img}
                     alt={`Screenshot of ${p.title}`}
                     widths={[400, 640]}
-                    sizes="(max-width: 640px) 100vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     class="h-full w-full object-cover object-top"
                     loading="lazy"
                   />

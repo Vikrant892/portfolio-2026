@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import idsImg from "@/assets/projects/ids-project.png";
+import portraitImg from "@/assets/portrait.jpg";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -15,9 +16,21 @@ export function HeroScroll() {
     <ContainerScroll
       titleComponent={
         <>
-          <motion.p {...fadeUp(0)} className="t-eyebrow">
-            Vikrant Sharma · Adelaide, Australia
-          </motion.p>
+          <motion.div
+            {...fadeUp(0)}
+            className="flex flex-col items-center gap-4"
+          >
+            <img
+              src={portraitImg.src}
+              alt="Vikrant Sharma"
+              width={160}
+              height={160}
+              className="h-20 w-20 rounded-full border border-[var(--color-border)] object-cover shadow-[var(--shadow-card)]"
+              loading="eager"
+              draggable={false}
+            />
+            <p className="t-eyebrow">Vikrant Sharma · Adelaide, Australia</p>
+          </motion.div>
 
           <motion.h1 {...fadeUp(0.08)} className="mt-6">
             <span className="t-display block text-3xl text-[var(--color-ink)] sm:text-5xl">

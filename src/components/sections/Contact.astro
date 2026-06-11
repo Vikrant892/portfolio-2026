@@ -64,7 +64,7 @@ const links = [
       <ul class="mono grid grid-cols-1 gap-1 self-end lg:col-span-5" data-reveal-group>
         {
           links.map((l) => (
-            <li data-reveal-child class="border-t border-[rgba(245,241,232,0.12)] first:border-t-0">
+            <li data-reveal-child class="border-t border-[var(--color-border)] first:border-t-0">
               <a
                 href={l.href}
                 target="_blank"
@@ -85,7 +85,7 @@ const links = [
     </div>
 
     <div
-      class="mono mt-20 border-t border-[rgba(242,242,245,0.1)] pt-8 text-xs text-[var(--color-ink-on-dark-muted)]"
+      class="mono mt-20 border-t border-[var(--color-border)] pt-8 text-xs text-[var(--color-ink-on-dark-muted)]"
     >
       <p>© 2026 Vikrant Sharma · Adelaide, Australia</p>
     </div>

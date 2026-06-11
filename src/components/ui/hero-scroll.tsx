@@ -23,9 +23,9 @@ export function HeroScroll() {
             <img
               src={portraitImg.src}
               alt="Vikrant Sharma"
-              width={160}
-              height={160}
-              className="h-20 w-20 rounded-full border border-[var(--color-border)] object-cover shadow-[var(--shadow-card)]"
+              width={256}
+              height={256}
+              className="h-28 w-28 rounded-full border-2 border-[var(--color-bg-elevated)] object-cover shadow-[var(--shadow-card)] md:h-32 md:w-32"
               loading="eager"
               draggable={false}
             />
@@ -57,8 +57,8 @@ export function HeroScroll() {
             <a href="#work" className="btn btn-primary">
               View selected work
             </a>
-            <a href="/resume" className="btn btn-secondary">
-              Resume <span aria-hidden="true">→</span>
+            <a href="#resume" className="btn btn-secondary">
+              The 30 second version <span aria-hidden="true">↓</span>
             </a>
           </motion.div>
 

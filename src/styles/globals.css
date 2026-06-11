@@ -13,15 +13,16 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Surfaces */
-  --color-bg: #ffffff;
-  --color-bg-elevated: #fafafa;
-  --color-bg-subtle: #f4f4f5;
-  --color-bg-inset: #e9e9ec;
+  /* Surfaces — warm ivory, softer on the eyes than pure white.
+     Cards sit on it in true white for gentle depth. */
+  --color-bg: #faf9f5;
+  --color-bg-elevated: #ffffff;
+  --color-bg-subtle: #f1efe8;
+  --color-bg-inset: #e7e4da;
 
-  /* Feature band surfaces — quiet grey panels, not dark */
-  --color-bg-dark: #f4f4f5;
-  --color-bg-dark-elevated: #ececef;
+  /* Feature band surfaces — quiet warm panels, not dark */
+  --color-bg-dark: #f1efe8;
+  --color-bg-dark-elevated: #e9e6dc;
 
   /* Ink */
   --color-ink: #18181b;
@@ -43,9 +44,9 @@
   --color-amber-glow: rgba(37, 99, 235, 0.08);
 
   /* Borders */
-  --color-border: #e4e4e7;
-  --color-border-subtle: #ececef;
-  --color-border-strong: #c9cad1;
+  --color-border: #e3e0d6;
+  --color-border-subtle: #ebe8df;
+  --color-border-strong: #c7c3b4;
 
   /* Type ramp */
   --font-display:

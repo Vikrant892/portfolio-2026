@@ -24,10 +24,65 @@
     (el as HTMLElement).style.transform = 'none';
   }
 
+  /* Cipher reveal: section headings scramble through a glyph set and
+     resolve to their real characters as they scroll into view. */
+  const CIPHER_CHARS = '01<>{}[]#$%&@+=*';
+
+  function wrapChars(root: HTMLElement) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const targets: Text[] = [];
+    let n: Node | null;
+    while ((n = walker.nextNode())) targets.push(n as Text);
+    targets.forEach((textNode) => {
+      const text = textNode.textContent ?? '';
+      const frag = document.createDocumentFragment();
+      for (const ch of Array.from(text)) {
+        if (/\s/.test(ch)) {
+          frag.appendChild(document.createTextNode(ch));
+          continue;
+        }
+        const span = document.createElement('span');
+        span.className = 'cipher-char';
+        span.dataset.orig = ch;
+        span.textContent = ch;
+        frag.appendChild(span);
+      }
+      textNode.replaceWith(frag);
+    });
+  }
+
+  function cipherReveal(h: HTMLElement) {
+    wrapChars(h);
+    const spans = h.querySelectorAll<HTMLElement>('.cipher-char');
+    inView(
+      h,
+      () => {
+        spans.forEach((s, i) => {
+          const orig = s.dataset.orig ?? '';
+          const ticks = 6 + (i % 4);
+          let t = 0;
+          const tick = () => {
+            t++;
+            if (t < ticks) {
+              s.textContent =
+                CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)] ?? orig;
+              setTimeout(tick, 28);
+            } else {
+              s.textContent = orig;
+            }
+          };
+          setTimeout(tick, i * 18);
+        });
+      },
+      { margin: '0px 0px -15% 0px' },
+    );
+  }
+
   function init() {
     const heroItems = document.querySelectorAll<HTMLElement>('[data-hero-seq]');
     const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
     const groups = document.querySelectorAll<HTMLElement>('[data-reveal-group]');
+    const headings = document.querySelectorAll<HTMLElement>('main h2.t-heading');
 
     if (reduced) {
       heroItems.forEach(show);
@@ -37,6 +92,8 @@
       );
       return;
     }
+
+    headings.forEach(cipherReveal);
 
     /* Hero: staged entrance on load */
     if (heroItems.length) {
@@ -82,3 +139,10 @@
     init();
   }
 </script>
+
+<style is:global>
+  .cipher-char {
+    display: inline-block;
+    font-variant-ligatures: none;
+  }
+</style>

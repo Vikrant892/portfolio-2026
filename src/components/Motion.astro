@@ -7,6 +7,10 @@
 //   data-reveal            single element fades up when scrolled into view
 //   data-reveal-group      container; its [data-reveal-child] items stagger in
 //   data-reveal-child      item inside a data-reveal-group
+//   data-draw              SVG (or wrapper): stroked shapes inside draw
+//                          themselves on scroll into view
+//   #journey-line          vertical timeline stroke, drawing tied to scroll
+//                          progress through the #journey section
 //
 // Initial hidden state lives in CSS gated behind html.js (set inline in
 // BaseLayout <head> before paint), so no-JS visitors and reduced-motion
@@ -14,7 +18,7 @@
 ---
 
 <script>
-  import { animate, inView, stagger } from 'motion';
+  import { animate, inView, stagger, scroll } from 'motion';
 
   const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -94,6 +98,58 @@
     }
 
     headings.forEach(cipherReveal);
+
+    /* SVG path drawing: every stroked shape inside [data-draw] draws
+       itself when scrolled into view. Dash state is only set here, so
+       reduced-motion and no-JS visitors see finished strokes. */
+    document.querySelectorAll<HTMLElement>('[data-draw]').forEach((box) => {
+      const shapes = box.querySelectorAll<SVGGeometryElement>(
+        'path, line, polyline, circle, ellipse',
+      );
+      if (!shapes.length) return;
+      const lengths = new Map<SVGGeometryElement, number>();
+      shapes.forEach((s) => {
+        const len = s.getTotalLength();
+        lengths.set(s, len);
+        // Attributes, not inline style: Motion animates SVG dash values
+        // via attributes, and an inline style would override them.
+        s.setAttribute('stroke-dasharray', `${len}`);
+        s.setAttribute('stroke-dashoffset', `${len}`);
+      });
+      inView(
+        box,
+        () => {
+          shapes.forEach((s, i) => {
+            const len = lengths.get(s) ?? 0;
+            animate(
+              s,
+              { strokeDashoffset: [len, 0] },
+              { duration: 1.1, ease: EASE, delay: 0.15 + i * 0.15 },
+            );
+          });
+        },
+        { margin: '0px 0px -12% 0px' },
+      );
+    });
+
+    /* Journey timeline: the vertical stroke draws in step with scroll
+       progress through the section. The line carries pathLength="1",
+       so dash units are normalised. */
+    const journeyLine = document.querySelector<SVGLineElement>('#journey-line');
+    const journeySection = document.getElementById('journey');
+    if (journeyLine && journeySection) {
+      journeyLine.setAttribute('stroke-dasharray', '1');
+      journeyLine.setAttribute('stroke-dashoffset', '1');
+      scroll(
+        (progress: number) => {
+          journeyLine.setAttribute('stroke-dashoffset', String(1 - progress));
+        },
+        {
+          target: journeySection,
+          offset: ['start 0.75', 'end 0.9'],
+        },
+      );
+    }
 
     /* Hero: staged entrance on load */
     if (heroItems.length) {

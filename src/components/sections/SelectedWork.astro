@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import SectionUnderline from '../SectionUnderline.astro';
 import idsImg from '../../assets/projects/ids-project.png';
 import threatLensImg from '../../assets/projects/threat-lens.png';
 import nasaImg from '../../assets/projects/nasa-space-challenge.png';
@@ -117,6 +118,7 @@ const more = [
       <h2 id="work-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
         Three systems, end to end<span class="text-[var(--color-accent)]">.</span>
       </h2>
+      <SectionUnderline />
       <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
         Each one is deployed and public. The live links open real running
         systems on Hugging Face Spaces; give them up to 30 seconds to wake.

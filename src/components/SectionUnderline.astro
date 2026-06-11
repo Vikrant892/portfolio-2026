@@ -1,0 +1,23 @@
+---
+// Hand-drawn accent stroke that draws itself in under a section heading.
+// Animated by the [data-draw] handler in Motion.astro; renders as a
+// finished stroke for no-JS and reduced-motion visitors.
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  data-draw
+  class:list={['mt-4 h-3 w-44', className]}
+  viewBox="0 0 176 12"
+  fill="none"
+  aria-hidden="true"
+>
+  <path
+    d="M2 9C32 3.5 70 2.5 98 5.5c22 2.4 48 3.6 76-2"
+    stroke="var(--color-accent)"
+    stroke-width="2.5"
+    stroke-linecap="round"></path>
+</svg>

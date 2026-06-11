@@ -1,4 +1,6 @@
 ---
+import SectionUnderline from '../SectionUnderline.astro';
+
 // Pull the 3 most recent posts from the blog RSS feed at build time.
 // A failed fetch renders nothing rather than an empty-state apology.
 interface BlogPost {
@@ -50,6 +52,7 @@ const formatDate = (s: string) => {
             <h2 id="writing-heading" class="t-heading text-3xl text-[var(--color-ink)] sm:text-4xl">
               Notes from the field<span class="text-[var(--color-accent)]">.</span>
             </h2>
+            <SectionUnderline />
           </div>
           <a
             href="https://vikrant69g.com/blog"

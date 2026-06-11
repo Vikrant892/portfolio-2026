@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import SectionUnderline from '../SectionUnderline.astro';
 
 const allCerts = (await getCollection('certifications')).sort((a, b) => {
   if (a.data.order !== b.data.order) return a.data.order - b.data.order;
@@ -43,6 +44,7 @@ const monthYear = (d: Date) => d.toLocaleDateString('en-AU', { month: 'short', y
       <h2 id="achievements-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
         Verified, not claimed<span class="text-[var(--color-accent)]">.</span>
       </h2>
+      <SectionUnderline />
       <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
         Every credential below links to its verification page or original
         announcement.

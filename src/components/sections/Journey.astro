@@ -1,4 +1,6 @@
 ---
+import SectionUnderline from '../SectionUnderline.astro';
+
 const steps = [
   {
     period: 'Feb 2025 to Aug 2027',
@@ -59,6 +61,7 @@ const steps = [
       <h2 id="journey-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
         Security floor to ML systems<span class="text-[var(--color-accent)]">.</span>
       </h2>
+      <SectionUnderline />
       <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
         Ten months of industry experience across two roles, one in security
         operations and one in data engineering. That order is the point: I
@@ -67,7 +70,34 @@ const steps = [
       </p>
     </div>
 
-    <ol class="relative border-l border-[var(--color-border-strong)] pl-8 sm:pl-12" data-reveal-group>
+    <ol class="relative pl-8 sm:pl-12" data-reveal-group>
+      {/* Timeline stroke: faint static track + scroll-drawn accent line */}
+      <svg
+        aria-hidden="true"
+        class="absolute bottom-0 left-0 top-0 h-full w-[2px]"
+        viewBox="0 0 2 100"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <line
+          x1="1"
+          y1="0"
+          x2="1"
+          y2="100"
+          stroke="var(--color-border-strong)"
+          stroke-width="2"
+          vector-effect="non-scaling-stroke"></line>
+        <line
+          id="journey-line"
+          x1="1"
+          y1="0"
+          x2="1"
+          y2="100"
+          pathLength="1"
+          stroke="var(--color-accent)"
+          stroke-width="2"
+          vector-effect="non-scaling-stroke"></line>
+      </svg>
       {
         steps.map((s) => (
           <li data-reveal-child class="group relative mb-14 last:mb-0">

@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import idsImg from "@/assets/projects/ids-project.png";
 import portraitImg from "@/assets/portrait.jpg";
@@ -12,6 +12,8 @@ const fadeUp = (delay: number) => ({
 });
 
 export function HeroScroll() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <ContainerScroll
       titleComponent={
@@ -39,6 +41,25 @@ export function HeroScroll() {
               built to hunt threats.
             </span>
           </motion.h1>
+
+          {/* Drawn underline stroke beneath the headline */}
+          <motion.svg
+            {...fadeUp(0.12)}
+            className="mx-auto mt-5 h-4 w-64 sm:w-80"
+            viewBox="0 0 320 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <motion.path
+              d="M6 11C58 4 130 3 178 7.5c38 3.6 92 5 136-3.5"
+              stroke="var(--color-accent)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              initial={{ pathLength: reduceMotion ? 1 : 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1.1, ease: EASE, delay: 0.7 }}
+            />
+          </motion.svg>
 
           <motion.p
             {...fadeUp(0.16)}

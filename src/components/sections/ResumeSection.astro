@@ -1,0 +1,49 @@
+---
+const summary = [
+  'ML engineer specialising in cybersecurity, Adelaide based',
+  'Two industry roles: data engineering at Nagarro, security analysis at AT SecurDI',
+  'AWS Certified Data Engineer Associate, OCI Data Science Professional',
+  'Seven production deployments, all public, all open source',
+  'NASA Space Apps Global Finalist 2023',
+  'Master of IT at UniSC Adelaide, graduating August 2027',
+];
+---
+
+<section
+  id="resume"
+  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-dark)] py-20 text-[var(--color-ink-on-dark)] sm:py-24"
+  aria-labelledby="resume-heading"
+>
+  <div class="container-site grid grid-cols-1 gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="t-eyebrow" style="color: var(--color-accent-on-dark)">Resume</p>
+      <h2 id="resume-heading" class="t-heading mt-4 text-3xl sm:text-4xl">
+        The 30 second version<span style="color: var(--color-accent-on-dark)">.</span>
+      </h2>
+      <p class="mt-5 max-w-md text-base leading-relaxed text-[var(--color-ink-on-dark-muted)]">
+        One page, current as of May 2026. Take the PDF for your ATS or read it
+        in the browser.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/resume/Vikrant-Sharma-Resume.pdf" class="btn btn-on-dark-primary" download>
+          Download PDF
+        </a>
+        <a href="/resume" class="btn btn-on-dark-secondary">Read online</a>
+      </div>
+    </div>
+
+    <ul class="space-y-3 self-center lg:col-span-7" data-reveal-group>
+      {
+        summary.map((item) => (
+          <li
+            data-reveal-child
+            class="flex gap-3 border-b border-[rgba(245,241,232,0.12)] pb-3 text-[15px] leading-relaxed text-[var(--color-ink-on-dark)]"
+          >
+            <span aria-hidden="true" class="mt-[0.65em] inline-block h-1 w-3 shrink-0 bg-[var(--color-amber)]" />
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

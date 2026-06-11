@@ -1,18 +1,16 @@
 # Cloudflare Pages header rules. Applied to every response.
-# Mostly defence-in-depth. Real download prevention is impossible on a
-# static site; what matters here is hardening + a polite "do not index"
-# hint to image search crawlers.
 
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
-  X-Robots-Tag: noimageindex
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-# Cache images aggressively (they have content-hash filenames) but tell
-# crawlers not to index them.
+# Hashed build assets never change; cache them forever.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
-  X-Robots-Tag: noindex, noimageindex
+
+# Resume PDF: short cache so an updated resume propagates within a day.
+/resume/*
+  Cache-Control: public, max-age=86400

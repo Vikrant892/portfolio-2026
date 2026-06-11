@@ -1,0 +1,80 @@
+---
+// Pull the 3 most recent posts from the blog RSS feed at build time.
+// A failed fetch renders nothing rather than an empty-state apology.
+interface BlogPost {
+  title: string;
+  link: string;
+  pubDate: string;
+}
+
+let posts: BlogPost[] = [];
+try {
+  const res = await fetch('https://vikrant69g.com/blog/rss.xml', {
+    headers: { 'User-Agent': 'portfolio-2026-build' },
+  });
+  if (res.ok) {
+    const xml = await res.text();
+    const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+    posts = itemMatches.slice(0, 3).map((item) => {
+      const pick = (tag: string) => {
+        const m = item.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
+        return m?.[1] ? m[1].replace(/<!\[CDATA\[|\]\]>/g, '').trim() : '';
+      };
+      return { title: pick('title'), link: pick('link'), pubDate: pick('pubDate') };
+    });
+  }
+} catch {
+  posts = [];
+}
+
+const formatDate = (s: string) => {
+  if (!s) return '';
+  const d = new Date(s);
+  return Number.isNaN(d.getTime())
+    ? s
+    : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+---
+
+{
+  posts.length > 0 && (
+    <section
+      id="writing"
+      class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] py-20 sm:py-24"
+      aria-labelledby="writing-heading"
+    >
+      <div class="container-site">
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-4" data-reveal>
+          <div>
+            <p class="t-eyebrow mb-4">Writing</p>
+            <h2 id="writing-heading" class="t-heading text-3xl text-[var(--color-ink)] sm:text-4xl">
+              Notes from the field<span class="text-[var(--color-accent)]">.</span>
+            </h2>
+          </div>
+          <a
+            href="https://vikrant69g.com/blog"
+            class="mono text-sm text-[var(--color-ink-muted)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline"
+          >
+            All posts →
+          </a>
+        </div>
+
+        <ul class="divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]" data-reveal-group>
+          {posts.map((p) => (
+            <li data-reveal-child>
+              <a
+                href={p.link}
+                class="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5 transition-colors hover:bg-[var(--color-bg-elevated)]"
+              >
+                <h3 class="t-title max-w-2xl text-lg text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent)]">
+                  {p.title}
+                </h3>
+                <span class="mono text-xs text-[var(--color-ink-dim)]">{formatDate(p.pubDate)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

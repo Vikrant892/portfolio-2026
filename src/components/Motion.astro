@@ -1,0 +1,84 @@
+---
+// Site-wide motion system built on the Motion library (vanilla API).
+// One rhythm everywhere: enter from 20px below, 600ms expo-out, 70ms stagger.
+//
+// Markup contract:
+//   data-hero-seq          staged entrance on page load (hero only)
+//   data-reveal            single element fades up when scrolled into view
+//   data-reveal-group      container; its [data-reveal-child] items stagger in
+//   data-reveal-child      item inside a data-reveal-group
+//
+// Initial hidden state lives in CSS gated behind html.js (set inline in
+// BaseLayout <head> before paint), so no-JS visitors and reduced-motion
+// users always see content. Reduced motion is also checked here.
+---
+
+<script>
+  import { animate, inView, stagger } from 'motion';
+
+  const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(el: Element) {
+    (el as HTMLElement).style.opacity = '1';
+    (el as HTMLElement).style.transform = 'none';
+  }
+
+  function init() {
+    const heroItems = document.querySelectorAll<HTMLElement>('[data-hero-seq]');
+    const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    const groups = document.querySelectorAll<HTMLElement>('[data-reveal-group]');
+
+    if (reduced) {
+      heroItems.forEach(show);
+      reveals.forEach(show);
+      groups.forEach((g) =>
+        g.querySelectorAll<HTMLElement>('[data-reveal-child]').forEach(show),
+      );
+      return;
+    }
+
+    /* Hero: staged entrance on load */
+    if (heroItems.length) {
+      animate(
+        heroItems,
+        { opacity: [0, 1], y: [24, 0] },
+        { duration: 0.8, ease: EASE, delay: stagger(0.09) },
+      );
+    }
+
+    /* Single reveals */
+    reveals.forEach((el) => {
+      inView(
+        el,
+        () => {
+          animate(el, { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, ease: EASE });
+        },
+        { margin: '0px 0px -10% 0px' },
+      );
+    });
+
+    /* Grouped reveals: children stagger when the group enters */
+    groups.forEach((group) => {
+      const children = group.querySelectorAll<HTMLElement>('[data-reveal-child]');
+      if (!children.length) return;
+      inView(
+        group,
+        () => {
+          animate(
+            children,
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.6, ease: EASE, delay: stagger(0.07) },
+          );
+        },
+        { margin: '0px 0px -8% 0px' },
+      );
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

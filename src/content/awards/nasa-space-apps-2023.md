@@ -1,10 +1,10 @@
 ---
-title: 'NASA Space Apps Challenge, Global Finalist'
-organisation: 'NASA'
+title: "NASA Space Apps Challenge, Global Finalist"
+organisation: "NASA"
 year: 2023
-tier: 'Finalist'
-url: 'https://www.linkedin.com/posts/vik892_nasachallenge-finalists-innovation-activity-7117690076209250305-08ju'
-imageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQEORHfUWGCjjQ/feedshare-shrink_800/feedshare-shrink_800/0/1696989552748'
+tier: "Finalist"
+url: "https://www.linkedin.com/posts/vik892_nasachallenge-finalists-innovation-activity-7117690076209250305-08ju"
+imageUrl: "https://media.licdn.com/dms/image/v2/D4D22AQEORHfUWGCjjQ/feedshare-shrink_800/feedshare-shrink_800/0/1696989552748"
 featured: true
 ---
 

@@ -1,157 +1,119 @@
 ---
 import { Image } from 'astro:assets';
-import portrait from '../../assets/portrait.png';
+import portrait from '../../assets/portrait.jpg';
+
+const proof = [
+  { label: 'AWS Certified Data Engineer', href: '#achievements' },
+  { label: 'OCI Data Science Professional', href: '#achievements' },
+  { label: 'NASA Space Apps Global Finalist', href: '#achievements' },
+  { label: '7 systems live in production', href: '#work' },
+];
 ---
 
 <section
-  class="relative isolate overflow-hidden border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] pb-16 pt-12 sm:pt-16"
+  class="relative isolate overflow-hidden border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)]"
   aria-labelledby="hero-heading"
 >
-  {/* Soft sunset gradient backdrop, behind the photo */}
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_70%_30%,_var(--color-amber-soft)_0%,_transparent_55%)] opacity-70"
-  ></div>
+    class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_18%,_var(--color-amber-glow)_0%,_transparent_55%)]"
+  >
+  </div>
 
-  <div class="mx-auto grid max-w-[1400px] grid-cols-1 gap-8 px-6 sm:px-12 lg:grid-cols-12">
-    {/* LEFT: script header, name, tagline, pill */}
-    <div class="lg:col-span-7 lg:pt-8">
-      <p class="ds-eyebrow mb-6">VIKRANT, ML ENGINEER SPECIALISING IN CYBERSECURITY</p>
-
-      <h1
-        id="hero-heading"
-        class="display-script text-[clamp(3rem,12vw,10rem)] text-[var(--color-ink)]"
-      >
-        Hey<span class="text-[var(--color-amber)]">,</span><br />
-        <span class="ml-[0.8em] sm:ml-[1.2em]">there</span>
+  <div class="container-site grid grid-cols-1 gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-8 lg:py-24">
+    {/* LEFT: the pitch */}
+    <div class="lg:col-span-7">
+      <h1 id="hero-heading">
+        <span data-hero-seq class="t-eyebrow block">
+          Vikrant Sharma · Adelaide, Australia
+        </span>
+        <span
+          data-hero-seq
+          class="t-display mt-6 block text-[clamp(2.75rem,6.5vw,5rem)] text-[var(--color-ink)]"
+        >
+          Machine learning,<br />
+          built for threat detection<span class="text-[var(--color-accent)]">.</span>
+        </span>
       </h1>
 
       <p
-        class="display-mark mt-10 text-[clamp(2.5rem,9vw,6.5rem)] text-[var(--color-ink)] sm:mt-12"
+        data-hero-seq
+        class="mt-8 max-w-xl text-lg leading-relaxed text-[var(--color-ink-muted)]"
       >
-        I&nbsp;AM<br />VIKRANT<span class="text-[var(--color-amber)]">.</span>
+        I build intrusion detection, threat triage and fraud models that run in
+        production, not in notebooks. Seven systems live with public demos and
+        open source code. Master of IT candidate at UniSC Adelaide with industry
+        experience across data engineering and security operations.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-3">
-        <span class="ds-pill">Available for new opportunities</span>
+      <div data-hero-seq class="mt-9 flex flex-wrap items-center gap-3">
+        <a href="#work" class="btn btn-primary">View selected work</a>
+        <a href="/resume" class="btn btn-secondary">
+          Resume
+          <span aria-hidden="true" class="text-[var(--color-accent)]">→</span>
+        </a>
         <a
-          href="#contact"
-          class="rounded-full bg-[var(--color-ink)] px-5 py-2.5 text-sm font-medium text-[var(--color-ink-on-dark)] transition-transform hover:-translate-y-0.5"
+          href="mailto:vikrantsharma892@gmail.com"
+          class="mono py-2 text-sm text-[var(--color-ink-muted)] underline-offset-4 transition-colors hover:text-[var(--color-accent)] hover:underline"
         >
-          Contact
+          vikrantsharma892@gmail.com
         </a>
       </div>
+
+      <ul data-hero-seq class="mt-10 flex flex-wrap gap-2" aria-label="Credentials">
+        {
+          proof.map((p) => (
+            <li>
+              <a href={p.href} class="chip transition-colors hover:border-[var(--color-border-strong)] hover:text-[var(--color-ink)]">
+                <span
+                  aria-hidden="true"
+                  class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-amber)]"
+                />
+                {p.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
-    {/* RIGHT: portrait, integrated into the page (no frame) */}
-    <div class="relative lg:col-span-5 lg:-mt-4">
-      {/* Section index marker, top-right of column */}
-      <div class="mono pointer-events-none absolute right-0 top-0 hidden text-xs uppercase tracking-widest text-[var(--color-ink-faint)] lg:block">
-        <span>01 / Intro</span>
-      </div>
-
-      <figure class="relative mx-auto aspect-square w-full max-w-[34rem] lg:-translate-x-4 xl:-translate-x-8">
-        <Image
-          src={portrait}
-          alt="Vikrant portrait"
-          widths={[480, 720, 1080, 1280]}
-          sizes="(max-width: 1024px) 100vw, 540px"
-          class="hero-portrait h-full w-full"
-          loading="eager"
-        />
-        {/* Thin baseline anchoring the portrait to the page */}
-        <span
-          aria-hidden="true"
-          class="absolute -bottom-2 left-1/2 h-px w-2/3 -translate-x-1/2 bg-[var(--color-border)]"
-        ></span>
+    {/* RIGHT: portrait + availability */}
+    <div class="lg:col-span-5">
+      <figure data-hero-seq class="relative mx-auto w-full max-w-sm lg:ml-auto">
+        <div class="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+          <Image
+            src={portrait}
+            alt="Vikrant Sharma"
+            widths={[384, 560, 768]}
+            sizes="(max-width: 1024px) 90vw, 384px"
+            class="h-auto w-full"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+        <figcaption class="mono mt-3 flex items-center justify-between text-xs text-[var(--color-ink-dim)]">
+          <span>Adelaide, ACST</span>
+          <span>UniSC · Class of Aug 2027</span>
+        </figcaption>
       </figure>
 
-      <p class="mt-10 max-w-sm text-base leading-relaxed text-[var(--color-ink-muted)]">
-        Master of Information and Communication Technology student at USC
-        Adelaide. I build machine learning
-        systems that detect threats. Data engineering and full-stack are
-        how I ship them end-to-end. Finishing my degree in Aug 2027.
-        AWS Certified Data Engineer Associate as of May 2026, OCI Data
-        Science Professional since 2025.
-      </p>
-
-      {/* Right-aligned mini stats */}
-      <dl class="mono mt-8 grid grid-cols-3 gap-4 border-t border-[var(--color-border-subtle)] pt-6 text-sm">
-        <div>
-          <dt class="ds-eyebrow">Based in</dt>
-          <dd class="mt-1 text-[var(--color-ink)]">Adelaide, AU</dd>
-        </div>
-        <div>
-          <dt class="ds-eyebrow">Graduating</dt>
-          <dd class="mt-1 text-[var(--color-ink)]">Aug 2027</dd>
-        </div>
-        <div>
-          <dt class="ds-eyebrow">Email</dt>
-          <dd class="mt-1 truncate text-[var(--color-ink)]">
-            <a href="mailto:vikrantsharma892@gmail.com" class="hover:text-[var(--color-amber)]">
-              get in touch
-            </a>
-          </dd>
-        </div>
-      </dl>
-
-      {/* Currently building line, anchors the right column */}
-      <div class="mono mt-6 flex items-center gap-3 border-t border-[var(--color-border-subtle)] pt-6 text-xs uppercase tracking-widest text-[var(--color-ink-dim)]">
-        <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-amber)] opacity-60"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-amber)]"></span>
-        </span>
-        <span>Currently building Hybrid ML IDS, capstone 2026</span>
+      <div
+        data-hero-seq
+        class="mx-auto mt-8 w-full max-w-sm rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5 lg:ml-auto"
+      >
+        <p class="t-eyebrow flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-amber)] opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-amber)]"></span>
+          </span>
+          Available now
+        </p>
+        <ul class="mt-3 space-y-1.5 text-sm text-[var(--color-ink-muted)]">
+          <li>Internships, 3 to 6 months</li>
+          <li>Part-time and casual engineering work</li>
+          <li>Full-time over the Nov to Feb break</li>
+        </ul>
       </div>
-    </div>
-  </div>
-
-  {/* Marquee-style scrolling tags at the bottom */}
-  <div class="mt-20 overflow-hidden border-y border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] py-6">
-    <div class="mono flex animate-[scroll_40s_linear_infinite] gap-12 whitespace-nowrap text-sm text-[var(--color-ink-muted)]">
-      {Array.from({ length: 2 }).map(() => (
-        <>
-          <span>ML FOR THREAT DETECTION</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>NIDS / HIDS</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>ANOMALY DETECTION</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>MITRE ATT&amp;CK</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>SCIKIT-LEARN / PYTORCH</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>DATA PIPELINES</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>SNOWFLAKE / REDSHIFT</span>
-          <span class="text-[var(--color-amber)]">●</span>
-          <span>ORACLE OCI CERTIFIED</span>
-          <span class="text-[var(--color-amber)]">●</span>
-        </>
-      ))}
     </div>
   </div>
 </section>
-
-<style>
-  /* Hero portrait: PNG with transparent background, sits cleanly on the
-     cream page with no frame or backdrop. */
-  .hero-portrait {
-    object-fit: contain;
-  }
-
-  @keyframes scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [class*='animate-[scroll'] {
-      animation: none !important;
-    }
-  }
-</style>

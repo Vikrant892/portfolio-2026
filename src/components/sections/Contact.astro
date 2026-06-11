@@ -1,60 +1,68 @@
 ---
 const links = [
-  { label: 'Email', value: 'vikrantsharma892@gmail.com', href: 'mailto:vikrantsharma892@gmail.com' },
-  { label: 'GitHub', value: 'Vikrant892', href: 'https://github.com/Vikrant892' },
-  { label: 'LinkedIn', value: 'vik892', href: 'https://www.linkedin.com/in/vik892/' },
-  { label: 'Twitter', value: 'Vik69G', href: 'https://x.com/Vik69G' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/vik892', href: 'https://www.linkedin.com/in/vik892/' },
+  { label: 'GitHub', value: 'github.com/Vikrant892', href: 'https://github.com/Vikrant892' },
+  { label: 'X', value: 'x.com/Vik69G', href: 'https://x.com/Vik69G' },
   { label: 'Blog', value: 'vikrant69g.com/blog', href: 'https://vikrant69g.com/blog' },
 ];
 ---
 
 <footer
   id="contact"
-  class="bg-[var(--color-ink)] py-24 text-[var(--color-ink-on-dark)] sm:py-32"
+  class="bg-[var(--color-bg-dark)] py-20 text-[var(--color-ink-on-dark)] sm:py-28"
   aria-labelledby="contact-heading"
 >
-  <div class="mx-auto max-w-[1400px] px-6 sm:px-12">
+  <div class="container-site">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
-      <div class="lg:col-span-7">
-        <p class="ds-eyebrow mb-6" style="color: var(--color-amber)">
-          BUILDING TOWARD AUG 2027 GRADUATE ROLES, ML + SECURITY
-        </p>
-        <h2
-          id="contact-heading"
-          class="display-script text-5xl text-[var(--color-ink-on-dark)] sm:text-8xl"
-        >
-          Let's build<br />
-          something good<span class="text-[var(--color-amber)]">.</span>
+      <div class="lg:col-span-7" data-reveal>
+        <p class="t-eyebrow" style="color: var(--color-accent-on-dark)">Contact</p>
+        <h2 id="contact-heading" class="t-heading mt-4 text-4xl sm:text-6xl">
+          Hiring for ML, data<br />or security
+          <span style="color: var(--color-accent-on-dark)">?</span>
         </h2>
-        <p class="mt-8 max-w-md text-[var(--color-ink-on-dark-muted)]">
-          Finishing my Master of Information and Communication Technology
-          in Aug 2027. AWS Certified Data Engineer Associate as of May 2026.
-          Building public ML + security
-          work until graduate roles open up. Best reached by email; I read
-          everything.
+        <p class="mt-6 max-w-md text-base leading-relaxed text-[var(--color-ink-on-dark-muted)]">
+          I am in Adelaide and available for internships of 3 to 6 months,
+          part-time engineering work right now, and full-time over the November
+          to February break. Graduate roles from August 2027. Email gets a
+          reply within 24 hours.
         </p>
-        <a
-          href="mailto:vikrantsharma892@gmail.com"
-          class="mt-10 inline-block rounded-full bg-[var(--color-amber)] px-8 py-4 font-medium text-[var(--color-ink)] transition-transform hover:-translate-y-0.5"
+
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href="mailto:vikrantsharma892@gmail.com" class="btn btn-on-dark-primary">
+            vikrantsharma892@gmail.com
+          </a>
+          <button
+            id="copy-email"
+            type="button"
+            class="btn btn-on-dark-secondary"
+            data-email="vikrantsharma892@gmail.com"
+          >
+            <span data-copy-label>Copy email</span>
+          </button>
+        </div>
+        <p
+          id="copy-status"
+          role="status"
+          aria-live="polite"
+          class="mono mt-3 h-5 text-xs text-[var(--color-accent-on-dark)]"
         >
-          vikrantsharma892@gmail.com →
-        </a>
+        </p>
       </div>
 
-      <ul class="mono grid grid-cols-1 gap-1 self-end lg:col-span-5">
+      <ul class="mono grid grid-cols-1 gap-1 self-end lg:col-span-5" data-reveal-group>
         {
           links.map((l) => (
-            <li class="border-t border-[var(--color-ink-on-dark-muted)]/20 first:border-t-0">
+            <li data-reveal-child class="border-t border-[rgba(245,241,232,0.12)] first:border-t-0">
               <a
                 href={l.href}
-                target={l.href.startsWith('http') ? '_blank' : undefined}
-                rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                class="group flex items-center justify-between py-4 text-sm transition-colors hover:text-[var(--color-amber)]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center justify-between py-4 text-sm transition-colors hover:text-[var(--color-accent-on-dark)]"
               >
-                <span class="ds-eyebrow" style="color: var(--color-ink-on-dark-muted)">
+                <span class="t-eyebrow" style="color: var(--color-ink-on-dark-muted)">
                   {l.label}
                 </span>
-                <span class="text-[var(--color-ink-on-dark)] transition-transform group-hover:translate-x-1">
+                <span class="text-[var(--color-ink-on-dark)] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[var(--color-accent-on-dark)]">
                   {l.value} →
                 </span>
               </a>
@@ -65,15 +73,39 @@ const links = [
     </div>
 
     <div
-      class="mono mt-24 flex flex-col items-start justify-between gap-4 border-t border-[var(--color-ink-on-dark-muted)]/20 pt-8 text-xs text-[var(--color-ink-on-dark-muted)] sm:flex-row sm:items-center"
+      class="mono mt-20 flex flex-col items-start justify-between gap-4 border-t border-[rgba(245,241,232,0.12)] pt-8 text-xs text-[var(--color-ink-on-dark-muted)] sm:flex-row sm:items-center"
     >
-      <p>© 2026 Vikrant Sharma · Adelaide, Australia · en-AU</p>
+      <p>© 2026 Vikrant Sharma · Adelaide, Australia</p>
       <p>
-        Built from scratch with Astro 5 + Tailwind 4. See
-        <a href="https://github.com/Vikrant892/portfolio-2026" class="underline">
+        Astro 5 + Tailwind 4 + Motion ·
+        <a
+          href="https://github.com/Vikrant892/portfolio-2026"
+          class="underline underline-offset-4 hover:text-[var(--color-ink-on-dark)]"
+        >
           source ↗
         </a>
       </p>
     </div>
   </div>
 </footer>
+
+<script>
+  const btn = document.getElementById('copy-email');
+  const status = document.getElementById('copy-status');
+  const label = btn?.querySelector('[data-copy-label]');
+
+  btn?.addEventListener('click', async () => {
+    const email = btn.getAttribute('data-email') ?? '';
+    try {
+      await navigator.clipboard.writeText(email);
+      if (label) label.textContent = 'Copied';
+      if (status) status.textContent = 'Email address copied to clipboard.';
+    } catch {
+      if (status) status.textContent = email;
+    }
+    setTimeout(() => {
+      if (label) label.textContent = 'Copy email';
+      if (status) status.textContent = '';
+    }, 2500);
+  });
+</script>

@@ -1,10 +1,10 @@
 ---
-title: 'TCS iON Career Edge, Young Professional'
-issuer: 'Tata Consultancy Services (TCS iON)'
+title: "TCS iON Career Edge, Young Professional"
+issuer: "Tata Consultancy Services (TCS iON)"
 issuedAt: 2023-09-03
-credentialId: '119854-24939281-1016'
-certImage: '../../assets/certs/tot-14.png'
-tags: ['career', 'business-skills', 'tcs', 'nptel']
+credentialId: "119854-24939281-1016"
+certImage: "../../assets/certs/tot-14.png"
+tags: ["career", "business-skills", "tcs", "nptel"]
 featured: true
 order: 5
 ---

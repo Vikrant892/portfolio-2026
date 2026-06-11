@@ -1,0 +1,101 @@
+---
+const steps = [
+  {
+    period: 'Feb 2025 to Aug 2027',
+    role: 'Master of Information Technology',
+    org: 'University of the Sunshine Coast, Adelaide',
+    location: 'Adelaide, AU',
+    points: [
+      'Postgraduate study across data systems, software engineering and cybersecurity research.',
+      'Capstone: the hybrid ML intrusion detection system featured above, built and deployed while studying.',
+    ],
+    tags: ['Data Systems', 'Software Engineering', 'Cybersecurity Research'],
+  },
+  {
+    period: 'Dec 2024 to Feb 2025',
+    role: 'Data Engineer',
+    org: 'Nagarro',
+    location: 'Adelaide, AU',
+    points: [
+      'Designed and optimised dimensional data models on AWS Redshift and Snowflake for enterprise analytics workloads.',
+      'Built ETL pipelines turning high-volume transactional data into analyst-ready tables.',
+      'Delivered weekly under Agile alongside analysts and product owners.',
+    ],
+    tags: ['Redshift', 'Snowflake', 'ETL', 'Agile'],
+  },
+  {
+    period: 'May 2023 to Dec 2023',
+    role: 'Cybersecurity Junior Analyst',
+    org: 'AT SecurDI',
+    location: 'Ahmedabad, IN',
+    points: [
+      'Monitored SIEM platforms and triaged alerts to surface genuine incidents.',
+      'Authored incident response runbooks adopted by the wider security operations team.',
+      'Ran OWASP Top 10 web testing and ISO 27001 plus NIST CSF compliance audits across client environments.',
+    ],
+    tags: ['SIEM', 'Incident Response', 'OWASP', 'ISO 27001', 'NIST CSF'],
+  },
+  {
+    period: '2021 to 2024',
+    role: 'Bachelor of Computer Applications',
+    org: 'CHARUSAT, CMPICA',
+    location: 'Gujarat, IN',
+    points: [
+      'Undergraduate computing degree. NASA Space Apps Global Finalist and class representative during this period.',
+    ],
+    tags: ['Computer Applications'],
+  },
+];
+---
+
+<section
+  id="journey"
+  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] py-20 sm:py-28"
+  aria-labelledby="journey-heading"
+>
+  <div class="container-site">
+    <div class="mb-14 max-w-2xl" data-reveal>
+      <p class="t-eyebrow mb-4">Professional journey</p>
+      <h2 id="journey-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
+        Security floor to ML systems<span class="text-[var(--color-accent)]">.</span>
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
+        Ten months of industry experience across two roles, one in security
+        operations and one in data engineering. That order is the point: I
+        learnt what attacks look like before I started building models to
+        catch them.
+      </p>
+    </div>
+
+    <ol class="relative border-l border-[var(--color-border-strong)] pl-8 sm:pl-12" data-reveal-group>
+      {
+        steps.map((s) => (
+          <li data-reveal-child class="group relative mb-14 last:mb-0">
+            <span
+              aria-hidden="true"
+              class="absolute -left-[2.28rem] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-bg)] transition-colors duration-300 group-hover:bg-[var(--color-amber)] sm:-left-[3.28rem]"
+            />
+            <p class="mono text-xs uppercase tracking-[0.14em] text-[var(--color-accent)]">{s.period}</p>
+            <h3 class="t-title mt-2 text-2xl text-[var(--color-ink)] sm:text-3xl">{s.role}</h3>
+            <p class="mono mt-1.5 text-sm text-[var(--color-ink-muted)]">
+              {s.org} · {s.location}
+            </p>
+            <ul class="mt-4 max-w-2xl space-y-2 text-[15px] leading-relaxed text-[var(--color-ink-muted)]">
+              {s.points.map((pt) => (
+                <li class="flex gap-3">
+                  <span aria-hidden="true" class="mt-[0.65em] inline-block h-1 w-3 shrink-0 bg-[var(--color-amber)]" />
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+            <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Key skills">
+              {s.tags.map((t) => (
+                <li class="chip !py-0.5 !text-[11px]">{t}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

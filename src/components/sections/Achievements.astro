@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const allCerts = (await getCollection('certifications')).sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.issuedAt.getTime() - a.data.issuedAt.getTime();
+});
+
+// Featured tier: the credentials a recruiter actually weighs.
+const featuredIds = new Set([
+  'aws-data-engineer-associate-2026',
+  'oci-data-science-2025',
+  'nasa-galactic-problem-solver-2023',
+]);
+const featured = allCerts.filter((c) => featuredIds.has(c.id));
+
+// Supporting tier: real but minor entries, one line each. Pure
+// participation certificates are deliberately not displayed at all;
+// they dilute the credentials above.
+const hidden = new Set([
+  'agnito-2023-volunteer',
+  'ignite-2024-participation',
+  'techshavar-2022-participation',
+]);
+const supporting = allCerts.filter((c) => !featuredIds.has(c.id) && !hidden.has(c.id));
+
+const awards = await getCollection('awards');
+const nasa = awards.find((a) => a.id.includes('nasa'));
+const asus = awards.find((a) => a.id.includes('asus'));
+
+const monthYear = (d: Date) => d.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+---
+
+<section
+  id="achievements"
+  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)] py-20 sm:py-28"
+  aria-labelledby="achievements-heading"
+>
+  <div class="container-site">
+    <div class="mb-14 max-w-2xl" data-reveal>
+      <p class="t-eyebrow mb-4">Achievements</p>
+      <h2 id="achievements-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
+        Verified, not claimed<span class="text-[var(--color-accent)]">.</span>
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
+        Every credential below links to its verification page or original
+        announcement.
+      </p>
+    </div>
+
+    {/* Headline achievement */}
+    {
+      nasa && (
+        <article
+          data-reveal
+          class="relative mb-10 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-dark)] p-8 text-[var(--color-ink-on-dark)] sm:p-12"
+        >
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_85%_10%,_var(--color-amber-glow)_0%,_transparent_55%)]"
+          />
+          <div class="relative z-10 max-w-3xl">
+            <p class="t-eyebrow" style="color: var(--color-accent-on-dark)">
+              NASA International Space Apps Challenge · 2023
+            </p>
+            <h3 class="t-heading mt-4 text-3xl sm:text-4xl">Global Finalist</h3>
+            <p class="mt-4 text-base leading-relaxed text-[var(--color-ink-on-dark-muted)]">
+              Selected with Team Eklavya from thousands of teams worldwide for
+              AstroSonify, a planetary data sonification engine. The project
+              lives on as Cosmic Keys in the work above.
+            </p>
+            {nasa.data.url && (
+              <a
+                href={nasa.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mono mt-6 inline-block text-sm text-[var(--color-accent-on-dark)] underline-offset-4 hover:underline"
+              >
+                See the announcement ↗
+              </a>
+            )}
+          </div>
+        </article>
+      )
+    }
+
+    {/* Verified certifications */}
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-3" data-reveal-group>
+      {
+        featured.map((c) => (
+          <li data-reveal-child>
+            <a
+              href={c.data.verifyUrl ?? '#achievements'}
+              target={c.data.verifyUrl ? '_blank' : undefined}
+              rel={c.data.verifyUrl ? 'noopener noreferrer' : undefined}
+              class="group flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card)]"
+            >
+              {c.data.certImage && (
+                <div class="aspect-[16/9] overflow-hidden border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] p-4">
+                  <Image
+                    src={c.data.certImage}
+                    alt={`${c.data.title} certificate`}
+                    widths={[400, 640]}
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    class="h-full w-full object-contain object-center"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              <div class="flex flex-1 flex-col p-5">
+                <p class="t-eyebrow">{c.data.issuer}</p>
+                <h3 class="t-title mt-2 text-lg leading-snug text-[var(--color-ink)]">
+                  {c.data.title}
+                </h3>
+                <div class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-[var(--color-ink-dim)]">
+                  <span>Issued {monthYear(c.data.issuedAt)}</span>
+                  {c.data.credentialId && <span class="truncate">ID {c.data.credentialId}</span>}
+                </div>
+                {c.data.verifyUrl && (
+                  <span class="mono mt-auto pt-4 text-xs text-[var(--color-accent)] underline-offset-4 group-hover:underline">
+                    Verify credential ↗
+                  </span>
+                )}
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* Supporting tier + competitive footnote */}
+    <div class="mt-10 grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-2" data-reveal>
+      <div>
+        <p class="t-eyebrow mb-4">Further certificates</p>
+        <ul class="divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+          {
+            supporting.map((c) => (
+              <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
+                <span class="text-sm text-[var(--color-ink)]">{c.data.title}</span>
+                <span class="mono text-xs text-[var(--color-ink-dim)]">
+                  {c.data.issuer} · {monthYear(c.data.issuedAt)}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      {
+        asus && (
+          <div>
+            <p class="t-eyebrow mb-4">Off the clock</p>
+            <p class="border-y border-[var(--color-border)] py-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+              Three consecutive 2v2 podium finishes in the ASUS ROG Showdown
+              series, 2024. Competitive instinct survives outside work hours.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

@@ -1,23 +1,70 @@
 ---
+import { getImage } from 'astro:assets';
 import '../styles/globals.css';
 import Header from '../components/Header.astro';
-import AssetProtection from '../components/AssetProtection.astro';
+import Motion from '../components/Motion.astro';
+import portrait from '../assets/portrait.jpg';
 
 interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** Hide the sticky site header (used by the print-friendly resume page). */
+  bare?: boolean;
 }
 
 const {
   title,
-  description = 'Vikrant Sharma. ML engineer specialising in cybersecurity. AWS Certified Data Engineer, OCI Data Science Pro. M.ICT student at USC Adelaide, graduating Aug 2027.',
+  description = 'Vikrant Sharma. Machine learning engineer specialising in cybersecurity. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Adelaide, Australia.',
   noindex = false,
+  bare = false,
 } = Astro.props;
 
 const fullTitle =
-  title.toLowerCase() === 'home' ? 'Vikrant Sharma' : `${title}, Vikrant`;
+  title.toLowerCase() === 'home'
+    ? 'Vikrant Sharma | Machine Learning for Threat Detection'
+    : `${title} | Vikrant Sharma`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const ogImage = await getImage({ src: portrait, width: 1200, format: 'jpeg' });
+const ogImageURL = new URL(ogImage.src, Astro.site).toString();
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Vikrant Sharma',
+  url: 'https://vikrant69g.com',
+  email: 'mailto:vikrantsharma892@gmail.com',
+  jobTitle: 'Machine Learning Engineer (Cybersecurity)',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Adelaide',
+    addressRegion: 'South Australia',
+    addressCountry: 'AU',
+  },
+  alumniOf: [
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'University of the Sunshine Coast (Adelaide Campus)',
+    },
+    {
+      '@type': 'CollegeOrUniversity',
+      name: 'Charotar University of Science and Technology',
+    },
+  ],
+  knowsAbout: [
+    'Machine Learning',
+    'Cybersecurity',
+    'Intrusion Detection',
+    'Data Engineering',
+    'Threat Intelligence',
+  ],
+  sameAs: [
+    'https://github.com/Vikrant892',
+    'https://www.linkedin.com/in/vik892/',
+    'https://x.com/Vik69G',
+  ],
+};
 ---
 
 <!doctype html>
@@ -38,20 +85,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="en_AU" />
+    <meta property="og:image" content={ogImageURL} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
-    <meta name="theme-color" content="#0a0e1a" />
+    <meta name="theme-color" content="#faf7f0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    {/* Gate for reveal styles: must run before first paint so content
+        never flashes hidden for no-JS visitors. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body id="top" class="min-h-svh bg-[var(--color-bg)] text-[var(--color-ink)]">
     <a href="#main" class="skip-link">Skip to content</a>
-    <Header />
+    {!bare && <Header />}
     <main id="main">
       <slot />
     </main>
-    <AssetProtection />
+    <Motion />
   </body>
 </html>

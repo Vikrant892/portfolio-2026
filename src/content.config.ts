@@ -1,8 +1,11 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const certifications = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/certifications' }),
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/certifications",
+  }),
   schema: ({ image }) =>
     z.object({
       title: z.string().min(1).max(120),
@@ -21,13 +24,22 @@ const certifications = defineCollection({
 });
 
 const awards = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/awards' }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/awards" }),
   schema: ({ image }) =>
     z.object({
       title: z.string().min(1).max(120),
       organisation: z.string().min(1).max(120),
       year: z.coerce.number().int(),
-      tier: z.enum(['Winner', 'Runner-up', 'Podium', 'Finalist', 'Honourable Mention', 'Other']).optional(),
+      tier: z
+        .enum([
+          "Winner",
+          "Runner-up",
+          "Podium",
+          "Finalist",
+          "Honourable Mention",
+          "Other",
+        ])
+        .optional(),
       url: z.string().url().optional(),
       imageUrl: z.string().url().optional(),
       logo: z.object({ src: image(), alt: z.string() }).optional(),
@@ -36,7 +48,7 @@ const awards = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: ({ image }) =>
     z.object({
       title: z.string().min(1).max(120),

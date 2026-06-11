@@ -1,0 +1,261 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import idsImg from '../../assets/projects/ids-project.png';
+import threatLensImg from '../../assets/projects/threat-lens.png';
+import nasaImg from '../../assets/projects/nasa-space-challenge.png';
+import fraudImg from '../../assets/projects/credit-card-fraud-detection.png';
+import passwordImg from '../../assets/projects/password-strength-api.png';
+import logImg from '../../assets/projects/log-analyzer-dashboard.png';
+import phishingImg from '../../assets/projects/phishing-detection-platform.png';
+
+interface CaseStudy {
+  n: string;
+  title: string;
+  category: string;
+  img: ImageMetadata;
+  challenge: string;
+  built: string;
+  outcome: string;
+  stack: string[];
+  live: string;
+  github: string;
+}
+
+const featured: CaseStudy[] = [
+  {
+    n: '01',
+    title: 'Hybrid ML Intrusion Detection',
+    category: 'Capstone · Cybersecurity ML',
+    img: idsImg,
+    challenge:
+      'Signature-based tools miss novel attacks, and SOC analysts drown in alerts with no context about what an attacker is actually doing.',
+    built:
+      'A hybrid NIDS and HIDS that runs an Isolation Forest, Random Forest and Autoencoder ensemble over CICIDS2017 traffic, with a real-time Streamlit dashboard. Every alert is mapped to its MITRE ATT&CK technique.',
+    outcome:
+      'Detects DDoS, brute force, port scans, web attacks, infiltration and botnet activity. The ATT&CK mapping turns each alert from a raw flag into a triage decision in seconds.',
+    stack: ['Python', 'PyTorch', 'scikit-learn', 'Scapy', 'Streamlit', 'Docker'],
+    live: 'https://huggingface.co/spaces/vikrant892/ids-project',
+    github: 'https://github.com/Vikrant892/ids-project',
+  },
+  {
+    n: '02',
+    title: 'ThreatLens',
+    category: 'Threat Intelligence',
+    img: threatLensImg,
+    challenge:
+      'Thousands of CVEs are published every month. Teams without a triage system patch alphabetically, or not at all.',
+    built:
+      'A FastAPI service that correlates NVD CVE data with exploit availability, asset exposure and MITRE ATT&CK techniques, producing one composite risk score per vulnerability.',
+    outcome:
+      'A pre-ranked patch queue. The vulnerabilities that are actually exploitable against assets you actually run rise to the top.',
+    stack: ['FastAPI', 'NVD API', 'MITRE ATT&CK', 'Pydantic'],
+    live: 'https://huggingface.co/spaces/vikrant892/threat-lens',
+    github: 'https://github.com/Vikrant892/threat-lens',
+  },
+  {
+    n: '03',
+    title: 'Credit Card Fraud Detection',
+    category: 'ML · Imbalanced Classification',
+    img: fraudImg,
+    challenge:
+      'The dataset has 284,807 transactions and a 0.17 per cent fraud rate. A naive model scores 99.8 per cent accuracy by predicting that nothing is ever fraud.',
+    built:
+      'A pipeline that takes class imbalance seriously: SMOTE oversampling, an XGBoost, Random Forest and Logistic Regression comparison, and precision-recall threshold tuning instead of accuracy worship.',
+    outcome:
+      'A model evaluated on the metric that matters, the precision-recall trade-off at a usable operating threshold, with the full analysis open for review.',
+    stack: ['XGBoost', 'scikit-learn', 'SMOTE', 'Streamlit'],
+    live: 'https://huggingface.co/spaces/vikrant892/credit-card-fraud-detection',
+    github: 'https://github.com/Vikrant892/credit-card-fraud-detection',
+  },
+  {
+    n: '04',
+    title: 'Cosmic Keys',
+    category: 'NASA Space Apps 2023 · Global Finalist',
+    img: nasaImg,
+    challenge:
+      'Planetary datasets are tables of numbers. NASA Space Apps asked teams to make space data accessible to people who will never read a CSV.',
+    built:
+      'A sonification engine with Team Eklavya that converts planetary latitude, velocity and temperature into piano notes, plus an image scanner that turns a planet photo into a melody.',
+    outcome:
+      'Global Finalist, selected from thousands of teams worldwide. The judges could hear the data.',
+    stack: ['Python', 'Streamlit', 'NumPy', 'PIL'],
+    live: 'https://huggingface.co/spaces/vikrant892/nasa-space-challenge',
+    github: 'https://github.com/Vikrant892/nasa-space-challenge',
+  },
+];
+
+const more = [
+  {
+    title: 'Phishing Detection Platform',
+    desc: 'Email analyser that flags header anomalies, hidden payloads and spoofed senders that gateways miss.',
+    img: phishingImg,
+    stack: ['Flask', 'SQLite', 'BeautifulSoup'],
+    live: 'https://huggingface.co/spaces/vikrant892/phishing-detection-platform',
+    github: 'https://github.com/Vikrant892/Phishing-detection-platform',
+  },
+  {
+    title: 'Log Analyzer Dashboard',
+    desc: 'A lightweight SIEM that parses syslog and web logs, flags brute force and port scans, and maps alerts to ATT&CK.',
+    img: logImg,
+    stack: ['Flask', 'Chart.js', 'Docker'],
+    live: 'https://huggingface.co/spaces/vikrant892/log-analyzer-dashboard',
+    github: 'https://github.com/Vikrant892/log-analyzer-dashboard',
+  },
+  {
+    title: 'Password Strength API',
+    desc: 'Drop-in API returning entropy, breach status via HIBP k-anonymity and crack-time estimates in under 100ms.',
+    img: passwordImg,
+    stack: ['FastAPI', 'HIBP API', 'Docker'],
+    live: 'https://huggingface.co/spaces/vikrant892/password-strength-api',
+    github: 'https://github.com/Vikrant892/password-strength-api',
+  },
+];
+---
+
+<section
+  id="work"
+  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] py-20 sm:py-28"
+  aria-labelledby="work-heading"
+>
+  <div class="container-site">
+    <div class="mb-14 max-w-2xl" data-reveal>
+      <p class="t-eyebrow mb-4">Selected work</p>
+      <h2 id="work-heading" class="t-heading text-4xl text-[var(--color-ink)] sm:text-5xl">
+        Four systems, end to end<span class="text-[var(--color-accent)]">.</span>
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
+        Each one is deployed and public. The live links open real running
+        systems on Hugging Face Spaces; give them up to 30 seconds to wake.
+        Source for everything is on GitHub.
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      {
+        featured.map((p, i) => (
+          <article
+            data-reveal
+            class="group grid grid-cols-1 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-shadow duration-300 hover:shadow-[var(--shadow-card)] lg:grid-cols-12"
+            aria-labelledby={`work-${p.n}`}
+          >
+            <div
+              class:list={[
+                'relative overflow-hidden border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)] lg:col-span-5',
+                i % 2 === 1 ? 'lg:order-2 lg:border-l' : 'lg:border-r',
+              ]}
+            >
+              <Image
+                src={p.img}
+                alt={`Screenshot of ${p.title}`}
+                widths={[480, 720, 960]}
+                sizes="(max-width: 1024px) 100vw, 460px"
+                class="h-full max-h-72 w-full object-cover object-top transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.025] lg:max-h-none"
+                loading="lazy"
+              />
+            </div>
+
+            <div class:list={['p-7 sm:p-9 lg:col-span-7', i % 2 === 1 ? 'lg:order-1' : '']}>
+              <div class="mono flex items-baseline justify-between gap-4 text-xs">
+                <span class="text-[var(--color-accent)]">{p.n}</span>
+                <span class="text-[var(--color-ink-dim)]">{p.category}</span>
+              </div>
+              <h3 id={`work-${p.n}`} class="t-title mt-3 text-2xl text-[var(--color-ink)] sm:text-3xl">
+                {p.title}
+              </h3>
+
+              <dl class="mt-5 space-y-3.5 text-sm leading-relaxed">
+                <div>
+                  <dt class="t-eyebrow mb-1">Challenge</dt>
+                  <dd class="text-[var(--color-ink-muted)]">{p.challenge}</dd>
+                </div>
+                <div>
+                  <dt class="t-eyebrow mb-1">Built</dt>
+                  <dd class="text-[var(--color-ink-muted)]">{p.built}</dd>
+                </div>
+                <div>
+                  <dt class="t-eyebrow mb-1">Outcome</dt>
+                  <dd class="text-[var(--color-ink)]">{p.outcome}</dd>
+                </div>
+              </dl>
+
+              <ul class="mt-5 flex flex-wrap gap-1.5" aria-label="Technology">
+                {p.stack.map((s) => (
+                  <li class="chip !py-0.5 !text-[11px]">{s}</li>
+                ))}
+              </ul>
+
+              <div class="mt-6 flex flex-wrap gap-2.5">
+                <a
+                  href={p.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary !min-h-0 !px-4 !py-2 !text-xs"
+                >
+                  Live demo <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  href={p.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-secondary !min-h-0 !px-4 !py-2 !text-xs"
+                >
+                  Source <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {/* Compact tier */}
+    <div class="mt-16" data-reveal-group>
+      <p class="t-eyebrow mb-6" data-reveal-child>Also shipped</p>
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {
+          more.map((p) => (
+            <li data-reveal-child>
+              <article class="group flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card)]">
+                <div class="aspect-[16/9] overflow-hidden border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-subtle)]">
+                  <Image
+                    src={p.img}
+                    alt={`Screenshot of ${p.title}`}
+                    widths={[400, 640]}
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    class="h-full w-full object-cover object-top"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="flex flex-1 flex-col p-5">
+                  <h3 class="t-title text-lg text-[var(--color-ink)]">{p.title}</h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+                    {p.desc}
+                  </p>
+                  <div class="mono mt-4 flex gap-4 text-xs">
+                    <a
+                      href={p.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[var(--color-accent)] underline-offset-4 hover:underline"
+                    >
+                      Live ↗
+                    </a>
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[var(--color-ink-muted)] underline-offset-4 hover:text-[var(--color-ink)] hover:underline"
+                    >
+                      Source ↗
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

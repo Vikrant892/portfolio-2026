@@ -211,9 +211,10 @@ const certs = [
 
   <style is:global>
     /* The resume reads and prints as a light document regardless of the
-       site theme. Token override is page-scoped: each Astro page is its
-       own HTML document. */
-    html {
+       site theme, including a saved dark preference. Token override is
+       page-scoped: each Astro page is its own HTML document. */
+    html,
+    html.dark {
       color-scheme: light;
       --color-bg: #ffffff;
       --color-bg-elevated: #fafafa;

@@ -76,6 +76,45 @@
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* ── Dark theme ──────────────────────────────────────────────────────
+   Toggled by .dark on <html> (header switch, persisted in localStorage,
+   applied pre-paint in BaseLayout). Same token names, night values. */
+html.dark {
+  color-scheme: dark;
+
+  --color-bg: #0b0b0f;
+  --color-bg-elevated: #131318;
+  --color-bg-subtle: #17171d;
+  --color-bg-inset: #1d1d25;
+
+  --color-bg-dark: #101015;
+  --color-bg-dark-elevated: #181820;
+
+  --color-ink: #f2f2f4;
+  --color-ink-muted: #a5a6b0;
+  --color-ink-dim: #8a8b96;
+  --color-ink-faint: #4c4d59;
+  --color-ink-on-dark: #f2f2f4;
+  --color-ink-on-dark-muted: #a5a6b0;
+
+  --color-accent: #60a5fa;
+  --color-accent-on-dark: #60a5fa;
+  --color-violet: #818cf8;
+
+  --color-amber: #60a5fa;
+  --color-amber-soft: #93c5fd;
+  --color-amber-glow: rgba(96, 165, 250, 0.14);
+
+  --color-border: #232430;
+  --color-border-subtle: #1b1c26;
+  --color-border-strong: #3a3b4a;
+
+  --shadow-card:
+    0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 40px -20px rgba(0, 0, 0, 0.6);
+  --shadow-lift:
+    0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+}
+
 @layer base {
   :root {
     color-scheme: light;
@@ -101,7 +140,7 @@
 
   ::selection {
     background: var(--color-accent);
-    color: #ffffff;
+    color: var(--color-bg);
   }
 
   *:focus-visible {
@@ -208,6 +247,19 @@
       transparent 100%
     );
   }
+  html.dark .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.045) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.045) 1px,
+        transparent 1px
+      );
+  }
 
   /* ── Buttons ─────────────────────────────────────────────────────── */
 
@@ -235,7 +287,7 @@
 
   .btn-primary {
     background: var(--color-ink);
-    color: #ffffff;
+    color: var(--color-bg);
   }
   .btn-primary:hover {
     transform: translateY(-2px);

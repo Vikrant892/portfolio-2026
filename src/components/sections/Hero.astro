@@ -22,6 +22,44 @@ const proof = [
   >
   </div>
 
+  {/* Floating side cards: fill the wide margins on large screens.
+      Decorative duplicates of facts shown elsewhere, hidden from
+      screen readers and from narrower viewports. */}
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-10 hidden min-[1460px]:block">
+    <div class="side-card side-float-a absolute left-10 top-36 -rotate-3" style="--float-delay: 0s">
+      <p class="t-eyebrow flex items-center gap-2 !text-[10px]">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>
+        Status
+      </p>
+      <p class="mt-2 text-sm font-medium text-[var(--color-ink)]">7 systems live in production</p>
+      <p class="mono mt-1 text-xs text-[var(--color-ink-dim)]">All open source</p>
+    </div>
+
+    <div class="side-card side-float-b absolute left-16 top-[26rem] rotate-2" style="--float-delay: 1.2s">
+      <p class="t-eyebrow !text-[10px]">Certified</p>
+      <p class="mt-2 text-sm font-medium text-[var(--color-ink)]">AWS Data Engineer Associate</p>
+      <p class="mt-1 text-sm text-[var(--color-ink-muted)]">OCI Data Science Professional</p>
+    </div>
+
+    <div class="side-card side-float-b absolute right-10 top-40 rotate-3" style="--float-delay: 0.6s">
+      <p class="t-eyebrow !text-[10px]">Highlight</p>
+      <p class="mt-2 text-sm font-medium text-[var(--color-ink)]">NASA Space Apps</p>
+      <p class="mt-1 text-sm text-[var(--color-ink-muted)]">Global Finalist 2023</p>
+    </div>
+
+    <div class="side-card side-float-a absolute right-16 top-[27rem] -rotate-2" style="--float-delay: 1.8s">
+      <p class="t-eyebrow flex items-center gap-2 !text-[10px]">
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-accent)] opacity-60"></span>
+          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>
+        </span>
+        Availability
+      </p>
+      <p class="mt-2 text-sm font-medium text-[var(--color-ink)]">Internships and part-time</p>
+      <p class="mono mt-1 text-xs text-[var(--color-ink-dim)]">Adelaide · ACST</p>
+    </div>
+  </div>
+
   <div class="container-site">
     <HeroScroll client:load />
   </div>
@@ -52,3 +90,48 @@ const proof = [
     </ul>
   </div>
 </section>
+
+<style>
+  .side-card {
+    width: 13rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-elevated) 85%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-card);
+    padding: 1rem 1.125rem;
+  }
+
+  .side-float-a {
+    animation: side-float-a 7s ease-in-out var(--float-delay, 0s) infinite;
+  }
+  .side-float-b {
+    animation: side-float-b 8s ease-in-out var(--float-delay, 0s) infinite;
+  }
+
+  @keyframes side-float-a {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -10px;
+    }
+  }
+  @keyframes side-float-b {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .side-float-a,
+    .side-float-b {
+      animation: none;
+    }
+  }
+</style>

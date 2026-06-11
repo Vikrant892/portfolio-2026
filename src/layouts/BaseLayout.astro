@@ -110,10 +110,20 @@ const personSchema = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
-    {/* Gate for reveal styles: must run before first paint so content
-        never flashes hidden for no-JS visitors. */}
+    {/* Gate for reveal styles and saved theme: must run before first
+        paint so content never flashes hidden or in the wrong theme. */}
     <script is:inline>
       document.documentElement.classList.add('js');
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute('content', '#0b0b0f');
+        }
+      } catch {
+        /* private browsing: default to light */
+      }
     </script>
   </head>
   <body id="top" class="min-h-svh bg-[var(--color-bg)] text-[var(--color-ink)]">

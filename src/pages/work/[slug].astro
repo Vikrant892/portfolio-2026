@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionUnderline from '../../components/SectionUnderline.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project: p } = Astro.props;
+const SITE = 'https://vikrant69g.com';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': `${SITE}/work/${p.slug}#project`,
+  name: p.title,
+  headline: p.title,
+  abstract: p.summary,
+  url: `${SITE}/work/${p.slug}`,
+  author: { '@type': 'Person', name: 'Vikrant Sharma', url: SITE },
+  keywords: p.stack.join(', '),
+  ...(p.github ? { codeRepository: p.github } : {}),
+};
+---
+
+<BaseLayout title={p.title} description={p.summary}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <article class="container-site py-14 sm:py-20">
+    <a
+      href="/#work"
+      class="mono text-xs uppercase tracking-[0.14em] text-[var(--color-ink-dim)] underline-offset-4 transition-colors hover:text-[var(--color-accent)] hover:underline"
+    >
+      ← All work
+    </a>
+
+    <header class="mt-8 max-w-3xl" data-reveal>
+      <p class="t-eyebrow">{p.category}</p>
+      <h1 class="t-display mt-4 text-4xl text-[var(--color-ink)] sm:text-6xl">
+        {p.title}<span class="text-[var(--color-accent)]">.</span>
+      </h1>
+      <SectionUnderline />
+      <p class="mt-5 text-lg leading-relaxed text-[var(--color-ink-muted)]">{p.summary}</p>
+
+      <div class="mt-7 flex flex-wrap gap-2.5">
+        <a
+          href={p.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary !min-h-0 !px-4 !py-2 !text-sm"
+        >
+          Live demo <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          href={p.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-secondary !min-h-0 !px-4 !py-2 !text-sm"
+        >
+          Source <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <figure
+      class="mt-12 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-subtle)]"
+      data-reveal
+    >
+      <Image
+        src={p.img}
+        alt={`Screenshot of ${p.title}`}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 1152px) 100vw, 1152px"
+        class="h-auto w-full"
+        loading="eager"
+      />
+    </figure>
+
+    <div class="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-8" data-reveal-group>
+        <section data-reveal-child>
+          <h2 class="t-eyebrow">Challenge</h2>
+          <p class="mt-3 text-base leading-relaxed text-[var(--color-ink-muted)]">{p.challenge}</p>
+        </section>
+        <section class="mt-9" data-reveal-child>
+          <h2 class="t-eyebrow">Approach</h2>
+          <p class="mt-3 text-base leading-relaxed text-[var(--color-ink-muted)]">{p.approach}</p>
+        </section>
+        <section class="mt-9" data-reveal-child>
+          <h2 class="t-eyebrow">Outcome</h2>
+          <p class="mt-3 text-base leading-relaxed text-[var(--color-ink)]">{p.outcome}</p>
+        </section>
+        <section class="mt-9" data-reveal-child>
+          <h2 class="t-eyebrow">Key decisions</h2>
+          <ul class="mt-4 space-y-2.5">
+            {
+              p.highlights.map((h) => (
+                <li class="flex gap-3 text-base leading-relaxed text-[var(--color-ink-muted)]">
+                  <span
+                    aria-hidden="true"
+                    class="mt-[0.7em] inline-block h-1 w-3 shrink-0 bg-[var(--color-accent)]"
+                  />
+                  <span>{h}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+
+      <aside class="lg:col-span-4" data-reveal>
+        <dl class="space-y-5 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+          <div>
+            <dt class="t-eyebrow">Role</dt>
+            <dd class="mt-1 text-sm text-[var(--color-ink)]">{p.role}</dd>
+          </div>
+          <div>
+            <dt class="t-eyebrow">When</dt>
+            <dd class="mt-1 text-sm text-[var(--color-ink)]">{p.timeframe}</dd>
+          </div>
+          <div>
+            <dt class="t-eyebrow">Stack</dt>
+            <dd class="mt-2 flex flex-wrap gap-1.5">
+              {p.stack.map((s) => <span class="chip !py-0.5 !text-[11px]">{s}</span>)}
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="mt-16 border-t border-[var(--color-border)] pt-8" data-reveal>
+      <a
+        href="/#work"
+        class="mono text-sm text-[var(--color-ink-muted)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline"
+      >
+        ← Back to all work
+      </a>
+    </div>
+  </article>
+</BaseLayout>

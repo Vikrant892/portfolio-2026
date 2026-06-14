@@ -30,6 +30,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = await getImage({ src: portrait, width: 1200, format: 'jpeg' });
 const ogImageURL = new URL(ogImage.src, Astro.site).toString();
 
+// Branded 1200x630 social share card (static, in /public). Used for
+// og:image and twitter:image so shared links render a deliberate card,
+// not a raw headshot. The plain headshot still feeds the Person schema.
+const ogCardURL = new URL('/og.jpg', Astro.site).toString();
+
 const SITE = 'https://vikrant69g.com';
 const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 
@@ -130,12 +135,16 @@ const schemaGraph = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="en_AU" />
-    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image" content={ogCardURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Vikrant Sharma — machine learning, built to hunt threats" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image" content={ogCardURL} />
+    <meta name="twitter:image:alt" content="Vikrant Sharma — machine learning, built to hunt threats" />
 
     <meta name="theme-color" content="#faf9f5" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

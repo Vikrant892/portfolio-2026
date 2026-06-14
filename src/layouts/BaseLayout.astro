@@ -30,50 +30,83 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = await getImage({ src: portrait, width: 1200, format: 'jpeg' });
 const ogImageURL = new URL(ogImage.src, Astro.site).toString();
 
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Vikrant Sharma',
-  alternateName: ['Vikrant Sharma Portfolio', 'vikrant69g'],
-  url: 'https://vikrant69g.com',
-};
+const SITE = 'https://vikrant69g.com';
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 
-const personSchema = {
+// One linked @graph: the WebSite, the Person, and (on the home page) a
+// ProfilePage whose mainEntity is the Person. Linking by @id is what
+// tells Google this whole site IS the entity "Vikrant Sharma", which is
+// what a name search resolves against.
+const schemaGraph = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Vikrant Sharma',
-  givenName: 'Vikrant',
-  familyName: 'Sharma',
-  url: 'https://vikrant69g.com',
-  email: 'mailto:vikrantsharma892@gmail.com',
-  jobTitle: 'Machine Learning Engineer (Cybersecurity)',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Adelaide',
-    addressRegion: 'South Australia',
-    addressCountry: 'AU',
-  },
-  alumniOf: [
+  '@graph': [
     {
-      '@type': 'CollegeOrUniversity',
-      name: 'University of the Sunshine Coast (Adelaide Campus)',
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      url: SITE,
+      name: 'Vikrant Sharma',
+      alternateName: ['Vikrant Sharma Portfolio', 'vikrant69g', 'Vikrant'],
+      inLanguage: 'en-AU',
+      publisher: { '@id': `${SITE}/#person` },
+      about: { '@id': `${SITE}/#person` },
     },
     {
-      '@type': 'CollegeOrUniversity',
-      name: 'Charotar University of Science and Technology',
+      '@type': 'Person',
+      '@id': `${SITE}/#person`,
+      name: 'Vikrant Sharma',
+      givenName: 'Vikrant',
+      familyName: 'Sharma',
+      url: SITE,
+      mainEntityOfPage: SITE,
+      image: ogImageURL,
+      email: 'mailto:vikrantsharma892@gmail.com',
+      jobTitle: 'Machine Learning Engineer (Cybersecurity)',
+      description:
+        'Machine learning engineer specialising in cybersecurity. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Based in Adelaide, Australia.',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Adelaide',
+        addressRegion: 'South Australia',
+        addressCountry: 'AU',
+      },
+      alumniOf: [
+        {
+          '@type': 'CollegeOrUniversity',
+          name: 'University of the Sunshine Coast (Adelaide Campus)',
+        },
+        {
+          '@type': 'CollegeOrUniversity',
+          name: 'Charotar University of Science and Technology',
+        },
+      ],
+      knowsAbout: [
+        'Machine Learning',
+        'Cybersecurity',
+        'Intrusion Detection',
+        'Data Engineering',
+        'Threat Intelligence',
+      ],
+      knowsLanguage: ['English', 'Hindi'],
+      sameAs: [
+        'https://github.com/Vikrant892',
+        'https://www.linkedin.com/in/vik892/',
+        'https://x.com/Vik69G',
+      ],
     },
-  ],
-  knowsAbout: [
-    'Machine Learning',
-    'Cybersecurity',
-    'Intrusion Detection',
-    'Data Engineering',
-    'Threat Intelligence',
-  ],
-  sameAs: [
-    'https://github.com/Vikrant892',
-    'https://www.linkedin.com/in/vik892/',
-    'https://x.com/Vik69G',
+    ...(isHome
+      ? [
+          {
+            '@type': 'ProfilePage',
+            '@id': `${SITE}/#webpage`,
+            url: SITE,
+            name: 'Vikrant Sharma | Machine Learning for Threat Detection',
+            isPartOf: { '@id': `${SITE}/#website` },
+            about: { '@id': `${SITE}/#person` },
+            mainEntity: { '@id': `${SITE}/#person` },
+            inLanguage: 'en-AU',
+          },
+        ]
+      : []),
   ],
 };
 ---
@@ -107,8 +140,7 @@ const personSchema = {
     <meta name="theme-color" content="#faf9f5" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
     {/* Gate for reveal styles and saved theme: must run before first
         paint so content never flashes hidden or in the wrong theme. */}

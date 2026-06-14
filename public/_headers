@@ -7,11 +7,11 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-# Hashed build assets never change; cache them forever. Keep images
-# out of image-search indexes.
+# Hashed build assets never change; cache them forever. Images are
+# allowed in image search so the portrait and project shots can surface
+# for a name query.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
-  X-Robots-Tag: noimageindex
 
 # Resume PDF: short cache so an updated resume propagates within a day.
 /resume/*

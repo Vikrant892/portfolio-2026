@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page does not exist on vikrant69g.com."
+  noindex
+  bare
+>
+  <section
+    class="container-site flex min-h-svh flex-col items-center justify-center py-24 text-center"
+    aria-labelledby="nf-heading"
+  >
+    <p class="t-eyebrow">Error 404</p>
+    <h1
+      id="nf-heading"
+      class="t-display mt-5 text-[clamp(3.5rem,16vw,9rem)] leading-none text-[var(--color-ink)]"
+    >
+      4<span class="t-gradient">0</span>4
+    </h1>
+    <p class="mt-4 max-w-md text-base leading-relaxed text-[var(--color-ink-muted)]">
+      That page does not exist, or it moved during the rebuild. Everything
+      worth seeing lives on the home page.
+    </p>
+
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a href="/" class="btn btn-primary">Back to home</a>
+      <a href="/resume" class="btn btn-secondary">Resume</a>
+    </div>
+
+    <nav aria-label="Quick links" class="mono mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs">
+      <a href="/#work" class="text-[var(--color-ink-dim)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline">Selected work</a>
+      <a href="/#journey" class="text-[var(--color-ink-dim)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline">Journey</a>
+      <a href="/#achievements" class="text-[var(--color-ink-dim)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline">Achievements</a>
+      <a href="https://vikrant69g.com/blog" class="text-[var(--color-ink-dim)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline">Blog</a>
+    </nav>
+  </section>
+</BaseLayout>

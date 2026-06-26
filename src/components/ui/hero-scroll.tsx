@@ -30,19 +30,16 @@ export function HeroScroll() {
             />
           </motion.div>
 
-          <motion.h1 {...fadeUp(0.08)} className="mt-5">
-            <span className="t-eyebrow block">
-              Vikrant Sharma · Adelaide, Australia
-            </span>
-            <span className="t-display mt-6 block text-3xl text-[var(--color-ink)] sm:text-5xl">
+          <motion.div {...fadeUp(0.08)} className="mt-6">
+            <span className="t-display block text-3xl text-[var(--color-ink)] sm:text-5xl">
               Machine learning,
             </span>
             <span className="t-display t-gradient mt-2 block text-[clamp(2.75rem,9vw,6.5rem)] leading-none">
               built to hunt threats.
             </span>
-          </motion.h1>
+          </motion.div>
 
-          {/* Drawn underline stroke beneath the headline */}
+          {/* Drawn underline stroke beneath the tagline */}
           <motion.svg
             {...fadeUp(0.12)}
             className="mx-auto mt-5 h-4 w-64 sm:w-80"
@@ -65,32 +62,9 @@ export function HeroScroll() {
             {...fadeUp(0.16)}
             className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-[var(--color-ink-muted)] sm:text-lg"
           >
-            Intrusion detection, threat triage and fraud models that run in
-            production, not in notebooks. Seven systems live, all open source.
-            This dashboard is one of them.
-          </motion.p>
-
-          <motion.div
-            {...fadeUp(0.24)}
-            className="mt-9 flex flex-wrap items-center justify-center gap-3"
-          >
-            <a href="#work" className="btn btn-primary">
-              View selected work
-            </a>
-            <a href="#resume" className="btn btn-secondary">
-              The 30 second version <span aria-hidden="true">↓</span>
-            </a>
-          </motion.div>
-
-          <motion.p
-            {...fadeUp(0.32)}
-            className="mono mt-7 inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.16em] text-[var(--color-ink-dim)]"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-accent)] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-accent)]" />
-            </span>
-            Open to internships and part-time work now
+            Data platforms, ML systems and security tooling that run in
+            production, not in notebooks. The dashboard below is one of seven
+            public deployments, all open source.
           </motion.p>
         </>
       }

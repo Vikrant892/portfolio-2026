@@ -1,0 +1,57 @@
+---
+import SectionUnderline from '../SectionUnderline.astro';
+
+const facts = [
+  { label: 'Location', value: 'Adelaide, South Australia' },
+  { label: 'Engagement', value: 'Internship or placement, 3 to 6 months' },
+  { label: 'Placement hours', value: 'UniSC pathway can require 192 hours' },
+  { label: 'Work rights', value: 'Student visa conditions respected' },
+];
+---
+
+<section
+  id="availability"
+  class="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)] py-16 sm:py-20"
+  aria-labelledby="availability-heading"
+>
+  <div class="container-site grid grid-cols-1 gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-4" data-reveal>
+      <p class="t-eyebrow">For recruiters</p>
+      <h2 id="availability-heading" class="t-heading mt-4 text-3xl text-[var(--color-ink)] sm:text-4xl">
+        Availability and fit<span class="text-[var(--color-accent)]">.</span>
+      </h2>
+      <SectionUnderline />
+      <p class="mt-5 text-base leading-relaxed text-[var(--color-ink-muted)]">
+        The practical details in one place, so you can decide quickly whether
+        I fit the role you are filling.
+      </p>
+    </div>
+
+    <div class="lg:col-span-8" data-reveal>
+      <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-2">
+        {
+          facts.map((f) => (
+            <div class="bg-[var(--color-bg-elevated)] p-5">
+              <dt class="t-eyebrow">{f.label}</dt>
+              <dd class="mt-1.5 text-[15px] text-[var(--color-ink)]">{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <p class="mt-6 text-base leading-relaxed text-[var(--color-ink-muted)]">
+        Open to machine learning, data engineering, automation, agentic AI
+        tooling, and security engineering work.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="mailto:vikrantsharma892@gmail.com" class="btn btn-primary !min-h-0 !px-4 !py-2 !text-sm">
+          Email me
+        </a>
+        <a href="/resume" class="btn btn-secondary !min-h-0 !px-4 !py-2 !text-sm">
+          View resume
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

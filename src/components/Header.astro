@@ -6,11 +6,13 @@ interface NavLink {
 }
 
 const links: ReadonlyArray<NavLink> = [
-  { label: 'Journey', href: '#journey' },
   { label: 'Work', href: '#work' },
-  { label: 'Expertise', href: '#expertise' },
-  { label: 'Achievements', href: '#achievements' },
-  { label: 'Writing', href: '#writing' },
+  { label: 'Resume', href: '#resume' },
+  { label: 'Availability', href: '#availability' },
+  { label: 'Skills', href: '#expertise' },
+  { label: 'Contact', href: '#contact' },
+  // Blog stays available but is not a primary recruiter path, so it sits
+  // last and visually quieter than the rest.
   { label: 'Blog', href: 'https://vikrant69g.com/blog', external: true },
 ];
 ---
@@ -34,7 +36,12 @@ const links: ReadonlyArray<NavLink> = [
             href={l.href}
             target={l.external ? '_blank' : undefined}
             rel={l.external ? 'noopener' : undefined}
-            class="mono text-xs uppercase tracking-[0.14em] text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+            class:list={[
+              'mono text-xs uppercase tracking-[0.14em] transition-colors hover:text-[var(--color-ink)]',
+              l.external
+                ? 'text-[var(--color-ink-faint)]'
+                : 'text-[var(--color-ink-muted)]',
+            ]}
           >
             {l.label}
           </a>

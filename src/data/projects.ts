@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "astro";
+import studentopsImg from "../assets/projects/studentops.png";
 import idsImg from "../assets/projects/ids-project.png";
 import threatLensImg from "../assets/projects/threat-lens.png";
 import nasaImg from "../assets/projects/nasa-space-challenge.png";
@@ -28,6 +29,32 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "studentops-data-platform",
+    title: "StudentOps Data Platform",
+    category: "Data Engineering · Capstone",
+    role: "Sole engineer",
+    timeframe: "2026",
+    img: studentopsImg,
+    summary:
+      "An end-to-end data platform that ingests six sources into a layered Postgres warehouse with dbt and Prefect, then serves a dashboard, a daily digest and a Claude assistant.",
+    challenge:
+      "Study life is scattered across calendars, reference managers and notes, with no single view of what is due, what is planned and what is worth reading. The goal was a real data platform, not a to-do app: ingestion, modelling, orchestration and serving, end to end.",
+    approach:
+      "Six sources (iCal feeds, Google Calendar, Zotero, BibTeX and RIS drops, markdown notes, OpenAlex and CrossRef) land in a bronze, silver, gold Postgres warehouse. dbt builds the typed silver views and gold facts and dimensions with SCD2 history; Prefect orchestrates the runs. Three surfaces sit on top: a Streamlit dashboard, a daily email digest, and a Claude assistant that summarises, generates flashcards and suggests citations with mandatory DOI validation.",
+    outcome:
+      "A single tenant platform running live for about twelve dollars a month, with observable pipelines and freshness tracking per source. It demonstrates the full data engineering loop: ingest, model, orchestrate, serve, and a grounded AI layer that refuses to invent citations.",
+    highlights: [
+      "Bronze, silver, gold warehouse on Postgres with dbt, including SCD2 history on the assessments dimension.",
+      "Six ingestion sources normalised into one model, orchestrated and scheduled with Prefect.",
+      "A Claude assistant with a hard DOI validation gate so it never fabricates a reference.",
+      "Daily digest by email and a Streamlit dashboard, deployed on Fly.io and Cloudflare Pages.",
+    ],
+    stack: ["Python", "Postgres", "dbt", "Prefect", "Streamlit", "Claude API"],
+    live: "https://studentops.vikrant69g.com",
+    github: "https://github.com/Vikrant892/studentops",
+    featured: true,
+  },
   {
     slug: "hybrid-ml-intrusion-detection",
     title: "Hybrid ML Intrusion Detection",
@@ -85,7 +112,7 @@ export const projects: Project[] = [
     stack: ["XGBoost", "scikit-learn", "SMOTE", "Streamlit"],
     live: "https://huggingface.co/spaces/vikrant892/credit-card-fraud-detection",
     github: "https://github.com/Vikrant892/credit-card-fraud-detection",
-    featured: true,
+    featured: false,
   },
   {
     slug: "cosmic-keys",
@@ -111,7 +138,7 @@ export const projects: Project[] = [
     stack: ["Python", "Streamlit", "NumPy", "PIL"],
     live: "https://huggingface.co/spaces/vikrant892/nasa-space-challenge",
     github: "https://github.com/Vikrant892/nasa-space-challenge",
-    featured: true,
+    featured: false,
   },
   {
     slug: "threatlens",
@@ -161,7 +188,7 @@ export const projects: Project[] = [
     stack: ["Flask", "SQLite", "BeautifulSoup", "Docker"],
     live: "https://huggingface.co/spaces/vikrant892/phishing-detection-platform",
     github: "https://github.com/Vikrant892/Phishing-detection-platform",
-    featured: false,
+    featured: true,
   },
   {
     slug: "log-analyzer-dashboard",

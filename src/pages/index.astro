@@ -1,24 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/sections/Hero.astro';
-import SelectedWork from '../components/sections/SelectedWork.astro';
-import ResumeSection from '../components/sections/ResumeSection.astro';
-import ForRecruiters from '../components/sections/ForRecruiters.astro';
-import Expertise from '../components/sections/Expertise.astro';
-import Journey from '../components/sections/Journey.astro';
-import Achievements from '../components/sections/Achievements.astro';
-import Writing from '../components/sections/Writing.astro';
-import Contact from '../components/sections/Contact.astro';
+import ImmersiveHome from '../components/immersive/ImmersiveHome';
+import '../styles/immersive-home.css';
 ---
 
-<BaseLayout title="Home">
-  <Hero />
-  <SelectedWork />
-  <ResumeSection />
-  <ForRecruiters />
-  <Expertise />
-  <Journey />
-  <Achievements />
-  <Writing />
-  <Contact />
+<BaseLayout
+  title="Home"
+  bare
+  description="Vikrant Sharma — machine learning, data engineering and cybersecurity systems. Adelaide, Australia."
+>
+  <ImmersiveHome client:load />
 </BaseLayout>

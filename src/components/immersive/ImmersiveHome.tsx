@@ -20,45 +20,45 @@ type CapabilityKey = "ml" | "data" | "security" | "delivery";
 
 const PALETTES: Palette[] = [
   {
-    a: [0.012, 0.015, 0.022],
-    b: [0.33, 0.43, 0.58],
-    c: [0.22, 0.48, 0.74],
-    energy: 0.48,
+    a: [0.24, 0.3, 0.4],
+    b: [0.52, 0.66, 0.88],
+    c: [0.36, 0.72, 1.0],
+    energy: 0.62,
     scale: 0.92,
   },
   {
-    a: [0.022, 0.012, 0.028],
-    b: [0.58, 0.24, 0.48],
-    c: [0.34, 0.25, 0.76],
-    energy: 0.6,
+    a: [0.4, 0.18, 0.34],
+    b: [0.9, 0.38, 0.72],
+    c: [0.55, 0.4, 1.0],
+    energy: 0.74,
     scale: 1.12,
   },
   {
-    a: [0.005, 0.026, 0.03],
-    b: [0.18, 0.6, 0.54],
-    c: [0.04, 0.31, 0.42],
-    energy: 0.56,
+    a: [0.12, 0.42, 0.38],
+    b: [0.28, 0.92, 0.84],
+    c: [0.08, 0.5, 0.66],
+    energy: 0.7,
     scale: 1.02,
   },
   {
-    a: [0.026, 0.016, 0.006],
-    b: [0.68, 0.42, 0.13],
-    c: [0.64, 0.16, 0.08],
-    energy: 0.62,
+    a: [0.45, 0.28, 0.1],
+    b: [1.0, 0.64, 0.2],
+    c: [0.98, 0.26, 0.13],
+    energy: 0.76,
     scale: 0.95,
   },
   {
-    a: [0.008, 0.014, 0.034],
-    b: [0.22, 0.38, 0.72],
-    c: [0.41, 0.17, 0.72],
-    energy: 0.52,
+    a: [0.16, 0.26, 0.46],
+    b: [0.35, 0.58, 1.0],
+    c: [0.63, 0.27, 1.0],
+    energy: 0.66,
     scale: 1.28,
   },
   {
-    a: [0.016, 0.018, 0.017],
-    b: [0.49, 0.53, 0.43],
-    c: [0.31, 0.43, 0.32],
-    energy: 0.42,
+    a: [0.33, 0.36, 0.3],
+    b: [0.74, 0.8, 0.66],
+    c: [0.48, 0.66, 0.5],
+    energy: 0.56,
     scale: 0.82,
   },
 ];
@@ -126,12 +126,12 @@ void main(){
   field += pointerGlow*(.12+.16*u_chaos);
   field += vel*.07;
 
-  vec3 color=mix(u_a,u_b,smoothstep(.15,1.00,field));
+  vec3 color=mix(u_a,u_b,smoothstep(.02,.80,field));
   color=mix(color,u_c,folds*(.18+.20*u_energy));
   color += u_c*pointerGlow*.11*u_energy;
 
   float vignette=smoothstep(1.10,.14,length(p*.72));
-  color*=.52+.56*vignette;
+  color*=.80+.34*vignette;
 
   float grain=(hash(gl_FragCoord.xy+fract(u_time)*100.0)-.5)*.018;
   color += grain;

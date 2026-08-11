@@ -117,17 +117,17 @@ void main(){
     fbm(p*u_scale + 2.9*q + vec2(8.3,2.8) - t*.18)
   );
 
-  float warp=fbm(p*(1.22+u_chaos*.38)*u_scale + (3.9+u_chaos*1.6)*r);
+  float warp=fbm(p*(1.22+u_chaos*.38)*u_scale + (4.8+u_chaos*1.6)*r);
   float folds=sin((p.x*.72+p.y*.19+warp*1.45+r.x*.78+u_scroll*.00022)*7.0);
   folds=.5+.5*folds;
-  folds=smoothstep(.20,.90,folds);
+  folds=smoothstep(.34,.72,folds);
 
   float field=mix(q.x,r.y,.58)+warp*.57;
   field += pointerGlow*(.12+.16*u_chaos);
   field += vel*.07;
 
-  vec3 color=mix(u_a,u_b,smoothstep(.02,.80,field));
-  color=mix(color,u_c,folds*(.18+.20*u_energy));
+  vec3 color=mix(u_a,u_b,smoothstep(.06,.66,field));
+  color=mix(color,u_c,folds*(.38+.30*u_energy));
   color += u_c*pointerGlow*.11*u_energy;
 
   float vignette=smoothstep(1.10,.14,length(p*.72));
@@ -313,7 +313,7 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
 
     const resize = () => {
       const mobile = window.innerWidth < 760;
-      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 0.95 : 1.25);
+      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.1 : 1.5);
       const w = Math.floor(window.innerWidth * dpr);
       const h = Math.floor(window.innerHeight * dpr);
       if (canvas.width !== w || canvas.height !== h) {
@@ -336,7 +336,7 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
     const render = (now: number) => {
       const target =
         PALETTES[sceneRef.current % PALETTES.length] ?? basePalette;
-      const smooth = 0.03;
+      const smooth = 0.07;
 
       for (let i = 0; i < 3; i++) {
         palette.a[i] = lerp(palette.a[i] ?? 0, target.a[i] ?? 0, smooth);

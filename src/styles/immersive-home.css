@@ -555,9 +555,9 @@ html.ih-active button {
 }
 
 .ih-index {
-  font: 500 10px/1 var(--font-mono);
+  font: 600 13px/1 var(--font-mono);
   letter-spacing: 0.17em;
-  color: var(--ih-muted);
+  color: rgba(255, 255, 255, 0.78);
   margin: 0;
 }
 
@@ -570,11 +570,11 @@ html.ih-active button {
   border-bottom: 1px solid var(--ih-line);
 }
 .ih-section-head > p:last-child {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 13px;
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  line-height: 1.55;
 }
 
 .ih-work-intro {
@@ -680,9 +680,9 @@ html.ih-active button {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 .ih-project-evidence > span {
-  font: 500 8px/1 var(--font-mono);
+  font: 600 11px/1 var(--font-mono);
   letter-spacing: 0.13em;
-  color: rgba(255, 255, 255, 0.52);
+  color: rgba(255, 255, 255, 0.7);
 }
 .ih-project-evidence ul {
   list-style: none;
@@ -692,9 +692,9 @@ html.ih-active button {
   gap: 9px;
 }
 .ih-project-evidence li {
-  font-size: 11px;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
   padding-left: 14px;
   position: relative;
 }
@@ -1146,12 +1146,12 @@ html.ih-active button {
   gap: 10px;
 }
 .ih-proof-credentials span {
-  padding: 10px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(7, 9, 13, 0.72);
-  font: 500 8px/1 var(--font-mono);
+  font: 600 12px/1 var(--font-mono);
   letter-spacing: 0.07em;
-  color: rgba(255, 255, 255, 0.76);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .ih-journey {
@@ -1191,8 +1191,8 @@ html.ih-active button {
 }
 .ih-journey-list article > p {
   margin: 0;
-  font: 500 10px/1.4 var(--font-mono);
-  color: var(--ih-muted);
+  font: 500 14px/1.5 var(--font-mono);
+  color: rgba(255, 255, 255, 0.85);
 }
 .ih-journey-list h3 {
   margin: 0;
@@ -1203,19 +1203,19 @@ html.ih-active button {
 }
 .ih-journey-list article > div:nth-of-type(2) b {
   display: block;
-  margin-top: 12px;
-  font: 500 10px/1.4 var(--font-mono);
-  color: rgba(255, 255, 255, 0.58);
+  margin-top: 14px;
+  font: 600 15px/1.4 var(--font-mono);
+  color: rgba(255, 255, 255, 0.85);
 }
 .ih-journey-list article > div:last-child > span {
-  font: 500 9px/1 var(--font-mono);
-  color: var(--ih-faint);
+  font: 500 12px/1 var(--font-mono);
+  color: rgba(255, 255, 255, 0.62);
 }
 .ih-journey-list article > div:last-child > p {
   margin: 15px 0 0;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.66);
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .ih-notes {
@@ -1265,8 +1265,8 @@ html.ih-active button {
   background: rgba(255, 255, 255, 0.04);
 }
 .ih-note-links span {
-  font: 500 9px/1.3 var(--font-mono);
-  color: var(--ih-faint);
+  font: 500 12px/1.3 var(--font-mono);
+  color: rgba(255, 255, 255, 0.62);
 }
 .ih-note-links b {
   font-family: var(--font-display);
@@ -1335,7 +1335,7 @@ html.ih-active button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font: 500 13px/1 var(--font-mono);
+  font: 600 18px/1 var(--font-mono);
   letter-spacing: 0.06em;
   text-align: left;
 }
@@ -1349,15 +1349,19 @@ html.ih-active button {
   flex-wrap: wrap;
 }
 .ih-contact-bottom a {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  font: 500 9px/1 var(--font-mono);
+  font: 600 14px/1 var(--font-mono);
   letter-spacing: 0.1em;
 }
+.ih-contact-bottom a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
 .ih-contact small {
-  font: 500 8px/1 var(--font-mono);
+  font: 500 11px/1 var(--font-mono);
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(255, 255, 255, 0.55);
   margin-top: 26px;
 }
 
@@ -1634,7 +1638,7 @@ html.ih-active button {
     display: none;
   }
   .ih-project-evidence li {
-    font-size: 10px;
+    font-size: 13px;
   }
 
   .ih-capability-map {
@@ -1695,7 +1699,7 @@ html.ih-active button {
     margin-left: 0;
   }
   .ih-contact-bottom button {
-    font-size: 9px;
+    font-size: 13px;
   }
   .ih-contact-bottom > div {
     gap: 14px;

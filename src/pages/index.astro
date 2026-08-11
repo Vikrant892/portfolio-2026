@@ -92,7 +92,7 @@ const statusLabel: Record<string, string> = {
 // reachable behind the cert links.
 const portraitOpt = await getImage({
   src: portraitImg,
-  width: 720,
+  widths: [400, 720],
   format: "webp",
 });
 const projectShots = new Map(
@@ -101,13 +101,19 @@ const projectShots = new Map(
       async (project) =>
         [
           project.slug,
-          await getImage({ src: project.img, width: 880, format: "webp" }),
+          await getImage({
+            src: project.img,
+            widths: [660, 880],
+            format: "webp",
+          }),
         ] as const,
     ),
   ),
 );
 const certShots = await Promise.all(
-  certs.map((cert) => getImage({ src: cert.img, width: 560, format: "webp" })),
+  certs.map((cert) =>
+    getImage({ src: cert.img, widths: [420, 560], format: "webp" }),
+  ),
 );
 ---
 
@@ -159,6 +165,8 @@ const certShots = await Promise.all(
         <div class="ih-portrait-frame">
           <img
             src={portraitOpt.src}
+            srcset={portraitOpt.srcSet.attribute}
+            sizes="(max-width: 620px) 45vw, (max-width: 980px) 34vw, 380px"
             width={portraitOpt.attributes.width}
             height={portraitOpt.attributes.height}
             alt="Vikrant Sharma"
@@ -213,6 +221,8 @@ const certShots = await Promise.all(
             <div class="ih-project-media">
               <img
                 src={projectShots.get(project.slug)?.src ?? project.img.src}
+                srcset={projectShots.get(project.slug)?.srcSet.attribute}
+                sizes="(max-width: 980px) 92vw, 660px"
                 width={projectShots.get(project.slug)?.attributes.width}
                 height={projectShots.get(project.slug)?.attributes.height}
                 alt={`${project.title} interface`}
@@ -371,6 +381,8 @@ const certShots = await Promise.all(
                 <span class="ih-cert-media">
                   <img
                     src={certShots[index]?.src ?? cert.img.src}
+                    srcset={certShots[index]?.srcSet.attribute}
+                    sizes="(max-width: 620px) 92vw, (max-width: 980px) 45vw, 560px"
                     width={certShots[index]?.attributes.width}
                     height={certShots[index]?.attributes.height}
                     alt={`${cert.title} certificate`}

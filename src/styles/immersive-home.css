@@ -408,7 +408,7 @@ html.ih-active button {
 /* Portrait: intentionally isolated from shader so the face never disappears. */
 .ih-portrait-card {
   position: absolute;
-  right: 5vw;
+  right: 9.5vw;
   bottom: 8.2vh;
   width: min(34vw, 520px);
   aspect-ratio: 0.86;
@@ -1221,6 +1221,66 @@ html.ih-active button {
   color: rgba(255, 255, 255, 0.62);
 }
 
+/* Fixed section rail: always-visible numbered index on the right edge. */
+.ih-rail {
+  position: fixed;
+  z-index: 150;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: rgba(4, 6, 9, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-radius: 4px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+.ih-rail:hover,
+.ih-rail:focus-within {
+  opacity: 1;
+}
+.ih-rail a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.66);
+  border-radius: 3px;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+.ih-rail a span {
+  font: 600 10px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.25s;
+}
+.ih-rail a b {
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+.ih-rail a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+.ih-rail a.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+.ih-rail a.is-active span {
+  color: rgba(151, 255, 187, 0.95);
+}
+
+html.ih-active {
+  scroll-behavior: smooth;
+}
+
 /* Hidden owner overlay (Ctrl+Alt+H): unique visitor counter. */
 .ih-stats-overlay {
   position: fixed;
@@ -1617,6 +1677,22 @@ html.ih-active button {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .ih-rail {
+    right: 8px;
+    gap: 4px;
+    padding: 8px 6px;
+  }
+  .ih-rail a {
+    padding: 6px 7px;
+    gap: 0;
+  }
+  .ih-rail a b {
+    display: none;
+  }
+  .ih-rail a span {
+    font-size: 11px;
+  }
+
   .ih-more-systems,
   .ih-capability,
   .ih-proof,
@@ -1830,6 +1906,9 @@ html.ih-active button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.ih-active {
+    scroll-behavior: auto;
+  }
   .ih-grain,
   .ih-portrait-ring,
   .ih-project-scan,

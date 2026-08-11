@@ -16,14 +16,14 @@ interface Props {
 
 const {
   title,
-  description = 'Vikrant Sharma. Machine learning engineer specialising in cybersecurity. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Adelaide, Australia.',
+  description = 'Vikrant Sharma. Data engineer and machine learning engineer with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Adelaide, Australia.',
   noindex = false,
   bare = false,
 } = Astro.props;
 
 const fullTitle =
   title.toLowerCase() === 'home'
-    ? 'Vikrant Sharma | Machine Learning for Threat Detection'
+    ? 'Vikrant Sharma | Data Engineering, ML & Security'
     : `${title} | Vikrant Sharma`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 
@@ -65,9 +65,14 @@ const schemaGraph = {
       mainEntityOfPage: SITE,
       image: ogImageURL,
       email: 'mailto:vikrantsharma892@gmail.com',
-      jobTitle: 'Machine Learning Engineer (Cybersecurity)',
+      jobTitle: 'Data Engineer & Machine Learning Engineer',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Voxon',
+        description: 'Industry placement, AI capabilities in VoxelOS',
+      },
       description:
-        'Machine learning engineer specialising in cybersecurity. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Based in Adelaide, Australia.',
+        'Data engineer and machine learning engineer with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Based in Adelaide, Australia.',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Adelaide',
@@ -85,10 +90,10 @@ const schemaGraph = {
         },
       ],
       knowsAbout: [
+        'Data Engineering',
         'Machine Learning',
         'Cybersecurity',
         'Intrusion Detection',
-        'Data Engineering',
         'Threat Intelligence',
       ],
       knowsLanguage: ['English', 'Hindi'],
@@ -104,7 +109,7 @@ const schemaGraph = {
             '@type': 'ProfilePage',
             '@id': `${SITE}/#webpage`,
             url: SITE,
-            name: 'Vikrant Sharma | Machine Learning for Threat Detection',
+            name: 'Vikrant Sharma | Data Engineering, ML & Security',
             isPartOf: { '@id': `${SITE}/#website` },
             about: { '@id': `${SITE}/#person` },
             mainEntity: { '@id': `${SITE}/#person` },

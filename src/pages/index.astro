@@ -1,7 +1,23 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ImmersiveHome from '../components/immersive/ImmersiveHome';
-import '../styles/immersive-home.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/immersive-home.css";
+import portraitImg from "../assets/portrait.jpg";
+import { projects } from "../data/projects";
+import {
+  identity,
+  availability,
+  experience,
+  education,
+  certs,
+  industryExperienceLabel,
+} from "../data/profile";
+import ShaderStage from "../components/immersive/ShaderStage";
+import Pointer from "../components/immersive/Pointer";
+import SectionRail from "../components/immersive/SectionRail";
+import SignalToggle from "../components/immersive/SignalToggle";
+import CapabilityMap from "../components/immersive/CapabilityMap";
+import CopyEmail from "../components/immersive/CopyEmail";
+import StatsOverlay from "../components/immersive/StatsOverlay";
 
 interface BlogPost {
   title: string;
@@ -9,47 +25,477 @@ interface BlogPost {
   pubDate: string;
 }
 
-// Preserve the existing site's source of truth for field notes: the blog RSS
-// feed is read at build time. A failed fetch degrades to an archive link in
-// ImmersiveHome rather than rendering guessed or stale article URLs.
+// Field notes come from the blog RSS at build time; a failed fetch degrades
+// to the archive link rather than guessed article URLs.
 let posts: BlogPost[] = [];
 try {
-  const res = await fetch('https://vikrant69g.com/blog/rss.xml', {
-    headers: { 'User-Agent': 'portfolio-2026-build' },
+  const res = await fetch("https://vikrant69g.com/blog/rss.xml", {
+    headers: { "User-Agent": "portfolio-2026-build" },
   });
 
   if (res.ok) {
     const xml = await res.text();
     const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
 
-    posts = itemMatches.slice(0, 3).map((item) => {
-      const pick = (tag: string) => {
-        const m = item.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
-        return m?.[1] ? m[1].replace(/<!\[CDATA\[|\]\]>/g, '').trim() : '';
-      };
+    posts = itemMatches
+      .slice(0, 3)
+      .map((item) => {
+        const pick = (tag: string) => {
+          const m = item.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
+          return m?.[1] ? m[1].replace(/<!\[CDATA\[|\]\]>/g, "").trim() : "";
+        };
 
-      const rawDate = pick('pubDate');
-      const date = rawDate ? new Date(rawDate) : null;
-      const pubDate = date && !Number.isNaN(date.getTime())
-        ? date.toLocaleDateString('en-AU', { day: '2-digit', month: '2-digit', year: '2-digit' })
-        : rawDate;
+        const rawDate = pick("pubDate");
+        const date = rawDate ? new Date(rawDate) : null;
+        const pubDate =
+          date && !Number.isNaN(date.getTime())
+            ? date.toLocaleDateString("en-AU", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "2-digit",
+              })
+            : rawDate;
 
-      return {
-        title: pick('title'),
-        link: pick('link'),
-        pubDate,
-      };
-    }).filter((post) => post.title && post.link);
+        return { title: pick("title"), link: pick("link"), pubDate };
+      })
+      .filter((post) => post.title && post.link);
   }
 } catch {
   posts = [];
 }
+
+const featuredSlugs = [
+  "studentops-data-platform",
+  "hybrid-ml-intrusion-detection",
+  "threatlens",
+  "cosmic-keys",
+  "phishing-detection-platform",
+];
+const featured = featuredSlugs
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter(Boolean) as typeof projects;
+const remaining = projects.filter((p) => !featuredSlugs.includes(p.slug));
+
+// Honest, computed deployment metrics: only URL-verified live systems count.
+const liveCount = projects.filter((p) => p.status === "live").length;
+const liveLabel = String(liveCount).padStart(2, "0");
+const projectCount = String(projects.length).padStart(2, "0");
+
+const statusLabel: Record<string, string> = {
+  sleeping: "DEMO OFFLINE",
+  migrating: "MIGRATING",
+  archived: "ARCHIVED",
+};
 ---
 
 <BaseLayout
   title="Home"
   bare
-  description="Vikrant Sharma — machine learning, data engineering and cybersecurity systems. Adelaide, Australia."
+  description={`Vikrant Sharma — data engineering, machine learning and security systems. ${liveCount} live deployments, all open source. Adelaide, Australia.`}
 >
-  <ImmersiveHome client:load posts={posts} />
+  <div class="immersive-home">
+    <ShaderStage client:idle />
+    <Pointer client:idle />
+    <SectionRail client:idle />
+    <div class="ih-scrim" aria-hidden="true"></div>
+    <div class="ih-grain" aria-hidden="true"></div>
+    <div class="ih-vignette" aria-hidden="true"></div>
+
+    <header class="ih-nav">
+      <a class="ih-mark" href="#top" aria-label="Vikrant Sharma, home">
+        <span>69G</span><b>{identity.name.toUpperCase()}</b>
+      </a>
+      <SignalToggle client:idle />
+    </header>
+
+    <section class="ih-hero ih-scene" data-scene="0" id="hero">
+      <div class="ih-hero-kicker">
+        <span class="ih-kicker-left">
+          {identity.kicker}
+          <a href="/recruiter" class="ih-recruiter-link">RECRUITER VIEW ↗</a>
+        </span>
+        <span>{identity.locationShort}</span>
+      </div>
+      <h1>
+        <span class="ih-solid">VIKRANT</span>
+        <span class="ih-outline">SHARMA</span>
+      </h1>
+
+      <div class="ih-hero-copy">
+        <p>{identity.tagline}</p>
+        <div>
+          <a href="#work" class="ih-pill">Enter the work <b>↘</b></a>
+          <a href="/resume" class="ih-plain">Resume ↗</a>
+        </div>
+      </div>
+
+      <div class="ih-portrait-card">
+        <div class="ih-portrait-glow" aria-hidden="true"></div>
+        <div class="ih-portrait-ring ih-ring-a" aria-hidden="true"></div>
+        <div class="ih-portrait-ring ih-ring-b" aria-hidden="true"></div>
+        <div class="ih-portrait-frame">
+          <img
+            src={portraitImg.src}
+            width={portraitImg.width}
+            height={portraitImg.height}
+            alt="Vikrant Sharma"
+          />
+        </div>
+      </div>
+
+      <div class="ih-scroll-cue"><span>SCROLL TO DEFORM</span><i></i></div>
+    </section>
+
+    <section class="ih-work-intro ih-scene" data-scene="1" id="work">
+      <p class="ih-index">001 / FLAGSHIP SYSTEMS</p>
+      <h2>NOT PROJECTS.<br /><em>OPERATING SYSTEMS.</em></h2>
+      <p class="ih-side-copy">
+        Five systems get full cinematic scenes. The shader remains present,
+        but content sits on controlled contrast layers so nothing disappears
+        into the artwork.
+      </p>
+    </section>
+
+    {
+      featured.map((project, index) => (
+        <section
+          class="ih-project ih-scene"
+          data-scene={String((index % 5) + 1)}
+          id={`project-${project.slug}`}
+        >
+          <div class="ih-project-sticky">
+            <div class="ih-project-meta">
+              <span>0{index + 1}</span>
+              <span>{project.category}</span>
+              <span>{project.timeframe}</span>
+            </div>
+
+            <div class="ih-project-copy-shell">
+              <div class="ih-project-title-wrap">
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+              </div>
+
+              <div class="ih-project-evidence">
+                <span>ENGINEERING DECISIONS</span>
+                <ul>
+                  {project.highlights.slice(0, 3).map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="ih-project-media">
+              <img
+                src={project.img.src}
+                width={project.img.width}
+                height={project.img.height}
+                alt={`${project.title} interface`}
+                loading={index > 1 ? "lazy" : "eager"}
+              />
+              <div class="ih-project-scan" aria-hidden="true"></div>
+              <div class="ih-project-readout">
+                <span>ROLE / {project.role}</span>
+                <span>{project.stack.slice(0, 4).join(" · ")}</span>
+              </div>
+            </div>
+
+            <div class="ih-project-outcome">
+              <span>OUTCOME</span>
+              <p>{project.outcome}</p>
+              <div class="ih-project-actions">
+                <a href={`/work/${project.slug}`}>Case study ↗</a>
+                {project.status === "live" ? (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Run system ↗
+                  </a>
+                ) : (
+                  <span class="ih-status-chip">
+                    {statusLabel[project.status] ?? project.status.toUpperCase()}
+                  </span>
+                )}
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Source ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      remaining.length > 0 && (
+        <section class="ih-more-systems ih-scene" data-scene="5">
+          <div class="ih-section-head">
+            <p class="ih-index">001.B / MORE SYSTEMS</p>
+            <p>
+              The flagship work gets the cinematic treatment. The rest still
+              gets a direct route to evidence.
+            </p>
+          </div>
+          <div class="ih-more-grid">
+            {remaining.map((project, i) => (
+              <a href={`/work/${project.slug}`}>
+                <span>
+                  0{i + 6}
+                  {project.status !== "live" &&
+                    ` · ${statusLabel[project.status] ?? project.status.toUpperCase()}`}
+                </span>
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                <b>{project.stack.slice(0, 4).join(" · ")}</b>
+                <i>OPEN CASE STUDY ↗</i>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="ih-capability ih-scene" data-scene="5" id="profile">
+      <div class="ih-section-head">
+        <p class="ih-index">002 / CAPABILITY OVERLAP</p>
+        <p>Four domains. Every one anchored to a project or industry role.</p>
+      </div>
+      <CapabilityMap client:visible />
+    </section>
+
+    <section class="ih-proof ih-scene" data-scene="2" id="proof">
+      <div class="ih-section-head ih-proof-head">
+        <p class="ih-index">003 / PROOF</p>
+        <p>
+          Every number here is checked against a running URL or a certificate
+          you can open.
+        </p>
+      </div>
+
+      <div class="ih-proof-marquee" aria-hidden="true">
+        <span>
+          NASA GLOBAL FINALIST · AWS DATA ENGINEER · OCI DATA SCIENCE ·{" "}
+          {liveCount} SYSTEMS LIVE ·{" "}
+        </span>
+        <span>
+          NASA GLOBAL FINALIST · AWS DATA ENGINEER · OCI DATA SCIENCE ·{" "}
+          {liveCount} SYSTEMS LIVE ·{" "}
+        </span>
+      </div>
+
+      <div class="ih-proof-grid">
+        <article>
+          <strong>{liveLabel}</strong>
+          <span>SYSTEMS LIVE RIGHT NOW</span>
+          <p>
+            Of {projectCount} open-source projects, {liveLabel} respond at
+            their live URLs today. Every link on this page is real.
+          </p>
+        </article>
+        <article>
+          <strong>{industryExperienceLabel}</strong>
+          <span>MONTHS INDUSTRY EXPERIENCE</span>
+          <p>
+            Seven months in security analysis, three in data engineering, now
+            on industry placement at Voxon.
+          </p>
+        </article>
+        <article>
+          <strong>04</strong>
+          <span>OPERATING DOMAINS</span>
+          <p>
+            Data engineering, threat detection ML, security operations and
+            production delivery.
+          </p>
+        </article>
+        <article>
+          <strong>2023</strong>
+          <span>NASA GLOBAL FINALIST</span>
+          <p>
+            Team Eklavya, planetary-data sonification project that became
+            Cosmic Keys.
+          </p>
+        </article>
+      </div>
+
+      <div class="ih-proof-credentials">
+        <span>AWS Certified Data Engineer – Associate</span>
+        <span>OCI Data Science Professional</span>
+        <span>NASA Space Apps Global Finalist</span>
+      </div>
+
+      <div class="ih-certs">
+        <p class="ih-certs-title">003.B / CERTIFICATES ON THE WALL</p>
+        <div class="ih-certs-grid">
+          {
+            certs.map((cert, index) => (
+              <a
+                href={cert.img.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ih-cert-card"
+                data-tilt={index % 3}
+                aria-label={`View ${cert.title} certificate`}
+              >
+                <span class="ih-cert-media">
+                  <img
+                    src={cert.img.src}
+                    width={cert.img.width}
+                    height={cert.img.height}
+                    alt={`${cert.title} certificate`}
+                    loading="lazy"
+                  />
+                </span>
+                <span class="ih-cert-caption">
+                  <b>{cert.title}</b>
+                  <i>{cert.issuer}</i>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+        <p class="ih-certs-proof">
+          NASA finalist registry:{" "}
+          <a
+            href="https://www.spaceappschallenge.org/2023/awards/global-finalists/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            spaceappschallenge.org / 2023 global finalists ↗
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section class="ih-journey ih-scene" data-scene="3" id="trajectory">
+      <div class="ih-section-head">
+        <p class="ih-index">004 / EXPERIENCE</p>
+        <p>
+          Security operations first, then data engineering, now AI systems
+          work at Voxon.
+        </p>
+      </div>
+
+      <div class="ih-journey-list">
+        {
+          experience.map((step, index) => (
+            <article>
+              <div class="ih-journey-index">
+                <span>0{index + 1}</span>
+                <i />
+              </div>
+              <p>{step.period}</p>
+              <div>
+                <h3>{step.role}</h3>
+                <b>{step.org}</b>
+              </div>
+              <div>
+                <span>{step.location}</span>
+                <p>{step.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="ih-journey ih-scene" data-scene="5" id="education">
+      <div class="ih-section-head">
+        <p class="ih-index">005 / EDUCATION</p>
+        <p>Undergraduate computing in India, postgraduate IT in Adelaide.</p>
+      </div>
+
+      <div class="ih-journey-list">
+        {
+          education.map((step, index) => (
+            <article>
+              <div class="ih-journey-index">
+                <span>0{index + 1}</span>
+                <i />
+              </div>
+              <p>{step.period}</p>
+              <div>
+                <h3>{step.degree}</h3>
+                <b>{step.org}</b>
+              </div>
+              <div>
+                <span>{step.location}</span>
+                <p>{step.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="ih-notes ih-scene" data-scene="4" id="notes">
+      <div class="ih-notes-title">
+        <p class="ih-index">006 / FIELD NOTES</p>
+        <h2>READ WHAT<br />I’M <i>THINKING.</i></h2>
+        <p>
+          The items are supplied by the same build-time RSS feed used by the
+          blog. No hard-coded guessed article slugs.
+        </p>
+      </div>
+
+      <div class="ih-note-links">
+        {
+          posts.length > 0 ? (
+            posts.map((post) => (
+              <a href={post.link}>
+                <span>{post.pubDate}</span>
+                <b>{post.title}</b>
+                <i>↗</i>
+              </a>
+            ))
+          ) : (
+            <a href={identity.blog}>
+              <span>INDEX</span>
+              <b>Open all field notes</b>
+              <i>↗</i>
+            </a>
+          )
+        }
+        <a href={identity.blog}>
+          <span>ALL</span><b>Field notes archive</b><i>↗</i>
+        </a>
+      </div>
+    </section>
+
+    <footer class="ih-contact ih-scene" data-scene="0" id="contact">
+      <div class="ih-contact-top">
+        <p>007 / OPEN CHANNEL</p>
+        <span>ADELAIDE, SOUTH AUSTRALIA</span>
+      </div>
+      <h2>LET’S BUILD<br /><em>SOMETHING REAL.</em></h2>
+      <p class="ih-contact-copy">
+        Data engineering, machine learning, automation and security
+        engineering are the current operating range. {availability.line}
+      </p>
+
+      <div class="ih-contact-bottom">
+        <CopyEmail client:visible email={identity.email} />
+        <div>
+          <a href={identity.github} target="_blank" rel="noopener noreferrer">
+            GITHUB ↗
+          </a>
+          <a href={identity.linkedin} target="_blank" rel="noopener noreferrer">
+            LINKEDIN ↗
+          </a>
+          <a href="/resume">RESUME ↗</a>
+          <a href={identity.blog}>FIELD NOTES ↗</a>
+        </div>
+      </div>
+      <small>© 2026 VIKRANT SHARMA · ADELAIDE, AUSTRALIA</small>
+    </footer>
+
+    <StatsOverlay client:idle />
+  </div>
 </BaseLayout>

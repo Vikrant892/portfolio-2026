@@ -1,9 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { projects } from "../data/projects";
+import {
+  availability,
+  experience,
+  education,
+  industryExperienceLabel,
+} from "../data/profile";
 
 // Recruiter view: everything that matters in under two minutes, no shader,
 // no animation cost, one scroll. Same visual language as the main site.
+const liveCount = projects.filter((p) => p.status === "live").length;
+const statusLabel: Record<string, string> = {
+  sleeping: "DEMO OFFLINE",
+  migrating: "MIGRATING",
+  archived: "ARCHIVED",
+};
 ---
 
 <BaseLayout
@@ -11,16 +23,16 @@ import { projects } from "../data/projects";
   bare
   description="Vikrant Sharma in two minutes: experience, certifications and every shipped project with live links. Machine learning, data engineering and security. Adelaide, Australia."
 >
-  <main class="rv">
+  <div class="rv">
     <div class="rv-inner">
       <header class="rv-head">
         <div>
           <p class="rv-kicker">RECRUITER VIEW · TWO-MINUTE READ</p>
           <h1>VIKRANT SHARMA</h1>
           <p class="rv-sub">
-            ML · Data Engineering · Security — Adelaide, Australia. Master of
-            IT at UniSC (Aug 2027). Open to graduate and junior roles from
-            July 2027, full working rights.
+            Data Engineering · ML · Security — Adelaide, Australia. Master of
+            Information Technology, UniSC (graduating Aug 2027).
+            {availability.line}
           </p>
         </div>
         <nav class="rv-links" aria-label="Contact">
@@ -41,8 +53,8 @@ import { projects } from "../data/projects";
       </header>
 
       <section class="rv-facts" aria-label="Proof">
-        <span>7 public deployments, all open source</span>
-        <span>10 months industry experience</span>
+        <span>{liveCount} systems live right now, all open source</span>
+        <span>{industryExperienceLabel} months industry experience</span>
         <span>AWS Certified Data Engineer – Associate</span>
         <span>OCI Data Science Professional</span>
         <span>NASA Space Apps Global Finalist 2023</span>
@@ -50,27 +62,19 @@ import { projects } from "../data/projects";
 
       <section aria-labelledby="rv-exp">
         <h2 id="rv-exp">EXPERIENCE</h2>
-        <div class="rv-row">
-          <b>Industry Placement · Voxon</b>
-          <span>Aug 2026—Present · Adelaide</span>
-          <p>AI capabilities in VoxelOS as part of the Master's placement.</p>
-        </div>
-        <div class="rv-row">
-          <b>Data Engineering Intern · Nagarro</b>
-          <span>Dec 2024—Feb 2025 · Gurugram (remote)</span>
-          <p>
-            ETL pipelines to analyst-ready dimensional tables on AWS Redshift
-            and Snowflake.
-          </p>
-        </div>
-        <div class="rv-row">
-          <b>Cybersecurity Junior Analyst · AT SecurDI</b>
-          <span>May—Dec 2023 · Ahmedabad</span>
-          <p>
-            SIEM monitoring, alert triage, OWASP testing, ISO 27001 / NIST CSF
-            audit work.
-          </p>
-        </div>
+        {
+          experience.map((entry) => (
+            <div class="rv-row">
+              <b>
+                {entry.role} · {entry.org}
+              </b>
+              <span>
+                {entry.period} · {entry.location}
+              </span>
+              <p>{entry.body}</p>
+            </div>
+          ))
+        }
       </section>
 
       <section aria-labelledby="rv-proj">
@@ -86,13 +90,22 @@ import { projects } from "../data/projects";
               <div class="rv-project-foot">
                 <i>{project.stack.slice(0, 5).join(" · ")}</i>
                 <span class="rv-project-links">
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    LIVE ↗
-                  </a>
+                  {
+                    project.status === "live" ? (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        LIVE ↗
+                      </a>
+                    ) : (
+                      <span class="rv-status">
+                        {statusLabel[project.status] ??
+                          project.status.toUpperCase()}
+                      </span>
+                    )
+                  }
                   <a
                     href={project.github}
                     target="_blank"
@@ -110,24 +123,27 @@ import { projects } from "../data/projects";
 
       <section aria-labelledby="rv-edu">
         <h2 id="rv-edu">EDUCATION</h2>
-        <div class="rv-row">
-          <b>Master of Information Technology · UniSC Adelaide</b>
-          <span>Feb 2025—Aug 2027</span>
-          <p>Data systems, software engineering, cybersecurity research.</p>
-        </div>
-        <div class="rv-row">
-          <b>Bachelor of Computer Applications · CHARUSAT</b>
-          <span>2021—2024</span>
-          <p>NASA Space Apps Global Finalist during this period.</p>
-        </div>
+        {
+          education.map((entry) => (
+            <div class="rv-row">
+              <b>
+                {entry.degree} · {entry.org}
+              </b>
+              <span>{entry.period}</span>
+              <p>{entry.body}</p>
+            </div>
+          ))
+        }
       </section>
+
+      <p class="rv-visa">{availability.detail}</p>
 
       <footer class="rv-foot">
         <a href="/">See the full immersive portfolio ↗</a>
         <span>© 2026 VIKRANT SHARMA · ADELAIDE, AUSTRALIA</span>
       </footer>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <style is:global>
@@ -317,6 +333,20 @@ import { projects } from "../data/projects";
     font: 500 10px/1 var(--font-mono, monospace);
     letter-spacing: 0.12em;
     color: rgba(255, 255, 255, 0.45);
+  }
+  .rv-status {
+    font: 600 13px/1.2 var(--font-mono, monospace);
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.55);
+    border: 1px dashed rgba(255, 255, 255, 0.35);
+    padding: 4px 8px;
+  }
+  .rv-visa {
+    margin: 26px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.66);
+    max-width: 720px;
   }
   @media (max-width: 720px) {
     .rv-row {

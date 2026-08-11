@@ -26,6 +26,16 @@ export interface Project {
   live: string;
   github: string;
   featured: boolean;
+  /**
+   * Honest deployment state, checked against the real URL:
+   * - live: responds and is usable right now (HF free Spaces may take a
+   *   moment to wake, but they wake on visit)
+   * - sleeping: needs a manual wake/restart before it responds
+   * - migrating: being moved between hosts, temporarily unavailable
+   * - archived: demo intentionally offline; source remains available
+   * Only status "live" may render a run-the-system CTA.
+   */
+  status: "live" | "sleeping" | "migrating" | "archived";
 }
 
 export const projects: Project[] = [
@@ -54,6 +64,7 @@ export const projects: Project[] = [
     live: "https://studentops.vikrant69g.com",
     github: "https://github.com/Vikrant892/studentops",
     featured: true,
+    status: "live",
   },
   {
     slug: "hybrid-ml-intrusion-detection",
@@ -87,6 +98,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/ids-project",
     github: "https://github.com/Vikrant892/ids-project",
     featured: true,
+    status: "live",
   },
   {
     slug: "credit-card-fraud-detection",
@@ -113,6 +125,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/credit-card-fraud-detection",
     github: "https://github.com/Vikrant892/credit-card-fraud-detection",
     featured: false,
+    status: "live",
   },
   {
     slug: "cosmic-keys",
@@ -139,6 +152,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/nasa-space-challenge",
     github: "https://github.com/Vikrant892/nasa-space-challenge",
     featured: false,
+    status: "live",
   },
   {
     slug: "threatlens",
@@ -164,6 +178,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/threat-lens",
     github: "https://github.com/Vikrant892/threat-lens",
     featured: false,
+    status: "live",
   },
   {
     slug: "phishing-detection-platform",
@@ -189,6 +204,8 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/phishing-detection-platform",
     github: "https://github.com/Vikrant892/Phishing-detection-platform",
     featured: true,
+    // Space is owner-paused (verified 12 Aug 2026): visitors cannot wake it.
+    status: "sleeping",
   },
   {
     slug: "log-analyzer-dashboard",
@@ -214,6 +231,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/log-analyzer-dashboard",
     github: "https://github.com/Vikrant892/log-analyzer-dashboard",
     featured: false,
+    status: "live",
   },
   {
     slug: "password-strength-api",
@@ -239,6 +257,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/password-strength-api",
     github: "https://github.com/Vikrant892/password-strength-api",
     featured: false,
+    status: "live",
   },
 ];
 

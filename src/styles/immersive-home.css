@@ -9,10 +9,11 @@ html.ih-active body {
   color: #f5f5f2 !important;
 }
 
+/* Native cursor stays visible everywhere; the ring is decoration only. */
 html.ih-active body,
 html.ih-active a,
 html.ih-active button {
-  cursor: none;
+  cursor: auto;
 }
 
 .immersive-home {
@@ -858,6 +859,28 @@ html.ih-lowpower .ih-portrait-glow {
 }
 .ih-project-actions a:hover {
   border-bottom-color: #fff;
+}
+.ih-project-actions a:focus-visible,
+.ih-rail a:focus-visible,
+.ih-pill:focus-visible,
+.ih-recruiter-link:focus-visible {
+  outline: 2px solid rgba(151, 255, 187, 0.9);
+  outline-offset: 3px;
+}
+.ih-status-chip {
+  font: 600 13px/1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  padding: 6px 10px;
+}
+.ih-certs-proof {
+  margin: 22px 0 0;
+  font: 500 12px/1.5 var(--font-mono);
+  color: rgba(255, 255, 255, 0.6);
+}
+.ih-certs-proof a {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .ih-more-systems,

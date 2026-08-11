@@ -480,6 +480,10 @@ function SectionRail() {
           <b>{section.label}</b>
         </a>
       ))}
+      <a href="https://vikrant69g.com/blog" className="ih-rail-blog">
+        <span>08</span>
+        <b>BLOG ↗</b>
+      </a>
     </nav>
   );
 }
@@ -1052,15 +1056,6 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
           <span>69G</span>
           <b>VIKRANT SHARMA</b>
         </a>
-        <nav aria-label="Portfolio">
-          <a href="#work">WORK</a>
-          <a href="#profile">CAPABILITY</a>
-          <a href="#proof">PROOF</a>
-          <a href="#trajectory">EXPERIENCE</a>
-          <a href="#education">EDUCATION</a>
-          <a href="#notes">FIELD NOTES</a>
-          <a href="https://vikrant69g.com/blog">BLOG</a>
-        </nav>
         <button
           className="ih-signal"
           type="button"
@@ -1108,10 +1103,6 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
               height={portraitImg.height}
               alt="Vikrant Sharma"
             />
-          </div>
-          <div className="ih-portrait-label">
-            <span>VIKRANT SHARMA</span>
-            <b>ML · DATA · SECURITY</b>
           </div>
         </div>
 

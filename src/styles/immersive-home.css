@@ -160,8 +160,8 @@ html.ih-active button {
   right: 0;
   z-index: 80;
   height: 72px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 2.4vw;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -294,9 +294,9 @@ html.ih-active button {
   grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
-  font: 500 10px/1 var(--font-mono);
-  letter-spacing: 0.18em;
-  color: rgba(255, 255, 255, 0.68);
+  font: 600 15px/1 var(--font-mono);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .ih-hero h1 {
@@ -1276,6 +1276,11 @@ html.ih-active button {
 .ih-rail a.is-active span {
   color: rgba(151, 255, 187, 0.95);
 }
+.ih-rail-blog {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  margin-top: 4px;
+  padding-top: 10px !important;
+}
 
 html.ih-active {
   scroll-behavior: smooth;
@@ -1569,12 +1574,8 @@ html.ih-active {
     background: rgba(3, 4, 6, 0.16);
   }
   .ih-nav {
-    grid-template-columns: 1fr auto;
     height: 66px;
     padding: 0 18px;
-  }
-  .ih-nav nav {
-    display: none;
   }
   .ih-signal {
     cursor: pointer;

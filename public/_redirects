@@ -1,0 +1,4 @@
+# Legacy URLs from the previous static site (portfolio-mntn era).
+/film / 301
+/cv /resume 301
+/sitemap.xml /sitemap-index.xml 301

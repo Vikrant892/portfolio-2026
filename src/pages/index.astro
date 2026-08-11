@@ -1,24 +1,55 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/sections/Hero.astro';
-import SelectedWork from '../components/sections/SelectedWork.astro';
-import ResumeSection from '../components/sections/ResumeSection.astro';
-import ForRecruiters from '../components/sections/ForRecruiters.astro';
-import Expertise from '../components/sections/Expertise.astro';
-import Journey from '../components/sections/Journey.astro';
-import Achievements from '../components/sections/Achievements.astro';
-import Writing from '../components/sections/Writing.astro';
-import Contact from '../components/sections/Contact.astro';
+import ImmersiveHome from '../components/immersive/ImmersiveHome';
+import '../styles/immersive-home.css';
+
+interface BlogPost {
+  title: string;
+  link: string;
+  pubDate: string;
+}
+
+// Preserve the existing site's source of truth for field notes: the blog RSS
+// feed is read at build time. A failed fetch degrades to an archive link in
+// ImmersiveHome rather than rendering guessed or stale article URLs.
+let posts: BlogPost[] = [];
+try {
+  const res = await fetch('https://vikrant69g.com/blog/rss.xml', {
+    headers: { 'User-Agent': 'portfolio-2026-build' },
+  });
+
+  if (res.ok) {
+    const xml = await res.text();
+    const itemMatches = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+
+    posts = itemMatches.slice(0, 3).map((item) => {
+      const pick = (tag: string) => {
+        const m = item.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
+        return m?.[1] ? m[1].replace(/<!\[CDATA\[|\]\]>/g, '').trim() : '';
+      };
+
+      const rawDate = pick('pubDate');
+      const date = rawDate ? new Date(rawDate) : null;
+      const pubDate = date && !Number.isNaN(date.getTime())
+        ? date.toLocaleDateString('en-AU', { day: '2-digit', month: '2-digit', year: '2-digit' })
+        : rawDate;
+
+      return {
+        title: pick('title'),
+        link: pick('link'),
+        pubDate,
+      };
+    }).filter((post) => post.title && post.link);
+  }
+} catch {
+  posts = [];
+}
 ---
 
-<BaseLayout title="Home">
-  <Hero />
-  <SelectedWork />
-  <ResumeSection />
-  <ForRecruiters />
-  <Expertise />
-  <Journey />
-  <Achievements />
-  <Writing />
-  <Contact />
+<BaseLayout
+  title="Home"
+  bare
+  description="Vikrant Sharma — machine learning, data engineering and cybersecurity systems. Adelaide, Australia."
+>
+  <ImmersiveHome client:load posts={posts} />
 </BaseLayout>

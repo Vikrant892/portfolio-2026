@@ -1,36 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  identity,
+  availability,
+  experience,
+  education,
+} from '../data/profile';
+import { projects as allProjects } from '../data/projects';
 
-const work = [
-  {
-    role: 'Data Engineer',
-    org: 'Nagarro',
-    location: 'Adelaide, Australia',
-    period: 'Dec 2024 to Feb 2025',
-    points: [
-      'Designed and optimised dimensional data models on AWS Redshift and Snowflake for enterprise analytics workloads.',
-      'Built ETL pipelines that transformed high-volume transactional data into analyst-ready dimensional tables.',
-      'Delivered iterative client work via Agile and Scrum, contributing to weekly deliverables for enterprise stakeholders.',
-    ],
-  },
-  {
-    role: 'Cybersecurity Junior Analyst',
-    org: 'AT SecurDI',
-    location: 'Ahmedabad, India',
-    period: 'May 2023 to Dec 2023',
-    points: [
-      'Monitored SIEM platforms and triaged alerts to identify and escalate genuine security incidents.',
-      'Authored incident response runbooks adopted by the wider security operations team.',
-      'Performed OWASP Top 10 web application security testing for client engagements.',
-      'Conducted ISO 27001 and NIST CSF compliance audits across multiple client environments.',
-    ],
-  },
-];
+// Work history and education come from the shared profile source of truth.
+const work = experience;
+const liveCount = allProjects.filter((p) => p.status === 'live').length;
 
 const projects = [
   {
     name: 'Hybrid ML Intrusion Detection System',
-    desc: 'Real-time hybrid NIDS and HIDS: Isolation Forest, Random Forest and Autoencoder ensemble on CICIDS2017 with MITRE ATT&CK alert mapping. Master of IT capstone, live on Hugging Face Spaces.',
+    desc: 'Real-time hybrid NIDS and HIDS: Isolation Forest, Random Forest and Autoencoder ensemble on CICIDS2017 with MITRE ATT&CK alert mapping. Master’s capstone, live on Hugging Face Spaces.',
   },
   {
     name: 'ThreatLens',
@@ -62,7 +47,7 @@ const certs = [
 
 <BaseLayout
   title="Resume"
-  description="Resume of Vikrant Sharma, machine learning engineer specialising in cybersecurity. Adelaide, Australia."
+  description={`Resume of ${identity.name}, ${identity.jobTitle.toLowerCase()}. ${identity.location}.`}
   bare
 >
   <div class="container-site max-w-3xl py-10 sm:py-14 print:max-w-none print:py-0">
@@ -88,7 +73,7 @@ const certs = [
       <header class="border-b-2 border-[var(--color-ink)] pb-6">
         <h1 class="t-display text-4xl text-[var(--color-ink)] sm:text-5xl">Vikrant Sharma</h1>
         <p class="mt-2 text-lg text-[var(--color-ink-muted)]">
-          Machine Learning Engineer specialising in Cybersecurity
+          {identity.jobTitle}
         </p>
         <p class="mono mt-3 text-sm text-[var(--color-ink-dim)]">
           Adelaide, South Australia ·
@@ -101,13 +86,13 @@ const certs = [
 
       <section class="mt-8" aria-label="Summary">
         <p class="text-[15px] leading-relaxed text-[var(--color-ink-muted)]">
-          Machine learning engineer who builds threat detection systems that
-          ship. Seven production ML and security systems with live public demos
-          and open source code. Industry experience across data engineering at
-          Nagarro and security operations at AT SecurDI. NASA Space Apps Global
-          Finalist 2023. Master of IT candidate at UniSC Adelaide, graduating
-          August 2027. Open to internships and part-time work now, full-time
-          over the November to February break.
+          Data engineer and machine learning engineer who builds systems that
+          ship. Eight open-source ML, data and security systems, {liveCount}
+          running as live public demos. Industry experience across AI systems
+          at Voxon, data engineering at Nagarro and security operations at AT
+          SecurDI. NASA Space Apps Global Finalist 2023.
+          {education[0]?.degree} candidate at UniSC Adelaide, graduating
+          August 2027. {availability.line}
         </p>
       </section>
 
@@ -139,7 +124,7 @@ const certs = [
 
       <section class="mt-8" aria-labelledby="r-proj">
         <h2 id="r-proj" class="t-eyebrow border-b border-[var(--color-border)] pb-2">
-          Selected projects, all live at vikrant69g.com
+          Selected projects, linked from vikrant69g.com
         </h2>
         <ul class="mt-4 space-y-3">
           {
@@ -190,16 +175,17 @@ const certs = [
       <section class="mt-8" aria-labelledby="r-edu">
         <h2 id="r-edu" class="t-eyebrow border-b border-[var(--color-border)] pb-2">Education</h2>
         <ul class="mt-4 space-y-3 text-sm leading-relaxed">
-          <li>
-            <span class="font-semibold text-[var(--color-ink)]">Master of Information Technology.</span>
-            <span class="text-[var(--color-ink-muted)]">
-              University of the Sunshine Coast, Adelaide. 2025 to Aug 2027.
-            </span>
-          </li>
-          <li>
-            <span class="font-semibold text-[var(--color-ink)]">Bachelor of Computer Applications.</span>
-            <span class="text-[var(--color-ink-muted)]">CHARUSAT, CMPICA. 2021 to 2024.</span>
-          </li>
+          {
+            education.map((entry) => (
+              <li>
+                <span class="font-semibold text-[var(--color-ink)]">{entry.degree}.</span>
+                <span class="text-[var(--color-ink-muted)]">
+                  {' '}
+                  {entry.org}. {entry.period.replace('—', ' to ')}.
+                </span>
+              </li>
+            ))
+          }
         </ul>
       </section>
     </article>

@@ -36,7 +36,7 @@ export const identity = {
 export const availability = {
   line: "Open to internships now and graduate roles from August 2027.",
   detail:
-    "International student (subclass 500): unlimited hours during course breaks, capped during trimester. Eligible for the post-study work visa (485) on graduation in August 2027.",
+    "International student (subclass 500): unlimited hours during course breaks, capped during trimester. Expected to be eligible for a post-study work visa (485) on graduation in August 2027, subject to meeting the stream requirements at the time.",
 };
 
 export interface ExperienceEntry {
@@ -45,6 +45,8 @@ export interface ExperienceEntry {
   org: string;
   location: string;
   body: string;
+  /** Resume bullet points; the /resume page renders these. */
+  points: string[];
   /** Completed engagements carry their agreed month count; null = ongoing. */
   months: number | null;
   startISO: string;
@@ -53,10 +55,15 @@ export interface ExperienceEntry {
 export const experience: ExperienceEntry[] = [
   {
     period: "Aug 2026—Present",
-    role: "Industry Placement",
+    role: "Software Engineer Intern",
     org: "Voxon",
     location: "Adelaide, Australia",
     body: "Working on AI capabilities in VoxelOS as part of the Master's industry placement.",
+    points: [
+      "Developing AI capabilities for VoxelOS as part of a Master's industry placement: prototyping and integrating real-time ML models for voxel processing and perception.",
+      "Optimising model inference and deployment pipelines to meet embedded performance constraints, collaborating with firmware and software teams.",
+      "Building automated testing and monitoring for model behaviour to keep live demos and internal releases reliable.",
+    ],
     months: null,
     startISO: "2026-08-01",
   },
@@ -66,6 +73,11 @@ export const experience: ExperienceEntry[] = [
     org: "Nagarro",
     location: "Gurugram, India (remote)",
     body: "ETL pipelines turning high-volume transactional data into analyst-ready dimensional tables on AWS Redshift and Snowflake, delivered in Agile sprints.",
+    points: [
+      "Designed and optimised dimensional data models on AWS Redshift and Snowflake for enterprise analytics workloads.",
+      "Built ETL pipelines that transformed high-volume transactional data into analyst-ready dimensional tables.",
+      "Delivered iterative client work via Agile and Scrum, collaborating with cross-functional teams of data analysts and product owners.",
+    ],
     months: 3,
     startISO: "2024-12-01",
   },
@@ -75,6 +87,12 @@ export const experience: ExperienceEntry[] = [
     org: "AT SecurDI",
     location: "Ahmedabad, India",
     body: "SIEM monitoring, alert triage, incident-response runbooks, OWASP Top 10 testing, and ISO 27001 / NIST CSF audit work.",
+    points: [
+      "Monitored SIEM platforms and triaged alerts to identify and escalate genuine security incidents.",
+      "Authored incident response runbooks adopted by the wider security operations team.",
+      "Performed OWASP Top 10 web application security testing for client engagements.",
+      "Conducted ISO 27001 and NIST CSF compliance audits across multiple client environments.",
+    ],
     months: 7,
     startISO: "2023-05-01",
   },
@@ -97,8 +115,11 @@ export const industryExperienceLabel = `${industryMonths()}+`;
 
 export const education = [
   {
-    period: "Feb 2025—Aug 2027",
-    degree: "Master of Information Technology",
+    // Degree name and commencement verified against the official UniSC
+    // transcript (program "M Inform & Comm Technology", first study period
+    // 2025 Trimester 2).
+    period: "Jul 2025—Aug 2027",
+    degree: "Master of Information and Communications Technology",
     org: "University of the Sunshine Coast, Adelaide Campus",
     location: "Adelaide, Australia",
     body: "Postgraduate study across data systems, software engineering and cybersecurity research, including the deployed hybrid ML intrusion-detection capstone.",

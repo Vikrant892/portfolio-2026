@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Motion from '../components/Motion.astro';
 import ImageGuard from '../components/ImageGuard.astro';
 import portrait from '../assets/portrait.jpg';
+import { identity } from '../data/profile';
 
 interface Props {
   title: string;
@@ -16,7 +17,7 @@ interface Props {
 
 const {
   title,
-  description = 'Vikrant Sharma. Data engineer and machine learning engineer with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Adelaide, Australia.',
+  description = `${identity.name}. ${identity.jobTitle} with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. ${identity.location}.`,
   noindex = false,
   bare = false,
 } = Astro.props;
@@ -65,14 +66,13 @@ const schemaGraph = {
       mainEntityOfPage: SITE,
       image: ogImageURL,
       email: 'mailto:vikrantsharma892@gmail.com',
-      jobTitle: 'Data Engineer & Machine Learning Engineer',
+      jobTitle: identity.jobTitle,
       worksFor: {
         '@type': 'Organization',
         name: 'Voxon',
         description: 'Industry placement, AI capabilities in VoxelOS',
       },
-      description:
-        'Data engineer and machine learning engineer with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Based in Adelaide, Australia.',
+      description: `${identity.jobTitle} with a security background. AWS Certified Data Engineer, OCI Data Science Professional, NASA Space Apps Global Finalist. Based in ${identity.location}.`,
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Adelaide',

@@ -360,11 +360,35 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    // Adaptive quality: machines without GPU acceleration (software WebGL)
+    // start at a much lower render resolution, and a frame-time watchdog
+    // keeps stepping the pixel budget down until the animation is smooth.
+    // The fluid is soft, so upscaling a small canvas is visually fine.
+    const rendererInfo = (() => {
+      try {
+        const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        return String(
+          ext
+            ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+            : gl.getParameter(gl.RENDERER),
+        );
+      } catch {
+        return "";
+      }
+    })();
+    const softwareGpu = /basic render|swiftshader|llvmpipe|software/i.test(
+      rendererInfo,
+    );
+    const MIN_PIXEL_BUDGET = 360_000;
+    let pixelBudget = softwareGpu ? 820_000 : 3_400_000;
+
     const resize = () => {
       const mobile = window.innerWidth < 760;
-      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.1 : 1.5);
-      const w = Math.floor(window.innerWidth * dpr);
-      const h = Math.floor(window.innerHeight * dpr);
+      const capped = Math.min(window.devicePixelRatio || 1, mobile ? 1.1 : 1.5);
+      const area = Math.max(1, window.innerWidth * window.innerHeight);
+      const dpr = Math.min(capped, Math.sqrt(pixelBudget / area));
+      const w = Math.max(320, Math.floor(window.innerWidth * dpr));
+      const h = Math.max(180, Math.floor(window.innerHeight * dpr));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
@@ -382,7 +406,35 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
     resize();
 
     const start = performance.now();
+    let lastFrame = start;
+    let frameCount = 0;
+    let frameAccum = 0;
+    let frameSamples = 0;
+
     const render = (now: number) => {
+      // Frame-time watchdog: after a short warmup, average frame duration
+      // over 40-frame windows; while it stays above ~45ms (22fps), shrink
+      // the pixel budget until the animation runs smoothly.
+      const dt = now - lastFrame;
+      lastFrame = now;
+      frameCount++;
+      if (frameCount > 10 && dt < 2000) {
+        frameAccum += dt;
+        frameSamples++;
+        // Adapt quickly: judge every 12 frames so even a 5fps machine
+        // reaches its stable budget within a few seconds.
+        if (frameSamples >= 12) {
+          const avg = frameAccum / frameSamples;
+          frameAccum = 0;
+          frameSamples = 0;
+          if (avg > 45 && pixelBudget > MIN_PIXEL_BUDGET) {
+            const factor = avg > 120 ? 0.4 : 0.6;
+            pixelBudget = Math.max(MIN_PIXEL_BUDGET, pixelBudget * factor);
+            resize();
+          }
+        }
+      }
+
       const target =
         PALETTES[sceneRef.current % PALETTES.length] ?? basePalette;
       const smooth = 0.07;

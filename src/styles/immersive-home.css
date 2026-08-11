@@ -39,8 +39,8 @@ html.ih-active button {
   height: 100%;
   z-index: -7;
   display: block;
-  opacity: 0.64;
-  filter: saturate(0.82) brightness(0.78) contrast(1.04);
+  opacity: 0.76;
+  filter: saturate(0.98) brightness(0.86) contrast(1.05);
   background: radial-gradient(
     circle at 35% 30%,
     #2a3547 0,
@@ -53,8 +53,8 @@ html.ih-active button {
 }
 
 .is-chaos .ih-shader {
-  opacity: 0.82;
-  filter: saturate(1) brightness(0.86) contrast(1.06);
+  opacity: 0.9;
+  filter: saturate(1.08) brightness(0.94) contrast(1.07);
 }
 
 .ih-shader.shader-fallback {
@@ -407,11 +407,11 @@ html.ih-active button {
 /* Portrait: intentionally isolated from shader so the face never disappears. */
 .ih-portrait-card {
   position: absolute;
-  right: 5.4vw;
-  bottom: 8.8vh;
-  width: min(29vw, 440px);
+  right: 5vw;
+  bottom: 8.2vh;
+  width: min(34vw, 520px);
   aspect-ratio: 0.86;
-  z-index: 6;
+  z-index: 9;
   display: grid;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -438,15 +438,15 @@ html.ih-active button {
   inset: 14% 10% 20%;
   background: radial-gradient(
     circle at 50% 38%,
-    rgba(152, 190, 255, 0.25),
-    rgba(98, 72, 180, 0.12) 42%,
-    transparent 72%
+    rgba(152, 190, 255, 0.38),
+    rgba(98, 72, 180, 0.18) 42%,
+    transparent 74%
   );
-  filter: blur(22px);
+  filter: blur(24px);
 }
 
 .ih-portrait-frame {
-  width: 72%;
+  width: 78%;
   aspect-ratio: 0.84;
   position: relative;
   z-index: 3;
@@ -463,7 +463,7 @@ html.ih-active button {
   object-fit: cover;
   object-position: 50% 30%;
   opacity: 1;
-  filter: brightness(1.06) contrast(1.04) saturate(1.04);
+  filter: brightness(1.08) contrast(1.06) saturate(1.08);
   transform: scale(1.02);
 }
 
@@ -1431,8 +1431,8 @@ html.ih-active button {
     inset: -14px -18px -14px -20px;
   }
   .ih-portrait-card {
-    width: min(43vw, 360px);
-    right: -2vw;
+    width: min(47vw, 390px);
+    right: 0;
     bottom: 21vh;
   }
   .ih-scroll-cue {
@@ -1595,10 +1595,10 @@ html.ih-active button {
     flex-wrap: wrap;
   }
   .ih-portrait-card {
-    width: 58vw;
-    right: -10vw;
+    width: 62vw;
+    right: -6vw;
     bottom: 27vh;
-    opacity: 0.96;
+    opacity: 1;
   }
   .ih-portrait-frame {
     width: 68%;

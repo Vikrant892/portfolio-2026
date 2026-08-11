@@ -1152,6 +1152,117 @@ html.ih-active button {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Certificate wall: real scans presented like framed exhibits. */
+.ih-certs {
+  margin: 9vh 3vw 0;
+}
+.ih-certs-title {
+  font: 600 13px/1 var(--font-mono);
+  letter-spacing: 0.17em;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0 0 26px;
+}
+.ih-certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.ih-cert-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(7, 9, 13, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 14px 14px 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  transition:
+    transform 0.45s var(--ih-ease),
+    border-color 0.3s,
+    box-shadow 0.45s;
+}
+.ih-cert-card[data-tilt="0"] {
+  transform: rotate(-1.1deg);
+}
+.ih-cert-card[data-tilt="2"] {
+  transform: rotate(1.1deg);
+}
+.ih-cert-card:hover {
+  transform: rotate(0deg) translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.55);
+  z-index: 3;
+}
+.ih-cert-media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #0b0d12;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ih-cert-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ih-cert-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 14px;
+}
+.ih-cert-caption b {
+  font: 600 14px/1.3 var(--font-mono);
+  letter-spacing: 0.03em;
+}
+.ih-cert-caption i {
+  font: 500 12px/1.3 var(--font-mono);
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* Hidden owner overlay (Ctrl+Alt+H): unique visitor counter. */
+.ih-stats-overlay {
+  position: fixed;
+  z-index: 300;
+  inset: auto 26px 26px auto;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 26px;
+  background: rgba(4, 6, 9, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
+}
+.ih-stats-overlay p {
+  margin: 0;
+  font: 600 10px/1 var(--font-mono);
+  letter-spacing: 0.2em;
+  color: rgba(151, 255, 187, 0.9);
+}
+.ih-stats-overlay strong {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 1;
+}
+.ih-stats-overlay span {
+  font: 600 12px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.85);
+}
+.ih-stats-overlay i {
+  font: 500 10px/1.4 var(--font-mono);
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ih-stats-overlay b {
+  margin-top: 8px;
+  font: 500 9px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
 .ih-journey {
   min-height: 110svh;
 }
@@ -1502,6 +1613,10 @@ html.ih-active button {
     gap: 18px;
   }
 
+  .ih-certs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .ih-more-systems,
   .ih-capability,
   .ih-proof,
@@ -1663,6 +1778,16 @@ html.ih-active button {
   }
   .ih-proof-grid article {
     min-height: 210px;
+  }
+  .ih-certs-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .ih-cert-card {
+    transform: none !important;
+  }
+  .ih-stats-overlay {
+    inset: auto 14px 14px 14px;
   }
 
   .ih-journey-list article {

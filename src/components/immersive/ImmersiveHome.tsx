@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { projects } from "@/data/projects";
 import portraitImg from "@/assets/portrait.jpg";
+import certAws from "@/assets/certs/aws-data-engineer-associate.png";
+import certOci from "@/assets/certs/oracle.png";
+import certNasa from "@/assets/certs/tot-02.png";
+import certConf from "@/assets/certs/tot-01.png";
+import certTcs from "@/assets/certs/tot-14.png";
+import certBackend from "@/assets/certs/tot-12.png";
 
 type BlogPost = {
   title: string;
@@ -182,6 +188,39 @@ const capabilities: Record<
     tools: ["FastAPI", "Flask", "Docker", "Cloudflare", "GitHub Actions"],
   },
 };
+
+const certs = [
+  {
+    img: certAws,
+    title: "AWS Certified Data Engineer – Associate",
+    issuer: "Amazon Web Services · 2026",
+  },
+  {
+    img: certOci,
+    title: "OCI Data Science Professional",
+    issuer: "Oracle · 2025",
+  },
+  {
+    img: certNasa,
+    title: "NASA Galactic Problem Solver",
+    issuer: "NASA Space Apps Challenge · 2023",
+  },
+  {
+    img: certConf,
+    title: "icSoftComp Intl. Conference",
+    issuer: "Springer and CHARUSAT · 2022",
+  },
+  {
+    img: certTcs,
+    title: "TCS iON Career Edge",
+    issuer: "Tata Consultancy Services · 2023",
+  },
+  {
+    img: certBackend,
+    title: "Backend Web Dev, Express and Node",
+    issuer: "DevTown, GDSC KIIT, AWS CB · 2023",
+  },
+];
 
 const experience = [
   {
@@ -732,6 +771,37 @@ function ProofSection() {
         <span>OCI Data Science Professional</span>
         <span>NASA Space Apps Global Finalist</span>
       </div>
+
+      <div className="ih-certs">
+        <p className="ih-certs-title">003.B / CERTIFICATES ON THE WALL</p>
+        <div className="ih-certs-grid">
+          {certs.map((cert, index) => (
+            <a
+              key={cert.title}
+              href={cert.img.src}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ih-cert-card"
+              data-tilt={index % 3}
+              aria-label={`View ${cert.title} certificate`}
+            >
+              <span className="ih-cert-media">
+                <img
+                  src={cert.img.src}
+                  width={cert.img.width}
+                  height={cert.img.height}
+                  alt={`${cert.title} certificate`}
+                  loading="lazy"
+                />
+              </span>
+              <span className="ih-cert-caption">
+                <b>{cert.title}</b>
+                <i>{cert.issuer}</i>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -825,6 +895,40 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
   const [scene, setScene] = useState(0);
   const [chaos, setChaos] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
+  const [stats, setStats] = useState<{
+    unique: number;
+    since: string;
+  } | null>(null);
+
+  // Anonymous unique-visitor ping: one POST per browser session. The server
+  // stores only a salted hash of the IP, never the address itself.
+  useEffect(() => {
+    if (window.sessionStorage.getItem("ih-visit")) return;
+    window.sessionStorage.setItem("ih-visit", "1");
+    fetch("/api/track", { method: "POST" }).catch(() => {});
+  }, []);
+
+  // Hidden owner shortcut: Ctrl+Alt+H toggles the visitor counter overlay.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "h") {
+        event.preventDefault();
+        setStatsOpen((open) => {
+          if (!open) {
+            fetch("/api/stats")
+              .then((res) => (res.ok ? res.json() : null))
+              .then((data) => setStats(data))
+              .catch(() => setStats(null));
+          }
+          return !open;
+        });
+      }
+      if (event.key === "Escape") setStatsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const featuredSlugs = useMemo(
     () => [
@@ -904,6 +1008,7 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
           <a href="#trajectory">EXPERIENCE</a>
           <a href="#education">EDUCATION</a>
           <a href="#notes">FIELD NOTES</a>
+          <a href="https://vikrant69g.com/blog">BLOG</a>
         </nav>
         <button
           className="ih-signal"
@@ -1043,6 +1148,20 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
         </div>
         <small>© 2026 VIKRANT SHARMA · ADELAIDE, AUSTRALIA</small>
       </footer>
+
+      {statsOpen && (
+        <div
+          className="ih-stats-overlay"
+          role="dialog"
+          aria-label="Visitor statistics"
+        >
+          <p>SIGNAL RECEIVED</p>
+          <strong>{stats ? stats.unique : "—"}</strong>
+          <span>UNIQUE VISITORS</span>
+          <i>{stats ? `TRACKING SINCE ${stats.since}` : "STATS UNAVAILABLE"}</i>
+          <b>ESC TO CLOSE</b>
+        </div>
+      )}
     </div>
   );
 }

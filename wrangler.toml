@@ -1,0 +1,9 @@
+# Cloudflare Pages configuration for the portfolio-mntn project.
+# Deploy with: npx wrangler pages deploy dist
+name = "portfolio-mntn"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-08-11"
+
+[[kv_namespaces]]
+binding = "VISITS"
+id = "094c93c3feb74e2e90339a253b19d6c2"

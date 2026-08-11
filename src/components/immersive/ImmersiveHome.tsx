@@ -183,13 +183,20 @@ const capabilities: Record<
   },
 };
 
-const journey = [
+const experience = [
   {
-    period: "2021—2024",
-    role: "Bachelor of Computer Applications",
-    org: "CHARUSAT, CMPICA",
-    location: "Gujarat, India",
-    body: "Undergraduate computing degree. NASA Space Apps Global Finalist and class representative during this period.",
+    period: "Aug 2026—Present",
+    role: "Industry Placement",
+    org: "Voxon",
+    location: "Adelaide, Australia",
+    body: "Working on AI capabilities in VoxelOS as part of the Master's industry placement.",
+  },
+  {
+    period: "Dec 2024—Feb 2025",
+    role: "Data Engineering Intern",
+    org: "Nagarro",
+    location: "Gurugram, India (remote)",
+    body: "ETL pipelines turning high-volume transactional data into analyst-ready dimensional tables on AWS Redshift and Snowflake, delivered in Agile sprints.",
   },
   {
     period: "May—Dec 2023",
@@ -198,19 +205,22 @@ const journey = [
     location: "Ahmedabad, India",
     body: "SIEM monitoring, alert triage, incident-response runbooks, OWASP Top 10 testing, and ISO 27001 / NIST CSF audit work.",
   },
-  {
-    period: "Dec 2024—Feb 2025",
-    role: "Data Engineer",
-    org: "Nagarro",
-    location: "Adelaide, Australia",
-    body: "Dimensional data models and ETL pipelines on AWS Redshift and Snowflake for enterprise analytics workloads.",
-  },
+];
+
+const education = [
   {
     period: "Feb 2025—Aug 2027",
     role: "Master of Information Technology",
     org: "University of the Sunshine Coast, Adelaide",
     location: "Adelaide, Australia",
     body: "Postgraduate study across data systems, software engineering and cybersecurity research, including the deployed hybrid ML intrusion-detection capstone.",
+  },
+  {
+    period: "2021—2024",
+    role: "Bachelor of Computer Applications",
+    org: "CHARUSAT, CMPICA",
+    location: "Gujarat, India",
+    body: "Undergraduate computing degree. NASA Space Apps Global Finalist and class representative during this period.",
   },
 ];
 
@@ -726,19 +736,28 @@ function ProofSection() {
   );
 }
 
-function JourneySection() {
+function TimelineSection({
+  id,
+  scene,
+  heading,
+  tagline,
+  steps,
+}: {
+  id: string;
+  scene: string;
+  heading: string;
+  tagline: string;
+  steps: typeof experience;
+}) {
   return (
-    <section className="ih-journey ih-scene" data-scene="3" id="trajectory">
+    <section className="ih-journey ih-scene" data-scene={scene} id={id}>
       <div className="ih-section-head">
-        <p className="ih-index">004 / CAREER TRAJECTORY</p>
-        <p>
-          Security first, then data engineering, now postgraduate systems work
-          across both.
-        </p>
+        <p className="ih-index">{heading}</p>
+        <p>{tagline}</p>
       </div>
 
       <div className="ih-journey-list">
-        {journey.map((step, index) => (
+        {steps.map((step, index) => (
           <article key={`${step.period}-${step.role}`}>
             <div className="ih-journey-index">
               <span>0{index + 1}</span>
@@ -764,7 +783,7 @@ function NotesSection({ posts }: { posts: BlogPost[] }) {
   return (
     <section className="ih-notes ih-scene" data-scene="4" id="notes">
       <div className="ih-notes-title">
-        <p className="ih-index">005 / FIELD NOTES</p>
+        <p className="ih-index">006 / FIELD NOTES</p>
         <h2>
           READ WHAT
           <br />
@@ -882,7 +901,8 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
           <a href="#work">WORK</a>
           <a href="#profile">CAPABILITY</a>
           <a href="#proof">PROOF</a>
-          <a href="#trajectory">TRAJECTORY</a>
+          <a href="#trajectory">EXPERIENCE</a>
+          <a href="#education">EDUCATION</a>
           <a href="#notes">FIELD NOTES</a>
         </nav>
         <button
@@ -965,12 +985,25 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
       <MoreSystems featuredSlugs={featuredSlugs} />
       <CapabilityOverlap />
       <ProofSection />
-      <JourneySection />
+      <TimelineSection
+        id="trajectory"
+        scene="3"
+        heading="004 / EXPERIENCE"
+        tagline="Security operations first, then data engineering, now AI systems work at Voxon."
+        steps={experience}
+      />
+      <TimelineSection
+        id="education"
+        scene="5"
+        heading="005 / EDUCATION"
+        tagline="Undergraduate computing in India, postgraduate IT in Adelaide."
+        steps={education}
+      />
       <NotesSection posts={posts} />
 
       <footer className="ih-contact ih-scene" data-scene="0" id="contact">
         <div className="ih-contact-top">
-          <p>006 / OPEN CHANNEL</p>
+          <p>007 / OPEN CHANNEL</p>
           <span>ADELAIDE, SOUTH AUSTRALIA</span>
         </div>
         <h2>

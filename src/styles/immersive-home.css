@@ -323,7 +323,7 @@ html.ih-active button {
   color: rgba(255, 255, 255, 0.38);
   -webkit-text-stroke: 2.2px #fff;
   text-shadow: 0 6px 44px rgba(0, 0, 0, 0.5);
-  padding-left: 15vw;
+  padding-left: 3vw;
   font-style: italic;
   font-weight: 420;
 }
@@ -415,25 +415,14 @@ html.ih-active button {
   z-index: 9;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background:
-    linear-gradient(145deg, rgba(18, 22, 29, 0.94), rgba(7, 9, 13, 0.9)),
-    rgba(5, 7, 10, 0.94);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 30px 70px rgba(0, 0, 0, 0.62),
-    0 60px 140px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px) saturate(110%);
-  overflow: hidden;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
 }
 
 .ih-portrait-card::after {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  pointer-events: none;
+  display: none;
 }
 
 .ih-portrait-glow {

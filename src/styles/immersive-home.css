@@ -111,6 +111,23 @@ html.ih-active button {
   );
 }
 
+/* Low-power mode (software WebGL detected): drop the effects that are
+   expensive without GPU compositing. The shader itself also switches to a
+   cheaper variant at reduced resolution. */
+html.ih-lowpower .ih-grain {
+  animation: none;
+  opacity: 0.02;
+}
+html.ih-lowpower .immersive-home *,
+html.ih-lowpower .ih-nav,
+html.ih-lowpower .ih-rail {
+  backdrop-filter: none !important;
+}
+html.ih-lowpower .ih-portrait-glow {
+  filter: none;
+  opacity: 0.5;
+}
+
 @keyframes ih-grain {
   0% {
     transform: translate(0);
@@ -135,22 +152,25 @@ html.ih-active button {
   top: -18px;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1.5px solid #fff;
   border-radius: 50%;
   z-index: 100;
   pointer-events: none;
-  mix-blend-mode: difference;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.45);
   will-change: transform;
 }
 
 .ih-pointer span {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #fff;
-  left: 15px;
-  top: 15px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
+  left: 14px;
+  top: 14px;
 }
 
 .ih-nav {

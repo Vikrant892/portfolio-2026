@@ -78,6 +78,8 @@ void main(){
 }`;
 
 const FRAGMENT = `#version 300 es
+#define OCT 5
+#define WARP2 1
 precision highp float;
 in vec2 v_uv;
 out vec4 outColor;
@@ -102,7 +104,7 @@ float noise(vec2 p){
 float fbm(vec2 p){
   float v=0.0; float amp=.5;
   mat2 r=mat2(.80,-.60,.60,.80);
-  for(int i=0;i<5;i++){ v += amp*noise(p); p=r*p*2.03+11.7; amp*=.5; }
+  for(int i=0;i<OCT;i++){ v += amp*noise(p); p=r*p*2.03+11.7; amp*=.5; }
   return v;
 }
 
@@ -118,10 +120,14 @@ void main(){
     fbm(p*u_scale + vec2(t, -t*.51)),
     fbm(p*u_scale + vec2(-t*.38, t*.72)+3.1)
   );
+#if WARP2
   vec2 r=vec2(
     fbm(p*u_scale + 3.2*q + vec2(1.7,-4.2) + t*.28),
     fbm(p*u_scale + 2.9*q + vec2(8.3,2.8) - t*.18)
   );
+#else
+  vec2 r=q.yx + vec2(.32*sin(t*.53 + q.x*4.0), .26*cos(t*.41 + q.y*4.0));
+#endif
 
   float warp=fbm(p*(1.22+u_chaos*.38)*u_scale + (4.8+u_chaos*1.6)*r);
   float folds=sin((p.x*.72+p.y*.19+warp*1.45+r.x*.78+u_scroll*.00022)*7.0);
@@ -305,11 +311,44 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
       return;
     }
 
+    // Adaptive quality: machines without GPU acceleration (software WebGL)
+    // get a cheaper shader (3 octaves, single warp), a lower starting
+    // resolution and no costly CSS blurs. `?perf=low` / `?perf=high`
+    // override detection for testing.
+    const rendererInfo = (() => {
+      try {
+        const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        return String(
+          ext
+            ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+            : gl.getParameter(gl.RENDERER),
+        );
+      } catch {
+        return "";
+      }
+    })();
+    const forcedPerf = new URLSearchParams(window.location.search).get("perf");
+    const softwareGpu =
+      forcedPerf === "low" ||
+      (forcedPerf !== "high" &&
+        /basic render|swiftshader|llvmpipe|software/i.test(rendererInfo));
+    const MIN_PIXEL_BUDGET = 280_000;
+    let pixelBudget = softwareGpu ? 520_000 : 3_400_000;
+
+    if (softwareGpu) document.documentElement.classList.add("ih-lowpower");
+
+    const fragmentSource = softwareGpu
+      ? FRAGMENT.replace("#define OCT 5", "#define OCT 3").replace(
+          "#define WARP2 1",
+          "#define WARP2 0",
+        )
+      : FRAGMENT;
+
     const program = gl.createProgram();
     if (!program) return;
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERTEX);
-    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, fragmentSource);
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
@@ -360,28 +399,6 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    // Adaptive quality: machines without GPU acceleration (software WebGL)
-    // start at a much lower render resolution, and a frame-time watchdog
-    // keeps stepping the pixel budget down until the animation is smooth.
-    // The fluid is soft, so upscaling a small canvas is visually fine.
-    const rendererInfo = (() => {
-      try {
-        const ext = gl.getExtension("WEBGL_debug_renderer_info");
-        return String(
-          ext
-            ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
-            : gl.getParameter(gl.RENDERER),
-        );
-      } catch {
-        return "";
-      }
-    })();
-    const softwareGpu = /basic render|swiftshader|llvmpipe|software/i.test(
-      rendererInfo,
-    );
-    const MIN_PIXEL_BUDGET = 360_000;
-    let pixelBudget = softwareGpu ? 820_000 : 3_400_000;
-
     const resize = () => {
       const mobile = window.innerWidth < 760;
       const capped = Math.min(window.devicePixelRatio || 1, mobile ? 1.1 : 1.5);
@@ -410,8 +427,18 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
     let frameCount = 0;
     let frameAccum = 0;
     let frameSamples = 0;
+    let skipToggle = false;
 
     const render = (now: number) => {
+      // Software renderers draw every second frame: a steady ~30fps cadence
+      // reads smoother than an oscillating full-rate attempt and halves CPU.
+      if (softwareGpu) {
+        skipToggle = !skipToggle;
+        if (skipToggle) {
+          raf = requestAnimationFrame(render);
+          return;
+        }
+      }
       // Frame-time watchdog: after a short warmup, average frame duration
       // over 40-frame windows; while it stays above ~45ms (22fps), shrink
       // the pixel budget until the animation runs smoothly.
@@ -427,8 +454,8 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
           const avg = frameAccum / frameSamples;
           frameAccum = 0;
           frameSamples = 0;
-          if (avg > 45 && pixelBudget > MIN_PIXEL_BUDGET) {
-            const factor = avg > 120 ? 0.4 : 0.6;
+          if (avg > (softwareGpu ? 80 : 45) && pixelBudget > MIN_PIXEL_BUDGET) {
+            const factor = avg > 160 ? 0.4 : 0.6;
             pixelBudget = Math.max(MIN_PIXEL_BUDGET, pixelBudget * factor);
             resize();
           }
@@ -456,7 +483,7 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
 
       gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform2f(uniforms.pointer, pointerX, pointerY);
-      gl.uniform1f(uniforms.time, ((now - start) / 1000) * (reduced ? 0.3 : 1));
+      gl.uniform1f(uniforms.time, ((now - start) / 1000) * (reduced ? 0.5 : 1));
       gl.uniform1f(uniforms.scroll, sy);
       gl.uniform1f(uniforms.velocity, velocity);
       gl.uniform1f(uniforms.energy, palette.energy);
@@ -478,6 +505,7 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", move);
+      document.documentElement.classList.remove("ih-lowpower");
       gl.deleteShader(vs);
       gl.deleteShader(fs);
       gl.deleteProgram(program);
@@ -562,8 +590,8 @@ function Pointer() {
     };
 
     const tick = () => {
-      x = lerp(x, tx, 0.18);
-      y = lerp(y, ty, 0.18);
+      x = lerp(x, tx, 0.4);
+      y = lerp(y, ty, 0.4);
       el.style.transform = `translate3d(${x}px,${y}px,0)`;
       raf = requestAnimationFrame(tick);
     };

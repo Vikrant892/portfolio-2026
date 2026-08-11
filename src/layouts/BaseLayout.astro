@@ -178,7 +178,10 @@ const schemaGraph = {
     <main id="main">
       <slot />
     </main>
-    <Motion />
+    {/* Motion powers [data-reveal] animations on the classic section pages;
+        bare pages (immersive home, resume, recruiter) don't use it, so skip
+        the 63 KB script there. */}
+    {!bare && <Motion />}
     <ImageGuard />
   </body>
 </html>

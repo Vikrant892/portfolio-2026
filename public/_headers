@@ -22,3 +22,9 @@
   Cache-Control: public, max-age=86400
 /cv/*
   Cache-Control: public, max-age=86400
+
+# Small root assets that rarely change.
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/og.jpg
+  Cache-Control: public, max-age=604800

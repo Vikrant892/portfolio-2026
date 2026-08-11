@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/immersive-home.css";
 import portraitImg from "../assets/portrait.jpg";
@@ -86,6 +87,28 @@ const statusLabel: Record<string, string> = {
   migrating: "MIGRATING",
   archived: "ARCHIVED",
 };
+
+// Optimised WebP renditions keep the page light; full-size scans stay
+// reachable behind the cert links.
+const portraitOpt = await getImage({
+  src: portraitImg,
+  width: 720,
+  format: "webp",
+});
+const projectShots = new Map(
+  await Promise.all(
+    featured.map(
+      async (project) =>
+        [
+          project.slug,
+          await getImage({ src: project.img, width: 880, format: "webp" }),
+        ] as const,
+    ),
+  ),
+);
+const certShots = await Promise.all(
+  certs.map((cert) => getImage({ src: cert.img, width: 560, format: "webp" })),
+);
 ---
 
 <BaseLayout
@@ -135,10 +158,11 @@ const statusLabel: Record<string, string> = {
         <div class="ih-portrait-ring ih-ring-b" aria-hidden="true"></div>
         <div class="ih-portrait-frame">
           <img
-            src={portraitImg.src}
-            width={portraitImg.width}
-            height={portraitImg.height}
+            src={portraitOpt.src}
+            width={portraitOpt.attributes.width}
+            height={portraitOpt.attributes.height}
             alt="Vikrant Sharma"
+            fetchpriority="high"
           />
         </div>
       </div>
@@ -188,9 +212,9 @@ const statusLabel: Record<string, string> = {
 
             <div class="ih-project-media">
               <img
-                src={project.img.src}
-                width={project.img.width}
-                height={project.img.height}
+                src={projectShots.get(project.slug)?.src ?? project.img.src}
+                width={projectShots.get(project.slug)?.attributes.width}
+                height={projectShots.get(project.slug)?.attributes.height}
                 alt={`${project.title} interface`}
                 loading={index > 1 ? "lazy" : "eager"}
               />
@@ -346,9 +370,9 @@ const statusLabel: Record<string, string> = {
               >
                 <span class="ih-cert-media">
                   <img
-                    src={cert.img.src}
-                    width={cert.img.width}
-                    height={cert.img.height}
+                    src={certShots[index]?.src ?? cert.img.src}
+                    width={certShots[index]?.attributes.width}
+                    height={certShots[index]?.attributes.height}
                     alt={`${cert.title} certificate`}
                     loading="lazy"
                   />

@@ -318,6 +318,27 @@ html.ih-lowpower .ih-portrait-glow {
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.92);
 }
+.ih-kicker-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+}
+.ih-recruiter-link {
+  color: #060708;
+  background: rgba(151, 255, 187, 0.92);
+  text-decoration: none;
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  padding: 9px 13px;
+  border-radius: 3px;
+  transition:
+    background 0.25s,
+    transform 0.25s;
+}
+.ih-recruiter-link:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
 
 .ih-hero h1 {
   grid-column: 1 / -1;
@@ -1794,8 +1815,12 @@ html.ih-active {
   .ih-hero {
     min-height: 710px;
   }
-  .ih-hero-kicker span {
+  .ih-hero-kicker > span:last-child {
     display: none;
+  }
+  .ih-kicker-left {
+    flex-wrap: wrap;
+    gap: 12px;
   }
   .ih-hero h1 {
     margin-top: 17vh;

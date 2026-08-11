@@ -1,0 +1,309 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+// Recruiter view: everything that matters in under two minutes, no shader,
+// no animation cost, one scroll. Same visual language as the main site.
+---
+
+<BaseLayout
+  title="Recruiter View"
+  bare
+  description="Vikrant Sharma in two minutes: experience, certifications and every shipped project with live links. Machine learning, data engineering and security. Adelaide, Australia."
+>
+  <main class="rv">
+    <header class="rv-head">
+      <div>
+        <p class="rv-kicker">RECRUITER VIEW · TWO-MINUTE READ</p>
+        <h1>VIKRANT SHARMA</h1>
+        <p class="rv-sub">
+          ML · Data Engineering · Security — Adelaide, Australia. Master of IT
+          at UniSC (Aug 2027). Open to graduate and junior roles from July
+          2027, full working rights.
+        </p>
+      </div>
+      <nav class="rv-links" aria-label="Contact">
+        <a href="mailto:vikrantsharma892@gmail.com">EMAIL</a>
+        <a href="https://github.com/Vikrant892" target="_blank" rel="noopener noreferrer">GITHUB</a>
+        <a href="https://www.linkedin.com/in/vik892/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+        <a href="/cv/vikrant-sharma.pdf">CV PDF</a>
+        <a href="/">FULL SITE</a>
+      </nav>
+    </header>
+
+    <section class="rv-facts" aria-label="Proof">
+      <span>7 public deployments, all open source</span>
+      <span>10 months industry experience</span>
+      <span>AWS Certified Data Engineer – Associate</span>
+      <span>OCI Data Science Professional</span>
+      <span>NASA Space Apps Global Finalist 2023</span>
+    </section>
+
+    <section aria-labelledby="rv-exp">
+      <h2 id="rv-exp">EXPERIENCE</h2>
+      <div class="rv-row">
+        <b>Industry Placement · Voxon</b>
+        <span>Aug 2026—Present · Adelaide</span>
+        <p>AI capabilities in VoxelOS as part of the Master's placement.</p>
+      </div>
+      <div class="rv-row">
+        <b>Data Engineering Intern · Nagarro</b>
+        <span>Dec 2024—Feb 2025 · Gurugram (remote)</span>
+        <p>
+          ETL pipelines to analyst-ready dimensional tables on AWS Redshift and
+          Snowflake.
+        </p>
+      </div>
+      <div class="rv-row">
+        <b>Cybersecurity Junior Analyst · AT SecurDI</b>
+        <span>May—Dec 2023 · Ahmedabad</span>
+        <p>
+          SIEM monitoring, alert triage, OWASP testing, ISO 27001 / NIST CSF
+          audit work.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="rv-proj">
+      <h2 id="rv-proj">ALL PROJECTS ({projects.length})</h2>
+      {
+        projects.map((project) => (
+          <article class="rv-project">
+            <div class="rv-project-top">
+              <b>{project.title}</b>
+              <span>{project.category}</span>
+            </div>
+            <p>{project.summary}</p>
+            <div class="rv-project-foot">
+              <i>{project.stack.slice(0, 5).join(" · ")}</i>
+              <span class="rv-project-links">
+                <a href={project.live} target="_blank" rel="noopener noreferrer">
+                  LIVE ↗
+                </a>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  SOURCE ↗
+                </a>
+                <a href={`/work/${project.slug}`}>CASE STUDY ↗</a>
+              </span>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <section aria-labelledby="rv-edu">
+      <h2 id="rv-edu">EDUCATION</h2>
+      <div class="rv-row">
+        <b>Master of Information Technology · UniSC Adelaide</b>
+        <span>Feb 2025—Aug 2027</span>
+        <p>Data systems, software engineering, cybersecurity research.</p>
+      </div>
+      <div class="rv-row">
+        <b>Bachelor of Computer Applications · CHARUSAT</b>
+        <span>2021—2024</span>
+        <p>NASA Space Apps Global Finalist during this period.</p>
+      </div>
+    </section>
+
+    <footer class="rv-foot">
+      <a href="/">See the full immersive portfolio ↗</a>
+      <span>© 2026 VIKRANT SHARMA · ADELAIDE, AUSTRALIA</span>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .rv {
+    min-height: 100vh;
+    background:
+      radial-gradient(
+        900px 500px at 85% -5%,
+        rgba(52, 89, 149, 0.35),
+        transparent 60%
+      ),
+      radial-gradient(
+        700px 420px at -10% 40%,
+        rgba(84, 48, 128, 0.24),
+        transparent 60%
+      ),
+      #050608;
+    color: #fff;
+    font-family: var(--font-sans, sans-serif);
+    padding: 48px clamp(18px, 5vw, 72px) 40px;
+    max-width: 1060px;
+    margin-inline: auto;
+  }
+  .rv-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 28px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding-bottom: 26px;
+  }
+  .rv-kicker {
+    font: 600 12px/1 var(--font-mono, monospace);
+    letter-spacing: 0.2em;
+    color: rgba(151, 255, 187, 0.9);
+    margin: 0 0 14px;
+  }
+  .rv h1 {
+    font-family: var(--font-display, serif);
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    line-height: 0.9;
+    margin: 0 0 14px;
+    letter-spacing: -0.04em;
+  }
+  .rv-sub {
+    max-width: 560px;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .rv-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .rv-links a {
+    font: 600 13px/1 var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.45);
+    padding-bottom: 4px;
+  }
+  .rv-links a:hover {
+    border-bottom-color: #fff;
+  }
+  .rv-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 24px 0;
+  }
+  .rv-facts span {
+    font: 600 12px/1.3 var(--font-mono, monospace);
+    letter-spacing: 0.06em;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .rv h2 {
+    font: 600 13px/1 var(--font-mono, monospace);
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 34px 0 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    padding-bottom: 12px;
+  }
+  .rv-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.7fr 1.4fr;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  }
+  .rv-row b {
+    font-size: 15px;
+  }
+  .rv-row span {
+    font: 500 12px/1.4 var(--font-mono, monospace);
+    color: rgba(255, 255, 255, 0.62);
+  }
+  .rv-row p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .rv-project {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  }
+  .rv-project-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .rv-project-top b {
+    font-size: 17px;
+  }
+  .rv-project-top span {
+    font: 500 11px/1.4 var(--font-mono, monospace);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .rv-project p {
+    margin: 8px 0 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 780px;
+  }
+  .rv-project-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .rv-project-foot i {
+    font: 500 11px/1.4 var(--font-mono, monospace);
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .rv-project-links {
+    display: flex;
+    gap: 18px;
+  }
+  .rv-project-links a {
+    font: 600 12px/1 var(--font-mono, monospace);
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    padding-bottom: 3px;
+  }
+  .rv-project-links a:hover {
+    border-bottom-color: #fff;
+  }
+  .rv-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-top: 30px;
+  }
+  .rv-foot a {
+    color: #fff;
+    font: 600 13px/1 var(--font-mono, monospace);
+    letter-spacing: 0.08em;
+  }
+  .rv-foot span {
+    font: 500 10px/1 var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  @media (max-width: 720px) {
+    .rv-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .rv-links {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+  }
+</style>

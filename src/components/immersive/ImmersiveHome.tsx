@@ -1151,7 +1151,13 @@ export default function ImmersiveHome({ posts = [] }: { posts?: BlogPost[] }) {
 
       <section className="ih-hero ih-scene" data-scene="0" id="top">
         <div className="ih-hero-kicker">
-          ML / DATA / SECURITY <span>ADL · AU</span>
+          <span className="ih-kicker-left">
+            ML / DATA / SECURITY
+            <a href="/recruiter" className="ih-recruiter-link">
+              RECRUITER VIEW ↗
+            </a>
+          </span>
+          <span>ADL · AU</span>
         </div>
         <h1>
           <span className="ih-solid">VIKRANT</span>

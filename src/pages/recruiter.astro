@@ -1,4 +1,4 @@
-﻿---
+---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { projects } from "../data/projects";
 
@@ -13,107 +13,119 @@ import { projects } from "../data/projects";
 >
   <main class="rv">
     <div class="rv-inner">
-    <header class="rv-head">
-      <div>
-        <p class="rv-kicker">RECRUITER VIEW Â· TWO-MINUTE READ</p>
-        <h1>VIKRANT SHARMA</h1>
-        <p class="rv-sub">
-          ML Â· Data Engineering Â· Security â€” Adelaide, Australia. Master of IT
-          at UniSC (Aug 2027). Open to graduate and junior roles from July
-          2027, full working rights.
-        </p>
-      </div>
-      <nav class="rv-links" aria-label="Contact">
-        <a href="mailto:vikrantsharma892@gmail.com">EMAIL</a>
-        <a href="https://github.com/Vikrant892" target="_blank" rel="noopener noreferrer">GITHUB</a>
-        <a href="https://www.linkedin.com/in/vik892/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-        <a href="/cv/vikrant-sharma.pdf">CV PDF</a>
-        <a href="/">FULL SITE</a>
-      </nav>
-    </header>
+      <header class="rv-head">
+        <div>
+          <p class="rv-kicker">RECRUITER VIEW · TWO-MINUTE READ</p>
+          <h1>VIKRANT SHARMA</h1>
+          <p class="rv-sub">
+            ML · Data Engineering · Security — Adelaide, Australia. Master of
+            IT at UniSC (Aug 2027). Open to graduate and junior roles from
+            July 2027, full working rights.
+          </p>
+        </div>
+        <nav class="rv-links" aria-label="Contact">
+          <a href="mailto:vikrantsharma892@gmail.com">EMAIL</a>
+          <a
+            href="https://github.com/Vikrant892"
+            target="_blank"
+            rel="noopener noreferrer">GITHUB</a
+          >
+          <a
+            href="https://www.linkedin.com/in/vik892/"
+            target="_blank"
+            rel="noopener noreferrer">LINKEDIN</a
+          >
+          <a href="/cv/vikrant-sharma.pdf">CV PDF</a>
+          <a href="/">FULL SITE</a>
+        </nav>
+      </header>
 
-    <section class="rv-facts" aria-label="Proof">
-      <span>7 public deployments, all open source</span>
-      <span>10 months industry experience</span>
-      <span>AWS Certified Data Engineer â€“ Associate</span>
-      <span>OCI Data Science Professional</span>
-      <span>NASA Space Apps Global Finalist 2023</span>
-    </section>
+      <section class="rv-facts" aria-label="Proof">
+        <span>7 public deployments, all open source</span>
+        <span>10 months industry experience</span>
+        <span>AWS Certified Data Engineer – Associate</span>
+        <span>OCI Data Science Professional</span>
+        <span>NASA Space Apps Global Finalist 2023</span>
+      </section>
 
-    <section aria-labelledby="rv-exp">
-      <h2 id="rv-exp">EXPERIENCE</h2>
-      <div class="rv-row">
-        <b>Industry Placement Â· Voxon</b>
-        <span>Aug 2026â€”Present Â· Adelaide</span>
-        <p>AI capabilities in VoxelOS as part of the Master's placement.</p>
-      </div>
-      <div class="rv-row">
-        <b>Data Engineering Intern Â· Nagarro</b>
-        <span>Dec 2024â€”Feb 2025 Â· Gurugram (remote)</span>
-        <p>
-          ETL pipelines to analyst-ready dimensional tables on AWS Redshift and
-          Snowflake.
-        </p>
-      </div>
-      <div class="rv-row">
-        <b>Cybersecurity Junior Analyst Â· AT SecurDI</b>
-        <span>Mayâ€”Dec 2023 Â· Ahmedabad</span>
-        <p>
-          SIEM monitoring, alert triage, OWASP testing, ISO 27001 / NIST CSF
-          audit work.
-        </p>
-      </div>
-    </section>
+      <section aria-labelledby="rv-exp">
+        <h2 id="rv-exp">EXPERIENCE</h2>
+        <div class="rv-row">
+          <b>Industry Placement · Voxon</b>
+          <span>Aug 2026—Present · Adelaide</span>
+          <p>AI capabilities in VoxelOS as part of the Master's placement.</p>
+        </div>
+        <div class="rv-row">
+          <b>Data Engineering Intern · Nagarro</b>
+          <span>Dec 2024—Feb 2025 · Gurugram (remote)</span>
+          <p>
+            ETL pipelines to analyst-ready dimensional tables on AWS Redshift
+            and Snowflake.
+          </p>
+        </div>
+        <div class="rv-row">
+          <b>Cybersecurity Junior Analyst · AT SecurDI</b>
+          <span>May—Dec 2023 · Ahmedabad</span>
+          <p>
+            SIEM monitoring, alert triage, OWASP testing, ISO 27001 / NIST CSF
+            audit work.
+          </p>
+        </div>
+      </section>
 
-    <section aria-labelledby="rv-proj">
-      <h2 id="rv-proj">ALL PROJECTS ({projects.length})</h2>
-      {
-        projects.map((project) => (
-          <article class="rv-project">
-            <div class="rv-project-top">
-              <b>{project.title}</b>
-              <span>{project.category}</span>
-            </div>
-            <p>{project.summary}</p>
-            <div class="rv-project-foot">
-              <i>{project.stack.slice(0, 5).join(" Â· ")}</i>
-              <span class="rv-project-links">
-                <a href={project.live} target="_blank" rel="noopener noreferrer">
-                  LIVE â†—
-                </a>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  SOURCE â†—
-                </a>
-                <a href={`/work/${project.slug}`}>CASE STUDY â†—</a>
-              </span>
-            </div>
-          </article>
-        ))
-      }
-    </section>
+      <section aria-labelledby="rv-proj">
+        <h2 id="rv-proj">ALL PROJECTS ({projects.length})</h2>
+        {
+          projects.map((project) => (
+            <article class="rv-project">
+              <div class="rv-project-top">
+                <b>{project.title}</b>
+                <span>{project.category}</span>
+              </div>
+              <p>{project.summary}</p>
+              <div class="rv-project-foot">
+                <i>{project.stack.slice(0, 5).join(" · ")}</i>
+                <span class="rv-project-links">
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    LIVE ↗
+                  </a>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    SOURCE ↗
+                  </a>
+                  <a href={`/work/${project.slug}`}>CASE STUDY ↗</a>
+                </span>
+              </div>
+            </article>
+          ))
+        }
+      </section>
 
-    <section aria-labelledby="rv-edu">
-      <h2 id="rv-edu">EDUCATION</h2>
-      <div class="rv-row">
-        <b>Master of Information Technology Â· UniSC Adelaide</b>
-        <span>Feb 2025â€”Aug 2027</span>
-        <p>Data systems, software engineering, cybersecurity research.</p>
-      </div>
-      <div class="rv-row">
-        <b>Bachelor of Computer Applications Â· CHARUSAT</b>
-        <span>2021â€”2024</span>
-        <p>NASA Space Apps Global Finalist during this period.</p>
-      </div>
-    </section>
+      <section aria-labelledby="rv-edu">
+        <h2 id="rv-edu">EDUCATION</h2>
+        <div class="rv-row">
+          <b>Master of Information Technology · UniSC Adelaide</b>
+          <span>Feb 2025—Aug 2027</span>
+          <p>Data systems, software engineering, cybersecurity research.</p>
+        </div>
+        <div class="rv-row">
+          <b>Bachelor of Computer Applications · CHARUSAT</b>
+          <span>2021—2024</span>
+          <p>NASA Space Apps Global Finalist during this period.</p>
+        </div>
+      </section>
 
-    <footer class="rv-foot">
-      <a href="/">See the full immersive portfolio â†—</a>
-      <span>Â© 2026 VIKRANT SHARMA Â· ADELAIDE, AUSTRALIA</span>
-    </footer>
+      <footer class="rv-foot">
+        <a href="/">See the full immersive portfolio ↗</a>
+        <span>© 2026 VIKRANT SHARMA · ADELAIDE, AUSTRALIA</span>
+      </footer>
     </div>
   </main>
 </BaseLayout>

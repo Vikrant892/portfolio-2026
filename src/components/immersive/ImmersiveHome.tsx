@@ -404,7 +404,7 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
 
       gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform2f(uniforms.pointer, pointerX, pointerY);
-      gl.uniform1f(uniforms.time, (now - start) / 1000);
+      gl.uniform1f(uniforms.time, ((now - start) / 1000) * (reduced ? 0.3 : 1));
       gl.uniform1f(uniforms.scroll, sy);
       gl.uniform1f(uniforms.velocity, velocity);
       gl.uniform1f(uniforms.energy, palette.energy);
@@ -415,7 +415,9 @@ function ShaderField({ scene, chaos }: { scene: number; chaos: boolean }) {
       gl.uniform3fv(uniforms.c, palette.c);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-      if (!reduced) raf = requestAnimationFrame(render);
+      // Reduced-motion visitors still get the field, just as a slow calm
+      // drift (0.3x time) instead of a hard freeze.
+      raf = requestAnimationFrame(render);
     };
 
     render(performance.now());

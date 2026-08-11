@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
@@ -32,24 +33,29 @@
   --color-ink-on-dark: #18181b;
   --color-ink-on-dark-muted: #4b4b53;
 
-  /* Accent — working blue. 5.2:1 on white. */
-  --color-accent: #2563eb;
-  --color-accent-on-dark: #2563eb;
-  --color-violet: #4f46e5;
+  /* Accent — working amber, deep enough for AA text on ivory (5.9:1).
+     Cyan rides shotgun as the counter-signal in gradients and glows. */
+  --color-accent: #b45309;
+  --color-accent-on-dark: #b45309;
+  --color-violet: #0e7490;
 
   /* Decorative signal tones (dots, rules, fills). Legacy names kept so
-     section components stay palette-agnostic. */
-  --color-amber: #2563eb;
-  --color-amber-soft: #93c5fd;
-  --color-amber-glow: rgba(37, 99, 235, 0.08);
+     section components stay palette-agnostic. Brighter than text tones. */
+  --color-amber: #f59e0b;
+  --color-amber-soft: #fcd34d;
+  --color-amber-glow: rgba(245, 158, 11, 0.14);
+  --color-cyan: #06b6d4;
+  --color-cyan-glow: rgba(6, 182, 212, 0.1);
 
   /* Borders */
   --color-border: #e3e0d6;
   --color-border-subtle: #ebe8df;
   --color-border-strong: #c7c3b4;
 
-  /* Type ramp */
-  --font-display:
+  /* Type ramp — Fraunces gives headings the editorial serif character;
+     Space Grotesk stays as the structural fallback and .t-title face. */
+  --font-display: "Fraunces Variable", "Space Grotesk Variable", Georgia, serif;
+  --font-structure:
     "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono:
@@ -97,13 +103,15 @@ html.dark {
   --color-ink-on-dark: #f2f2f4;
   --color-ink-on-dark-muted: #a5a6b0;
 
-  --color-accent: #60a5fa;
-  --color-accent-on-dark: #60a5fa;
-  --color-violet: #818cf8;
+  --color-accent: #fbbf24;
+  --color-accent-on-dark: #fbbf24;
+  --color-violet: #22d3ee;
 
-  --color-amber: #60a5fa;
-  --color-amber-soft: #93c5fd;
-  --color-amber-glow: rgba(96, 165, 250, 0.14);
+  --color-amber: #fbbf24;
+  --color-amber-soft: #fcd34d;
+  --color-amber-glow: rgba(251, 191, 36, 0.16);
+  --color-cyan: #22d3ee;
+  --color-cyan-glow: rgba(34, 211, 238, 0.12);
 
   --color-border: #232430;
   --color-border-subtle: #1b1c26;
@@ -139,8 +147,8 @@ html.dark {
   }
 
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-bg);
+    background: var(--color-amber);
+    color: #1a1200;
   }
 
   *:focus-visible {
@@ -183,29 +191,36 @@ html.dark {
 
   .t-display {
     font-family: var(--font-display);
-    font-weight: 620;
-    letter-spacing: -0.03em;
+    font-weight: 540;
+    letter-spacing: -0.02em;
     line-height: 1.02;
   }
 
   .t-heading {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    font-weight: 520;
+    letter-spacing: -0.015em;
     line-height: 1.08;
   }
 
   .t-title {
-    font-family: var(--font-display);
+    font-family: var(--font-structure);
     font-weight: 560;
     letter-spacing: -0.015em;
     line-height: 1.18;
   }
 
-  /* Key-phrase emphasis. In the minimal theme this is a solid accent,
-     not a gradient; markup using .t-gradient needs no change. */
+  /* Key-phrase emphasis: iridescent amber-to-cyan gradient text. */
   .t-gradient {
-    color: var(--color-accent);
+    background: linear-gradient(
+      100deg,
+      var(--color-accent),
+      var(--color-violet)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   .mono {
@@ -309,12 +324,16 @@ html.dark {
 
   /* Band variants (feature bands are light grey panels in this theme) */
   .btn-on-dark-primary {
-    background: var(--color-accent);
-    color: #ffffff;
+    background: linear-gradient(
+      100deg,
+      var(--color-amber),
+      var(--color-amber-soft)
+    );
+    color: #1a1200;
   }
   .btn-on-dark-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 40px -16px rgba(37, 99, 235, 0.45);
+    box-shadow: 0 16px 40px -16px rgba(245, 158, 11, 0.5);
   }
   .btn-on-dark-secondary {
     background: transparent;

@@ -25,7 +25,7 @@ export const identity = {
   email: "vikrantsharma892@gmail.com",
   github: "https://github.com/Vikrant892",
   linkedin: "https://www.linkedin.com/in/vik892/",
-  blog: "https://vikrant69g.com/blog",
+  blog: "https://vikrantsharma.info/blog",
 };
 
 /**

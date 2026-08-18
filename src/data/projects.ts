@@ -61,7 +61,7 @@ export const projects: Project[] = [
       "Daily digest by email and a Streamlit dashboard, deployed on Fly.io and Cloudflare Pages.",
     ],
     stack: ["Python", "Postgres", "dbt", "Prefect", "Streamlit", "Claude API"],
-    live: "https://studentops.vikrant69g.com",
+    live: "https://studentops.vikrantsharma.info",
     github: "https://github.com/Vikrant892/studentops",
     featured: true,
     status: "live",

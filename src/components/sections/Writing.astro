@@ -11,7 +11,7 @@ interface BlogPost {
 
 let posts: BlogPost[] = [];
 try {
-  const res = await fetch('https://vikrant69g.com/blog/rss.xml', {
+  const res = await fetch('https://vikrantsharma.info/blog/rss.xml', {
     headers: { 'User-Agent': 'portfolio-2026-build' },
   });
   if (res.ok) {
@@ -55,7 +55,7 @@ const formatDate = (s: string) => {
             <SectionUnderline />
           </div>
           <a
-            href="https://vikrant69g.com/blog"
+            href="https://vikrantsharma.info/blog"
             class="mono text-sm text-[var(--color-ink-muted)] underline-offset-4 hover:text-[var(--color-accent)] hover:underline"
           >
             All posts →

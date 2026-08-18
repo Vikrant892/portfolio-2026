@@ -49,7 +49,7 @@ export default function SectionRail() {
           <b>{section.label}</b>
         </a>
       ))}
-      <a href="https://vikrant69g.com/blog" className="ih-rail-blog">
+      <a href="https://vikrantsharma.info/blog" className="ih-rail-blog">
         <span>08</span>
         <b>BLOG ↗</b>
       </a>

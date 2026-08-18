@@ -6,7 +6,7 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://vikrant69g.com",
+  site: "https://vikrantsharma.info",
   trailingSlash: "never",
   output: "static",
   build: {

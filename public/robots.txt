@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vikrant69g.com/sitemap-index.xml
+Sitemap: https://vikrantsharma.info/sitemap-index.xml

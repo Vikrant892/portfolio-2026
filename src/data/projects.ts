@@ -17,6 +17,10 @@ export interface Project {
   img: ImageMetadata;
   /** One-line summary used on cards and as the page meta description. */
   summary: string;
+  /** optional <title> override (SEO) - falls back to title */
+  seoTitle?: string;
+  /** optional meta-description override (SEO) - falls back to summary */
+  seoDescription?: string;
   challenge: string;
   approach: string;
   outcome: string;
@@ -42,6 +46,9 @@ export const projects: Project[] = [
   {
     slug: "studentops-data-platform",
     title: "StudentOps Data Platform",
+    seoTitle: "StudentOps — dbt + Prefect Platform",
+    seoDescription:
+      "Vikrant Sharma's end-to-end data platform: six sources into a layered Postgres warehouse with dbt and Prefect. Tour the build.",
     category: "Data Engineering · Capstone",
     role: "Sole engineer",
     timeframe: "2026",
@@ -69,6 +76,8 @@ export const projects: Project[] = [
   {
     slug: "hybrid-ml-intrusion-detection",
     title: "Hybrid ML Intrusion Detection",
+    seoDescription:
+      "Real-time IDS by Vikrant Sharma: an ML ensemble over live traffic, every alert mapped to MITRE ATT&CK. See the live demo.",
     category: "Capstone · Cybersecurity ML",
     role: "Sole engineer",
     timeframe: "Master of IT capstone, 2026",
@@ -103,6 +112,9 @@ export const projects: Project[] = [
   {
     slug: "credit-card-fraud-detection",
     title: "Credit Card Fraud Detection",
+    seoTitle: "Credit Card Fraud Detection ML",
+    seoDescription:
+      "ML fraud pipeline on 284k transactions at a 0.17% fraud rate, by Vikrant Sharma. See how threshold tuning makes or breaks it.",
     category: "ML · Imbalanced Classification",
     role: "Sole engineer",
     timeframe: "2025",
@@ -130,6 +142,9 @@ export const projects: Project[] = [
   {
     slug: "cosmic-keys",
     title: "Cosmic Keys",
+    seoTitle: "Cosmic Keys — NASA Data Sonification",
+    seoDescription:
+      "Planetary data turned into music — Vikrant Sharma's NASA Space Apps Global Finalist project. Hear the solar system play.",
     category: "NASA Space Apps 2023 · Global Finalist",
     role: "Team Eklavya",
     timeframe: "NASA Space Apps Challenge, 2023",
@@ -157,6 +172,9 @@ export const projects: Project[] = [
   {
     slug: "threatlens",
     title: "ThreatLens",
+    seoTitle: "ThreatLens — CVE Triage Tool",
+    seoDescription:
+      "CVE triage by Vikrant Sharma: vulnerabilities pre-ranked by real exploitability against your assets. Cut the alert noise.",
     category: "Threat Intelligence",
     role: "Sole engineer",
     timeframe: "2025",
@@ -183,6 +201,8 @@ export const projects: Project[] = [
   {
     slug: "phishing-detection-platform",
     title: "Phishing Detection Platform",
+    seoDescription:
+      "Email analyser by Vikrant Sharma that catches what gateways miss: header anomalies, hidden payloads, spoofed senders.",
     category: "Cybersecurity · Email Security",
     role: "Sole engineer",
     timeframe: "2024",
@@ -210,6 +230,9 @@ export const projects: Project[] = [
   {
     slug: "log-analyzer-dashboard",
     title: "Log Analyzer Dashboard",
+    seoTitle: "Log Analyzer — Lightweight SIEM",
+    seoDescription:
+      "A SIEM for teams without a Splunk budget, built by Vikrant Sharma — parse logs, flag attacks, map to ATT&CK. Try it live.",
     category: "Cybersecurity · SIEM",
     role: "Sole engineer",
     timeframe: "2024",
@@ -236,6 +259,8 @@ export const projects: Project[] = [
   {
     slug: "password-strength-api",
     title: "Password Strength API",
+    seoDescription:
+      "Vikrant Sharma's drop-in API: entropy, breach status and crack-time estimates without seeing the raw password. Read the docs.",
     category: "Security · API",
     role: "Sole engineer",
     timeframe: "2024",

@@ -137,7 +137,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/credit-card-fraud-detection",
     github: "https://github.com/Vikrant892/credit-card-fraud-detection",
     featured: false,
-    status: "live",
+    status: "sleeping",
   },
   {
     slug: "cosmic-keys",
@@ -224,7 +224,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/phishing-detection-platform",
     github: "https://github.com/Vikrant892/Phishing-detection-platform",
     featured: true,
-    // Space is owner-paused (verified 12 Aug 2026): visitors cannot wake it.
+    // Space is paused (verified 11 Oct 2026): visitors cannot wake it.
     status: "sleeping",
   },
   {
@@ -232,7 +232,7 @@ export const projects: Project[] = [
     title: "Log Analyzer Dashboard",
     seoTitle: "Log Analyzer — Lightweight SIEM",
     seoDescription:
-      "A SIEM for teams without a Splunk budget, built by Vikrant Sharma — parse logs, flag attacks, map to ATT&CK. Try it live.",
+      "A SIEM for teams without a Splunk budget, built by Vikrant Sharma — parse logs, flag attacks, map to ATT&CK. Explore the build.",
     category: "Cybersecurity · SIEM",
     role: "Sole engineer",
     timeframe: "2024",
@@ -254,27 +254,27 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/log-analyzer-dashboard",
     github: "https://github.com/Vikrant892/log-analyzer-dashboard",
     featured: false,
-    status: "live",
+    status: "sleeping",
   },
   {
     slug: "password-strength-api",
     title: "Password Strength API",
     seoDescription:
-      "Vikrant Sharma's drop-in API: entropy, breach status and crack-time estimates without seeing the raw password. Read the docs.",
+      "Vikrant Sharma's drop-in API: entropy, breach status and crack-time estimates with HIBP k-anonymity for external breach lookups. Read the docs.",
     category: "Security · API",
     role: "Sole engineer",
     timeframe: "2024",
     img: passwordImg,
     summary:
-      "A drop-in API that returns entropy, breach status and crack-time estimates without ever seeing the raw password.",
+      "A drop-in API that returns entropy, breach status and crack-time estimates with external breach lookups using HIBP k-anonymity.",
     challenge:
-      "Most password checks either leak the password to a server or give a meaningless strength bar. The goal was a real check that respects the secret.",
+      "Password strength bars often hide the reasoning behind their score. The goal was an API that explains strength and checks breaches while limiting the information shared with the external breach service.",
     approach:
-      "A FastAPI microservice with entropy scoring, pattern detection and Have I Been Pwned k-anonymity SHA-1 breach checks, so the server never receives the actual password.",
+      "A FastAPI microservice with entropy scoring, pattern detection and Have I Been Pwned k-anonymity SHA-1 breach checks, The API receives the submitted password and sends only the first five SHA-1 hash characters to HIBP.",
     outcome:
       "Returns entropy, breach status and crack-time estimates in under 100 milliseconds, ready to drop into any authentication flow.",
     highlights: [
-      "HIBP k-anonymity model: only a SHA-1 prefix leaves the client, so the password is never exposed.",
+      "HIBP k-anonymity model: the API receives the password; HIBP receives only a five-character SHA-1 prefix, not the full password or hash.",
       "Entropy scoring plus pattern detection for a meaningful strength signal.",
       "Sub-100ms responses, documented FastAPI endpoints, containerised.",
     ],
@@ -282,7 +282,7 @@ export const projects: Project[] = [
     live: "https://huggingface.co/spaces/vikrant892/password-strength-api",
     github: "https://github.com/Vikrant892/password-strength-api",
     featured: false,
-    status: "live",
+    status: "sleeping",
   },
 ];
 

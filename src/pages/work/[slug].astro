@@ -51,7 +51,7 @@ const schema = {
           rel="noopener noreferrer"
           class="btn btn-primary !min-h-0 !px-4 !py-2 !text-sm"
         >
-          Live demo <span aria-hidden="true">↗</span>
+          {p.status === "live" ? "Live demo" : "Demo hosting (currently unavailable)"} <span aria-hidden="true">↗</span>
         </a>
         <a
           href={p.github}

@@ -54,18 +54,19 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
-    period: "Aug 2026—Present",
+    period: "Aug 2026—Oct 2026",
     role: "Software Engineer Intern",
     org: "Voxon",
     location: "Adelaide, Australia",
-    body: "Working on AI capabilities in VoxelOS as part of the Master's industry placement.",
+    body: "Completed a Master's industry placement developing AI capabilities for VoxelOS.",
     points: [
-      "Developing AI capabilities for VoxelOS as part of a Master's industry placement: prototyping and integrating real-time ML models for voxel processing and perception.",
-      "Optimising model inference and deployment pipelines to meet embedded performance constraints, collaborating with firmware and software teams.",
-      "Building automated testing and monitoring for model behaviour to keep live demos and internal releases reliable.",
+      "Developed AI capabilities for VoxelOS during a Master's industry placement, including prototyping and integrating real-time ML models for voxel processing and perception.",
+      "Optimised model inference and deployment pipelines for embedded performance constraints in collaboration with firmware and software teams.",
+      "Built automated testing and monitoring for model behaviour to support reliable live demos and internal releases.",
     ],
-    months: null,
-    startISO: "2026-08-01",
+    // University-approved placement: 17 August–31 October 2026 (192 hours).
+    months: 3,
+    startISO: "2026-08-17",
   },
   {
     period: "Dec 2024—Feb 2025",
@@ -98,7 +99,7 @@ export const experience: ExperienceEntry[] = [
   },
 ];
 
-/** Total completed industry months plus ongoing months, computed at build. */
+/** Total completed industry months plus any genuinely ongoing engagement, computed at build. */
 export function industryMonths(now = new Date()): number {
   return experience.reduce((total, entry) => {
     if (entry.months !== null) return total + entry.months;
@@ -110,8 +111,8 @@ export function industryMonths(now = new Date()): number {
   }, 0);
 }
 
-/** Renders like "10+" — grows automatically as the Voxon placement runs. */
-export const industryExperienceLabel = `${industryMonths()}+`;
+/** Renders the completed total; it changes only if an ongoing entry is added. */
+export const industryExperienceLabel = `${industryMonths()}`;
 
 export const education = [
   {
